@@ -2686,14 +2686,14 @@ const JobMatchResult = ({ result, onBack, onNewSearch }) => {
         <Button variant="ghost" onClick={onBack} data-testid="results-back-btn" className="declic-back-btn">
           <ChevronLeft size={20} /> Retour à l'accueil
         </Button>
-        <DeclicProLogoCompact size={40} />
+        <div className="results-header-logo">
+          <DeclicProLogo size={50} animated={false} />
+          <span className="results-header-title">DE'CLIC PRO</span>
+        </div>
         <div className="header-right-section">
           <Button variant="outline" onClick={onNewSearch} data-testid="new-search-btn" className="declic-button-secondary">
             <Search size={18} /> Nouvelle recherche
           </Button>
-          <div className="reactif-logo-header" data-testid="reactif-logo-header">
-            <img src="/reactif-pro-logo.png" alt="RE'ACTIF PRO" className="reactif-logo-img-header" />
-          </div>
         </div>
       </div>
 
@@ -2862,11 +2862,11 @@ const ExploreResult = ({ result, onBack }) => {
         <Button variant="ghost" onClick={onBack} data-testid="explore-results-back-btn" className="declic-back-btn">
           <ChevronLeft size={20} /> Retour à l'accueil
         </Button>
-        <DeclicProLogoCompact size={40} />
+        <div className="results-header-logo">
+          <DeclicProLogo size={50} animated={false} />
+          <span className="results-header-title">DE'CLIC PRO</span>
+        </div>
         <div className="header-right-section">
-          <div className="reactif-logo-header" data-testid="reactif-logo-header-explore">
-            <img src="/reactif-pro-logo.png" alt="RE'ACTIF PRO" className="reactif-logo-img-header" />
-          </div>
         </div>
       </div>
 
