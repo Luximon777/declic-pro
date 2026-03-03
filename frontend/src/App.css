@@ -6202,13 +6202,17 @@ body {
 
 /* Label sous l'image */
 .visual-choice-label {
-  padding: 1rem;
-  font-size: 1rem;
+  padding: 0.75rem;
+  font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--declic-indigo);
+  color: #1f2937;
   text-align: center;
   width: 100%;
   background: white;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .visual-choice-card.selected .visual-choice-label {
