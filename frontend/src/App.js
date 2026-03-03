@@ -72,51 +72,94 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 // ============================================================================
-// DECLIC PRO LOGO SVG
+// DECLIC PRO LOGO SVG - New Design with gradient circle
 // ============================================================================
 const DeclicProLogo = ({ size = 120, animated = true }) => (
   <svg width={size} height={size} viewBox="0 0 120 120">
+    <defs>
+      {/* Gradient pour le cercle extérieur (orange -> vert) */}
+      <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#F97316"/>
+        <stop offset="50%" stopColor="#84cc16"/>
+        <stop offset="100%" stopColor="#22c55e"/>
+      </linearGradient>
+      
+      {/* Gradient pour le centre (jaune-vert avec glow) */}
+      <radialGradient id="centerGradient" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="#fde047"/>
+        <stop offset="50%" stopColor="#a3e635"/>
+        <stop offset="100%" stopColor="#4ade80"/>
+      </radialGradient>
+      
+      {/* Glow effect */}
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    
     {/* Cercle de pulsation */}
     {animated && (
       <circle 
         className="pulse-ring" 
-        cx="60" cy="60" r="50" 
+        cx="60" cy="60" r="52" 
         fill="none" 
-        stroke="#F97316" 
+        stroke="url(#circleGradient)" 
         strokeWidth="2" 
         opacity="0.3"
       />
     )}
     
-    {/* Cercle de fond */}
-    <circle cx="60" cy="60" r="50" fill="none" stroke="#FFE4D6" strokeWidth="2"/>
+    {/* Cercle extérieur gradient */}
+    <circle cx="60" cy="60" r="48" fill="none" stroke="url(#circleGradient)" strokeWidth="2.5"/>
     
-    {/* Point de connexion central (le déclic) */}
-    <circle cx="60" cy="60" r="15" fill="#F97316" className={animated ? "glow-effect" : ""}/>
+    {/* Centre avec gradient et glow */}
+    <circle cx="60" cy="60" r="22" fill="url(#centerGradient)" filter={animated ? "url(#glow)" : ""}/>
     
-    {/* Éclairs/étincelles du déclic */}
-    <g className={animated ? "spark" : ""}>
-      <path d="M 60 35 L 62 50 L 70 48 L 60 60" fill="#FBBF24" opacity="0.9"/>
-      <path d="M 85 60 L 70 62 L 72 70 L 60 60" fill="#FBBF24" opacity="0.9"/>
-      <path d="M 60 85 L 58 70 L 50 72 L 60 60" fill="#FBBF24" opacity="0.9"/>
-      <path d="M 35 60 L 50 58 L 48 50 L 60 60" fill="#FBBF24" opacity="0.9"/>
+    {/* Diamants au centre */}
+    <g fill="rgba(255,255,255,0.8)">
+      <path d="M 60 48 L 65 55 L 60 62 L 55 55 Z"/>
+      <path d="M 60 58 L 65 65 L 60 72 L 55 65 Z"/>
     </g>
     
-    {/* Nœuds périphériques (connexions activées) */}
-    <circle cx="60" cy="20" r="5" fill="#F97316"/>
-    <circle cx="90" cy="40" r="5" fill="#F97316"/>
-    <circle cx="90" cy="80" r="5" fill="#F97316"/>
-    <circle cx="60" cy="100" r="5" fill="#F97316"/>
-    <circle cx="30" cy="80" r="5" fill="#F97316"/>
-    <circle cx="30" cy="40" r="5" fill="#F97316"/>
+    {/* Nœuds périphériques colorés */}
+    {/* Top - Orange */}
+    <circle cx="60" cy="15" r="7" fill="#F97316"/>
+    {/* Top-left - Orange */}
+    <circle cx="25" cy="35" r="7" fill="#F97316"/>
+    {/* Top-right - Orange */}
+    <circle cx="95" cy="35" r="7" fill="#F97316"/>
+    {/* Bottom-left - Cyan */}
+    <circle cx="25" cy="85" r="7" fill="#06b6d4"/>
+    {/* Bottom-right - Green */}
+    <circle cx="95" cy="85" r="7" fill="#22c55e"/>
+    {/* Bottom - Green */}
+    <circle cx="60" cy="105" r="7" fill="#22c55e"/>
     
-    {/* Lignes de connexion activées */}
-    <line x1="60" y1="20" x2="60" y2="45" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-    <line x1="90" y1="40" x2="75" y2="60" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-    <line x1="90" y1="80" x2="75" y2="60" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-    <line x1="60" y1="100" x2="60" y2="75" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-    <line x1="30" y1="80" x2="45" y2="60" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-    <line x1="30" y1="40" x2="45" y2="60" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
+    {/* Points blancs de connexion (petits cercles) */}
+    <circle cx="60" cy="38" r="4" fill="white"/>
+    <circle cx="42" cy="47" r="4" fill="white"/>
+    <circle cx="78" cy="47" r="4" fill="white"/>
+    <circle cx="42" cy="73" r="4" fill="white"/>
+    <circle cx="78" cy="73" r="4" fill="white"/>
+    <circle cx="60" cy="82" r="4" fill="white"/>
+    
+    {/* Lignes de connexion colorées */}
+    {/* Top orange */}
+    <line x1="60" y1="15" x2="60" y2="38" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round"/>
+    {/* Top-left orange */}
+    <line x1="25" y1="35" x2="42" y2="47" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round"/>
+    {/* Top-right orange */}
+    <line x1="95" y1="35" x2="78" y2="47" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round"/>
+    {/* Bottom-left cyan */}
+    <line x1="25" y1="85" x2="42" y2="73" stroke="#06b6d4" strokeWidth="2.5" strokeLinecap="round"/>
+    {/* Bottom-right green */}
+    <line x1="95" y1="85" x2="78" y2="73" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round"/>
+    {/* Bottom green */}
+    <line x1="60" y1="105" x2="60" y2="82" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round"/>
   </svg>
 );
 
