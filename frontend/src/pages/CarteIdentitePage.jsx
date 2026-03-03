@@ -84,8 +84,8 @@ export const CarteIdentitePage = () => {
   return (
     <div className="min-h-screen hero-bg pb-20" data-testid="carte-identite-page">
       {/* Header */}
-      <header className="px-6 py-6 flex items-center justify-between max-w-6xl mx-auto">
-        <Link to="/" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors" data-testid="back-home-link">
+      <header className="px-6 py-6 flex items-center justify-between max-w-6xl mx-auto relative z-50">
+        <Link to="/" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors relative z-50" data-testid="back-home-link">
           <ArrowLeft className="w-5 h-5" />
           <span>Retour</span>
         </Link>
