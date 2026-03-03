@@ -12,21 +12,22 @@
   --reactif-secondary: #06b6d4;
   --reactif-accent: #c7d2fe;
   --reactif-bg: #0a1628;
-  --reactif-card: #0f2035;
-  --reactif-text: #ffffff;
-  --reactif-text-light: #9ca3af;
+  --reactif-card: #ffffff;
+  --reactif-text: #1f2937;
+  --reactif-text-light: #64748b;
+  --reactif-text-white: #ffffff;
   --reactif-success: #10b981;
   --reactif-warning: #f59e0b;
   --reactif-danger: #ef4444;
-  --reactif-border: rgba(255, 255, 255, 0.1);
+  --reactif-border: #e5e7eb;
   
   /* DE'CLIC PRO Theme - Dark Mode */
   --declic-orange: #F97316;
   --declic-orange-light: #FB923C;
   --declic-orange-pale: rgba(249, 115, 22, 0.15);
   --declic-yellow: #FBBF24;
-  --declic-indigo: #ffffff;
-  --declic-gray: #9ca3af;
+  --declic-indigo: #1f2937;
+  --declic-gray: #64748b;
   --declic-green: #22c55e;
   
   /* Dark theme colors */
@@ -148,6 +149,7 @@ body {
   background: var(--bg-dark);
   position: relative;
   min-height: 100vh;
+  color: #ffffff;
 }
 
 .landing-page.declic-theme::before {
@@ -164,6 +166,15 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+
+/* Dark mode text colors */
+.landing-page.declic-theme,
+.declic-questionnaire,
+.navigation-sidebar,
+.nav-sidebar-item {
+  --reactif-text: #ffffff;
+  --reactif-text-light: #9ca3af;
 }
 
 /* Landing page logos row - DE'CLIC PRO left, RE'ACTIF PRO right */
@@ -290,7 +301,7 @@ body {
 
 .phase-description {
   font-size: 1.25rem;
-  color: var(--text-secondary);
+  color: #ffffff;
   margin: 0;
   max-width: 600px;
   line-height: 1.6;
@@ -298,7 +309,7 @@ body {
 
 .phase-description-below-cards {
   font-size: 1.125rem;
-  color: var(--text-secondary);
+  color: #9ca3af;
   margin: -1.5rem auto 0;
   max-width: 600px;
   line-height: 1.6;
@@ -2218,7 +2229,7 @@ body {
   display: block;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2227,7 +2238,7 @@ body {
 .nav-item-subtitle {
   display: block;
   font-size: 0.6875rem;
-  color: var(--text-secondary);
+  color: #9ca3af;
   margin-top: 0.125rem;
 }
 
@@ -3237,10 +3248,10 @@ body {
   background: white;
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--reactif-border);
+  border: 1px solid #e5e7eb;
   font-size: 0.875rem;
   line-height: 1.7;
-  color: var(--reactif-text);
+  color: #1f2937;
   text-align: left;
   opacity: 0;
   visibility: hidden;
@@ -3349,7 +3360,7 @@ body {
   margin: 0;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--reactif-text);
+  color: #1f2937;
 }
 
 .archeology-items {
@@ -4972,7 +4983,7 @@ body {
   margin: 0;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--reactif-text);
+  color: #1f2937;
   line-height: 1.2;
 }
 
