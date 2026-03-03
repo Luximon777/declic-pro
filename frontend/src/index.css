@@ -115,9 +115,9 @@ code {
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Gradient text */
+/* Gradient text - Orange to Green */
 .gradient-text {
-    background: linear-gradient(135deg, var(--primary-gradient-start), var(--accent-pink));
+    background: linear-gradient(90deg, #ff8c00, #ffc800, #a8e000, #00d4aa, #00c9b7);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
