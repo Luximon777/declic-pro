@@ -2849,13 +2849,23 @@ body {
 
 .secteurs-badges .badge,
 .secteurs-badges [class*="Badge"] {
-  color: #374151 !important;
-  background: #f8fafc !important;
-  border: 1px solid #d1d5db !important;
-  font-size: 0.8rem !important;
-  font-weight: 600 !important;
-  padding: 0.35rem 0.75rem !important;
-  letter-spacing: 0.01em;
+  color: #111827 !important;
+  background: #ffffff !important;
+  border: 2px solid #1f2937 !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  padding: 0.4rem 0.85rem !important;
+  letter-spacing: 0;
+}
+
+/* Force dark text on all badges in path cards */
+.path-result-card .badge,
+.path-result-card [class*="Badge"][variant="outline"] {
+  color: #000000 !important;
+  background: #f3f4f6 !important;
+  border: 2px solid #374151 !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
 }
 
 .path-jobs ul {
