@@ -2737,7 +2737,7 @@ body {
   gap: 0.75rem;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--reactif-text);
+  color: #ffffff;
   margin-bottom: 1.5rem;
 }
 
@@ -2749,10 +2749,11 @@ body {
 }
 
 .path-result-card {
-  background: var(--reactif-card);
+  background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(67, 56, 202, 0.06);
   transition: all 0.2s ease;
+  border: 1px solid #e5e7eb;
 }
 
 .path-result-card:hover {
@@ -2767,6 +2768,12 @@ body {
   gap: 1rem;
 }
 
+.path-result-card h3,
+.path-result-card [class*="CardTitle"] {
+  color: #1f2937 !important;
+  font-weight: 700;
+}
+
 .path-secteurs, .path-jobs {
   margin-top: 1rem;
 }
@@ -2774,7 +2781,7 @@ body {
 .path-secteurs h5, .path-jobs h5 {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--reactif-text-light);
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0 0 0.5rem;
@@ -2784,6 +2791,13 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 0.375rem;
+}
+
+.secteurs-badges .badge,
+.secteurs-badges [class*="Badge"] {
+  color: #1f2937 !important;
+  background: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
 }
 
 .path-jobs ul {
@@ -2797,7 +2811,7 @@ body {
   align-items: center;
   gap: 0.5rem;
   font-size: 0.875rem;
-  color: var(--reactif-text);
+  color: #1f2937;
   padding: 0.25rem 0;
 }
 
