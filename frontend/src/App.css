@@ -414,31 +414,34 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
-  margin: 1.5rem 0;
-  padding: 1rem 2rem;
+  gap: 3rem;
+  margin: 1.5rem auto;
+  padding: 1.5rem 2rem;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  width: calc(100% - 2rem);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .partner-logo {
-  height: 50px;
+  height: 60px;
   width: auto;
   object-fit: contain;
 }
 
 .logo-altact {
-  height: 35px;
+  height: 55px;
 }
 
 .logo-reactif {
-  height: 50px;
+  height: 70px;
 }
 
 .logo-ia-act {
-  height: 45px;
+  height: 55px;
   border-radius: 8px;
 }
 
