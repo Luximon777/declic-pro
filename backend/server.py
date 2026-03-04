@@ -2392,6 +2392,36 @@ METIERS = [
         "interaction": 2, "cadre": 1, "rythme": 1, "complexite": 1, "autonomie": 2
     },
     {
+        "id": "M033", 
+        "label": "Chargé(e) de recrutement", 
+        "code_rome": "M1502",
+        "intitule_rome": "Développement des ressources humaines",
+        "filiere": "SGAE", 
+        "secteur": "Ressources humaines",
+        "definition": "Recruteur spécialisé qui identifie, évalue et sélectionne les candidats pour pourvoir les postes de l'entreprise. Gère le processus de recrutement de A à Z : définition des besoins, sourcing, entretiens, intégration. Aussi appelé talent acquisition, chasseur de têtes ou consultant en recrutement.",
+        "disc_attendu": ["I", "S"], 
+        "ennea_compatible": [2, 3, 7],
+        "mbti_compatible": ["ENFJ", "ENFP", "ESFJ", "ENTJ"],
+        "competences_requises": ["Communication", "Écoute active", "Analyse", "Négociation", "Organisation"],
+        "soft_skills_essentiels": [
+            {"nom": "Écoute active", "importance": "critique", "description": "Comprendre les besoins des managers et les attentes des candidats"},
+            {"nom": "Sens du relationnel", "importance": "critique", "description": "Créer un climat de confiance avec les candidats"},
+            {"nom": "Capacité d'analyse", "importance": "critique", "description": "Évaluer les compétences et le potentiel des candidats"},
+            {"nom": "Persuasion", "importance": "importante", "description": "Convaincre les meilleurs talents de rejoindre l'entreprise"},
+            {"nom": "Organisation", "importance": "importante", "description": "Gérer plusieurs recrutements en parallèle"}
+        ],
+        "hard_skills_essentiels": [
+            {"nom": "Techniques d'entretien", "importance": "critique", "description": "Conduite d'entretiens structurés et comportementaux"},
+            {"nom": "Sourcing candidats", "importance": "critique", "description": "LinkedIn Recruiter, jobboards, chasse"},
+            {"nom": "ATS (Applicant Tracking System)", "importance": "critique", "description": "Gestion des candidatures (Workday, Taleo, etc.)"},
+            {"nom": "Assessment", "importance": "importante", "description": "Tests de personnalité, mises en situation"},
+            {"nom": "Droit du travail", "importance": "importante", "description": "Cadre juridique du recrutement"},
+            {"nom": "Marque employeur", "importance": "importante", "description": "Communication RH et attractivité"}
+        ],
+        "acces_emploi": "Licence/Master RH, Psychologie du travail ou école de commerce. Première expérience en cabinet de recrutement appréciée.",
+        "interaction": 2, "cadre": 1, "rythme": 2, "complexite": 1, "autonomie": 2
+    },
+    {
         "id": "M016", 
         "label": "Contrôleur de gestion", 
         "code_rome": "M1204",

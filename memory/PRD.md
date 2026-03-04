@@ -63,7 +63,11 @@ Créer le site DE'CLIC PRO - Intelligence Professionnelle, une plateforme de dé
 - [x] Bug fix critique: Algorithme de recherche de métiers (12 déc 2025)
   - Correction de `search_job_by_query` pour normaliser le texte (accents, parenthèses)
   - Correction de l'endpoint `/api/job-match` pour préserver la pertinence de recherche
-  - "chargé de recrutement" retourne maintenant "Responsable RH / Chargé(e) RH" correctement
+- [x] Nouveau métier: "Chargé(e) de recrutement" (M033) ajouté à la base de données
+  - Profil DISC: I, S (Influence, Stabilité)
+  - Ennéagramme compatible: 2, 3, 7
+  - MBTI compatible: ENFJ, ENFP, ESFJ, ENTJ
+  - Variantes de recherche: recruteur, talent acquisition, chasseur de têtes
 
 ### Mars 2026 (sessions précédentes)
 - [x] Page d'accueil complète avec design glassmorphism
