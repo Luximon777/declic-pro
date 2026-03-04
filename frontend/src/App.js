@@ -2137,18 +2137,21 @@ const ReactifProCTA = () => {
             parcours en développant confiance et estime de soi.
           </p>
           
-          {/* Code section */}
-          <div className="cta-code-institutional">
-            <div className="cta-code-label-institutional">Votre code d'accès</div>
-            <div className="cta-code-value-institutional">{profileCode}</div>
+          {/* Footer with code and button side by side */}
+          <div className="cta-footer-institutional">
+            {/* Code section */}
+            <div className="cta-code-institutional">
+              <div className="cta-code-label-institutional">Votre code d'accès</div>
+              <div className="cta-code-value-institutional">{profileCode}</div>
+            </div>
+            
+            {/* CTA Button */}
+            <Button className="cta-button-institutional" disabled data-testid="discover-reactif-btn">
+              <span>Accéder à RE'ACTIF PRO</span>
+              <ExternalLink size={16} />
+              <Badge className="cta-badge-institutional">Bientôt disponible</Badge>
+            </Button>
           </div>
-          
-          {/* CTA Button */}
-          <Button className="cta-button-institutional" disabled data-testid="discover-reactif-btn">
-            <span>Accéder à RE'ACTIF PRO</span>
-            <ExternalLink size={16} />
-            <Badge className="cta-badge-institutional">Bientôt disponible</Badge>
-          </Button>
         </div>
       </CardContent>
     </Card>

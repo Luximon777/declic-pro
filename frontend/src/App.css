@@ -2849,9 +2849,13 @@ body {
 
 .secteurs-badges .badge,
 .secteurs-badges [class*="Badge"] {
-  color: #1f2937 !important;
-  background: #f1f5f9 !important;
-  border-color: #e2e8f0 !important;
+  color: #374151 !important;
+  background: #f8fafc !important;
+  border: 1px solid #d1d5db !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  padding: 0.35rem 0.75rem !important;
+  letter-spacing: 0.01em;
 }
 
 .path-jobs ul {
@@ -6674,17 +6678,17 @@ body {
 }
 
 .cta-logo-partner {
-  height: 50px;
+  height: 70px;
   width: auto;
   object-fit: contain;
   filter: brightness(1.1);
 }
 
 .cta-logo-ubuntoo {
-  height: 45px;
+  height: 65px;
   border-radius: 8px;
   background: white;
-  padding: 6px 12px;
+  padding: 8px 16px;
 }
 
 .cta-logo-separator {
@@ -6751,6 +6755,15 @@ body {
   font-weight: 700;
   color: #fbbf24;
   letter-spacing: 0.05em;
+}
+
+/* Footer with code and button */
+.cta-footer-institutional {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
 /* CTA Button */
