@@ -401,20 +401,27 @@ body {
 
 /* Bande blanche avec logo RE'ACTIF PRO */
 .reactif-pro-banner {
-  width: 100%;
-  background: #ffffff;
-  padding: 1.5rem 2rem;
+  display: none;
+}
+
+/* Logo RE'ACTIF PRO adapté au design dark */
+.reactif-pro-logo-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2rem 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 1.5rem 0;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
-.reactif-pro-banner-logo {
-  max-height: 80px;
+.reactif-pro-logo-dark {
+  max-height: 60px;
   width: auto;
   object-fit: contain;
+  filter: brightness(1.1);
 }
 
 /* DE'CLIC Cards - DARK MODE */
