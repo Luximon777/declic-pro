@@ -16,13 +16,13 @@ Créer le site DE'CLIC PRO - Intelligence Professionnelle, une plateforme de dé
 /app
 ├── frontend/
 │   └── src/
-│       ├── App.js (routeur principal)
+│       ├── App.js (routeur principal avec questionnaire visuel et résultats)
 │       └── pages/
 │           ├── HomePage.jsx
 │           ├── QuestionnairePage.jsx
 │           └── CarteIdentitePage.jsx
 └── backend/
-    └── server.py (API FastAPI)
+    └── server.py (API FastAPI avec algorithme de matching)
 ```
 
 ## Personas utilisateurs
@@ -33,44 +33,53 @@ Créer le site DE'CLIC PRO - Intelligence Professionnelle, une plateforme de dé
 ## Fonctionnalités principales (Core Requirements)
 
 ### Page d'accueil
-- Hero section avec titre gradient "DE'CLIC PRO"
-- 2 boutons CTA : "Commencer le questionnaire" et "Voir ma carte d'identité Pro"
-- 4 feature pills : Soft Skills, Valeurs, Potentiel, Métiers
-- Section "Votre parcours en 4 étapes" avec cartes animées
+- Logo DE'CLIC PRO avec gradient orange-vert
+- 2 cartes CTA : "Je cherche mon job" et "Je cherche encore..."
+- Phrase sur le questionnaire anonyme et gratuit
+- Footer avec logos partenaires (Alt&Act, Ubuntoo, RE'ACTIF PRO, AI Act)
 
-### Page Questionnaire (/questionnaire)
-- 8 questions réparties en catégories (soft_skills, values, potential, career)
-- Options de réponse avec radio buttons stylisés
+### Questionnaire (/questionnaire)
+- Questions visuelles avec images
+- Questions de classement (ranking 1-4)
 - Barre de progression animée
+- Champ date de naissance
 - Navigation Précédent/Suivant
-- Soumission automatique et redirection vers résultats
 
-### Page Carte d'identité Pro (/carte-identite)
-- Section Soft Skills avec badges
-- Section Valeurs avec tags colorés
-- Section Potentiel avec barres de progression
-- Section Métiers compatibles avec % de match
-- Boutons partage et téléchargement
+### Page Résultats
+- Profil de personnalité (DISC, Ennéagramme, MBTI)
+- Cadran d'Ofman (zones de vigilance)
+- Liste des métiers compatibles avec scores
+- Narratif personnalisé généré par IA
 
 ### API Backend
-- `POST /api/profile` - Créer un profil professionnel
-- `GET /api/profile/{id}` - Récupérer un profil
-- `POST /api/matching-jobs` - Obtenir les métiers compatibles
-- `GET /api/jobs` - Liste de tous les métiers
+- `POST /api/job-match` - Matching métier avec profil
+- `POST /api/explore` - Exploration des filières
+- `GET /api/questionnaire/visual` - Questions visuelles
+- `GET /api/metiers` - Liste des métiers
 
 ## Ce qui a été implémenté
-- [x] Page d'accueil complète avec design glassmorphism (3 mars 2026)
-- [x] Questionnaire interactif avec 8 questions (3 mars 2026)
-- [x] Carte d'identité Pro avec profil personnalisé (3 mars 2026)
-- [x] API de création de profil MongoDB (3 mars 2026)
-- [x] Algorithme de matching métiers (3 mars 2026)
-- [x] Animations et transitions CSS (3 mars 2026)
-- [x] Design responsive mobile/desktop (3 mars 2026)
+
+### Décembre 2025
+- [x] Bug fix critique: Algorithme de recherche de métiers (12 déc 2025)
+  - Correction de `search_job_by_query` pour normaliser le texte (accents, parenthèses)
+  - Correction de l'endpoint `/api/job-match` pour préserver la pertinence de recherche
+  - "chargé de recrutement" retourne maintenant "Responsable RH / Chargé(e) RH" correctement
+
+### Mars 2026 (sessions précédentes)
+- [x] Page d'accueil complète avec design glassmorphism
+- [x] Thème sombre avec gradients orange-vert
+- [x] Questionnaire interactif avec questions visuelles
+- [x] Carte d'identité Pro avec profil personnalisé
+- [x] API de création de profil MongoDB
+- [x] Algorithme de matching métiers (DISC + Ennéagramme + MBTI + environnement)
+- [x] Animations et transitions CSS
+- [x] Design responsive mobile/desktop
 
 ## Backlog priorisé
 
 ### P0 (Critique) - Fait ✅
 - Toutes les fonctionnalités core sont implémentées
+- Bug de matching métiers corrigé
 
 ### P1 (Important)
 - [ ] Export PDF de la carte d'identité Pro
@@ -81,12 +90,31 @@ Créer le site DE'CLIC PRO - Intelligence Professionnelle, une plateforme de dé
 ### P2 (Nice to have)
 - [ ] Dashboard administrateur
 - [ ] Statistiques d'utilisation
+- [ ] Intégration API France Travail (actuellement mockée)
 - [ ] Personnalisation des questions
-- [ ] Intégration IA pour analyse plus poussée
-- [ ] Mode sombre/clair switch
+- [ ] Intégration IA avancée pour analyse plus poussée
 
 ## Prochaines tâches
 1. Implémenter l'export PDF de la carte d'identité
 2. Ajouter la fonctionnalité de partage social
 3. Créer un système d'authentification utilisateur
-4. Sauvegarder l'historique des profils
+4. Configurer l'API France Travail pour enrichir les données métiers
+
+## Notes techniques
+
+### Algorithme de recherche de métiers
+Le système utilise une fonction `normalize_text` pour:
+- Supprimer les accents (normalisation Unicode NFD)
+- Supprimer les caractères spéciaux (parenthèses, etc.)
+- Ignorer les mots vides (de, du, le, la, etc.)
+
+L'endpoint `/api/job-match` préserve la pertinence de recherche pour `best_match` tout en affichant les alternatives triées par compatibilité de profil dans `other_matches`.
+
+### Scoring des métiers
+Basé sur 6 critères pondérés:
+- Motivation (Ennéagramme): 25%
+- Style DISC: 20%
+- Personnalité MBTI: 15%
+- Environnement de travail: 20%
+- Compétences: 15%
+- Contraintes: 5%
