@@ -2967,7 +2967,7 @@ const ExploreResult = ({ result, onBack }) => {
                     <h5>Secteurs :</h5>
                     <div className="secteurs-badges">
                       {path.secteurs?.map((s, i) => (
-                        <Badge key={i} variant="outline">{s}</Badge>
+                        <Badge key={i} variant="outline" className="secteur-badge-dark">{s}</Badge>
                       ))}
                     </div>
                   </div>

@@ -2848,24 +2848,44 @@ body {
 }
 
 .secteurs-badges .badge,
-.secteurs-badges [class*="Badge"] {
-  color: #111827 !important;
-  background: #ffffff !important;
-  border: 2px solid #1f2937 !important;
-  font-size: 0.85rem !important;
+.secteurs-badges [class*="Badge"],
+.secteurs-badges > *,
+.path-secteurs .badge,
+.path-secteurs [class*="Badge"] {
+  color: #000000 !important;
+  background: #e5e7eb !important;
+  border: 2px solid #374151 !important;
+  font-size: 0.875rem !important;
   font-weight: 700 !important;
-  padding: 0.4rem 0.85rem !important;
+  padding: 0.5rem 1rem !important;
   letter-spacing: 0;
+}
+
+/* Specific class for dark sector badges */
+.secteur-badge-dark {
+  color: #1f2937 !important;
+  background-color: #f3f4f6 !important;
+  border: 2px solid #6b7280 !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  padding: 0.4rem 0.8rem !important;
 }
 
 /* Force dark text on all badges in path cards */
 .path-result-card .badge,
-.path-result-card [class*="Badge"][variant="outline"] {
+.path-result-card [class*="Badge"][variant="outline"],
+.path-result-card [class*="Badge"] {
   color: #000000 !important;
-  background: #f3f4f6 !important;
+  background: #e5e7eb !important;
   border: 2px solid #374151 !important;
   font-weight: 700 !important;
-  font-size: 0.85rem !important;
+  font-size: 0.875rem !important;
+}
+
+/* Exclude the compatibility badge (keep it colored) */
+.path-result-header .badge,
+.path-result-header [class*="Badge"] {
+  border: none !important;
 }
 
 .path-jobs ul {
