@@ -657,6 +657,188 @@ VISUAL_QUESTIONS = [
                 "alt": "Organisation de documents"
             }
         ]
+    },
+    
+    # ============================================================================
+    # BLOC 8 - VERTUS ET VALEURS (Archéologie des Compétences)
+    # 6 questions pour mesurer les vertus dominantes de Seligman/Peterson
+    # ============================================================================
+    
+    # Question VV1 - Sagesse vs Courage (valeurs fondamentales)
+    {
+        "id": "vv1",
+        "question": "Face à un défi important dans votre vie, vous comptez d'abord sur...",
+        "category": "vertus",
+        "type": "visual",
+        "vertus_weight": {"primary": "sagesse", "secondary": "courage"},
+        "choices": [
+            {
+                "id": "vv1a",
+                "value": "sagesse",
+                "label": "La réflexion et l'analyse pour comprendre",
+                "image": "https://images.pexels.com/photos/3808057/pexels-photo-3808057.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Personne en réflexion"
+            },
+            {
+                "id": "vv1b",
+                "value": "courage",
+                "label": "La détermination et l'action pour avancer",
+                "image": "https://images.pexels.com/photos/3756165/pexels-photo-3756165.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Personne déterminée"
+            }
+        ]
+    },
+    
+    # Question VV2 - Humanité vs Justice (relations sociales)
+    {
+        "id": "vv2",
+        "question": "Dans vos relations avec les autres, ce qui compte le plus pour vous...",
+        "category": "vertus",
+        "type": "visual",
+        "vertus_weight": {"primary": "humanite", "secondary": "justice"},
+        "choices": [
+            {
+                "id": "vv2a",
+                "value": "humanite",
+                "label": "L'empathie et le soutien émotionnel",
+                "image": "https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Soutien et empathie"
+            },
+            {
+                "id": "vv2b",
+                "value": "justice",
+                "label": "L'équité et le respect des engagements",
+                "image": "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Justice et équité"
+            }
+        ]
+    },
+    
+    # Question VV3 - Tempérance vs Transcendance (vie intérieure)
+    {
+        "id": "vv3",
+        "question": "Ce qui vous apporte le plus de sérénité au quotidien...",
+        "category": "vertus",
+        "type": "visual",
+        "vertus_weight": {"primary": "temperance", "secondary": "transcendance"},
+        "choices": [
+            {
+                "id": "vv3a",
+                "value": "temperance",
+                "label": "L'organisation et la maîtrise de soi",
+                "image": "https://images.pexels.com/photos/6802049/pexels-photo-6802049.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Organisation et calme"
+            },
+            {
+                "id": "vv3b",
+                "value": "transcendance",
+                "label": "La beauté, la gratitude et le sens de la vie",
+                "image": "https://images.pexels.com/photos/3560044/pexels-photo-3560044.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Contemplation et gratitude"
+            }
+        ]
+    },
+    
+    # Question VV4 - Classement des 4 valeurs prioritaires (Schwartz)
+    {
+        "id": "vv4",
+        "question": "Classez ces valeurs de la plus importante (1) à la moins importante (4) pour vous :",
+        "category": "valeurs",
+        "type": "ranking",
+        "instruction": "Glissez ou numérotez de 1 (la plus importante) à 4 (la moins importante)",
+        "choices": [
+            {
+                "id": "vv4a",
+                "value": "autonomie",
+                "label": "Autonomie - Liberté de penser et d'agir",
+                "image": "https://images.pexels.com/photos/3756175/pexels-photo-3756175.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Liberté et autonomie"
+            },
+            {
+                "id": "vv4b",
+                "value": "bienveillance",
+                "label": "Bienveillance - Prendre soin des proches",
+                "image": "https://images.pexels.com/photos/7176317/pexels-photo-7176317.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Prendre soin des autres"
+            },
+            {
+                "id": "vv4c",
+                "value": "reussite",
+                "label": "Réussite - Accomplissement personnel",
+                "image": "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Succès et accomplissement"
+            },
+            {
+                "id": "vv4d",
+                "value": "securite",
+                "label": "Sécurité - Stabilité et harmonie",
+                "image": "https://images.pexels.com/photos/7176026/pexels-photo-7176026.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Stabilité et sécurité"
+            }
+        ]
+    },
+    
+    # Question VV5 - Qualités humaines prioritaires
+    {
+        "id": "vv5",
+        "question": "On vous reconnaît surtout pour...",
+        "category": "qualites",
+        "type": "visual",
+        "choices": [
+            {
+                "id": "vv5a",
+                "value": "creativite",
+                "label": "Votre créativité et votre curiosité",
+                "image": "https://images.pexels.com/photos/3094218/pexels-photo-3094218.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Créativité"
+            },
+            {
+                "id": "vv5b",
+                "value": "generosite",
+                "label": "Votre générosité et votre écoute",
+                "image": "https://images.pexels.com/photos/6646917/pexels-photo-6646917.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Générosité et écoute"
+            }
+        ]
+    },
+    
+    # Question VV6 - Classement des savoir-être professionnels
+    {
+        "id": "vv6",
+        "question": "Classez ces savoir-être du plus naturel (1) au moins naturel (4) pour vous :",
+        "category": "savoirs_etre",
+        "type": "ranking",
+        "instruction": "Glissez ou numérotez de 1 (le plus naturel) à 4 (le moins naturel)",
+        "choices": [
+            {
+                "id": "vv6a",
+                "value": "initiative",
+                "label": "Prendre des initiatives et proposer des idées",
+                "image": "https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Prise d'initiative"
+            },
+            {
+                "id": "vv6b",
+                "value": "ecoute",
+                "label": "Être à l'écoute et au service des autres",
+                "image": "https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Écoute active"
+            },
+            {
+                "id": "vv6c",
+                "value": "rigueur",
+                "label": "Faire preuve de rigueur et de précision",
+                "image": "https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Rigueur et précision"
+            },
+            {
+                "id": "vv6d",
+                "value": "leadership",
+                "label": "Inspirer et donner du sens aux autres",
+                "image": "https://images.pexels.com/photos/3184299/pexels-photo-3184299.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "alt": "Leadership"
+            }
+        ]
     }
 ]
 
@@ -3978,6 +4160,143 @@ ROME_RIASEC_MAPPING = {
     "N4401": "CR",  # Circulation réseau ferré
 }
 
+
+def calculate_vertus_profile(answers: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Calcule le profil de vertus basé sur les questions vv1-vv6.
+    Retourne les vertus dominantes et les valeurs/qualités associées.
+    
+    Hiérarchie: Vertus → Valeurs → Qualités → Savoir-être → Compétences
+    """
+    vertus_scores = {
+        "sagesse": 0,
+        "courage": 0,
+        "humanite": 0,
+        "justice": 0,
+        "temperance": 0,
+        "transcendance": 0
+    }
+    
+    valeurs_scores = {
+        "autonomie": 0,
+        "bienveillance": 0,
+        "reussite": 0,
+        "securite": 0
+    }
+    
+    qualites_scores = {
+        "creativite": 0,
+        "generosite": 0
+    }
+    
+    savoirs_etre_scores = {
+        "initiative": 0,
+        "ecoute": 0,
+        "rigueur": 0,
+        "leadership": 0
+    }
+    
+    # ============================================================================
+    # PARTIE 1: Questions directes sur les vertus (vv1, vv2, vv3) - Poids élevé
+    # ============================================================================
+    
+    # vv1: Sagesse vs Courage
+    vv1 = answers.get("vv1", "")
+    if vv1 in vertus_scores:
+        vertus_scores[vv1] += 5
+    
+    # vv2: Humanité vs Justice
+    vv2 = answers.get("vv2", "")
+    if vv2 in vertus_scores:
+        vertus_scores[vv2] += 5
+    
+    # vv3: Tempérance vs Transcendance
+    vv3 = answers.get("vv3", "")
+    if vv3 in vertus_scores:
+        vertus_scores[vv3] += 5
+    
+    # ============================================================================
+    # PARTIE 2: Classement des valeurs (vv4) - Schwartz
+    # ============================================================================
+    vv4 = answers.get("vv4", "")
+    if vv4 and isinstance(vv4, str) and "," in vv4:
+        ranking_weights = [5, 3, 2, 1]
+        ranked_values = [v.strip().lower() for v in vv4.split(",")]
+        for idx, val in enumerate(ranked_values[:4]):
+            if val in valeurs_scores and idx < len(ranking_weights):
+                valeurs_scores[val] += ranking_weights[idx]
+                
+                # Mapper les valeurs vers les vertus
+                valeur_to_vertu = {
+                    "autonomie": "sagesse",
+                    "bienveillance": "humanite",
+                    "reussite": "courage",
+                    "securite": "temperance"
+                }
+                if val in valeur_to_vertu:
+                    vertus_scores[valeur_to_vertu[val]] += ranking_weights[idx] * 0.5
+    
+    # ============================================================================
+    # PARTIE 3: Qualités humaines (vv5)
+    # ============================================================================
+    vv5 = answers.get("vv5", "")
+    if vv5 in qualites_scores:
+        qualites_scores[vv5] += 5
+        
+        # Mapper les qualités vers les vertus
+        qualite_to_vertu = {
+            "creativite": "sagesse",
+            "generosite": "humanite"
+        }
+        if vv5 in qualite_to_vertu:
+            vertus_scores[qualite_to_vertu[vv5]] += 3
+    
+    # ============================================================================
+    # PARTIE 4: Savoir-être professionnels (vv6)
+    # ============================================================================
+    vv6 = answers.get("vv6", "")
+    if vv6 and isinstance(vv6, str) and "," in vv6:
+        ranking_weights = [5, 3, 2, 1]
+        ranked_savoirs = [s.strip().lower() for s in vv6.split(",")]
+        for idx, savoir in enumerate(ranked_savoirs[:4]):
+            if savoir in savoirs_etre_scores and idx < len(ranking_weights):
+                savoirs_etre_scores[savoir] += ranking_weights[idx]
+                
+                # Mapper les savoir-être vers les vertus
+                savoir_to_vertu = {
+                    "initiative": "courage",
+                    "ecoute": "humanite",
+                    "rigueur": "temperance",
+                    "leadership": "justice"
+                }
+                if savoir in savoir_to_vertu:
+                    vertus_scores[savoir_to_vertu[savoir]] += ranking_weights[idx] * 0.5
+    
+    # Trier les vertus par score
+    sorted_vertus = sorted(vertus_scores.items(), key=lambda x: x[1], reverse=True)
+    dominant_vertu = sorted_vertus[0][0]
+    secondary_vertu = sorted_vertus[1][0]
+    
+    # Normaliser les scores (0-100)
+    max_score = max(vertus_scores.values()) if max(vertus_scores.values()) > 0 else 1
+    normalized_vertus = {k: round((v / max_score) * 100) for k, v in vertus_scores.items()}
+    
+    return {
+        "vertus_scores": normalized_vertus,
+        "vertus_raw": vertus_scores,
+        "dominant": dominant_vertu,
+        "secondary": secondary_vertu,
+        "dominant_name": VERTUS.get(dominant_vertu, {}).get("name", dominant_vertu.capitalize()),
+        "secondary_name": VERTUS.get(secondary_vertu, {}).get("name", secondary_vertu.capitalize()),
+        "valeurs_scores": valeurs_scores,
+        "qualites_scores": qualites_scores,
+        "savoirs_etre_scores": savoirs_etre_scores,
+        "qualites_dominantes": VERTUS.get(dominant_vertu, {}).get("qualites_humaines", [])[:4],
+        "savoirs_etre_dominants": VERTUS.get(dominant_vertu, {}).get("savoirs_etre", [])[:3],
+        "competences_oms": VERTUS.get(dominant_vertu, {}).get("competences_oms", [])[:3]
+    }
+
+
 def calculate_riasec_profile(answers: Dict[str, Any], profile: Dict[str, Any]) -> Dict[str, Any]:
     """
     Calcule le profil RIASEC basé sur les réponses au questionnaire et le profil MBTI/DISC.
@@ -4542,23 +4861,54 @@ def score_skills(profile: Dict[str, Any], job: Dict[str, Any]) -> float:
     return min(1.0, final_score)
 
 
-def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any]) -> float:
+def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any], vertus_profile: Dict[str, Any] = None) -> float:
     """
-    Score basé sur l'Archéologie des Compétences (nouveau).
+    Score basé sur l'Archéologie des Compétences.
     Calcule la cohérence entre les vertus/qualités de l'utilisateur et les soft skills du métier.
     
     Hiérarchie: Vertus → Valeurs → Qualités → Savoir-être → Compétences → Métier
+    
+    Utilise 2 sources:
+    1. Les réponses directes aux questions vv1-vv6 (vertus_profile)
+    2. L'inférence depuis l'Ennéagramme (profile)
     """
-    # Récupérer la vertu dominante de l'utilisateur (via Ennéagramme)
+    # Source 1: Vertus depuis les questions directes (prioritaire si disponible)
+    if vertus_profile and vertus_profile.get("vertus_scores"):
+        user_vertu_key = vertus_profile.get("dominant", "sagesse")
+        # Récupérer les savoirs-être et qualités depuis les réponses directes
+        user_savoirs_etre_from_answers = set(
+            s.lower() for s in vertus_profile.get("savoirs_etre_dominants", [])
+        )
+        user_qualites_from_answers = set(
+            q.lower() for q in vertus_profile.get("qualites_dominantes", [])
+        )
+        user_competences_oms_from_answers = set(
+            c.lower() for c in vertus_profile.get("competences_oms", [])
+        )
+    else:
+        user_vertu_key = "sagesse"
+        user_savoirs_etre_from_answers = set()
+        user_qualites_from_answers = set()
+        user_competences_oms_from_answers = set()
+    
+    # Source 2: Vertus inférées depuis l'Ennéagramme
     ennea_dominant = profile.get("ennea_dominant", 5)
     ennea_profile = ENNEA_TO_PROFILE.get(ennea_dominant, ENNEA_TO_PROFILE[5])
-    user_vertu_key = ennea_profile.get("vertu", "sagesse")
-    user_vertu = VERTUS.get(user_vertu_key, VERTUS["sagesse"])
+    ennea_vertu_key = ennea_profile.get("vertu", "sagesse")
+    ennea_vertu = VERTUS.get(ennea_vertu_key, VERTUS["sagesse"])
     
-    # Récupérer les savoirs-être et qualités de l'utilisateur (via ses vertus)
-    user_savoirs_etre = set(s.lower() for s in user_vertu.get("savoirs_etre", []))
-    user_qualites = set(q.lower() for q in user_vertu.get("qualites_humaines", []))
-    user_competences_oms = set(c.lower() for c in user_vertu.get("competences_oms", []))
+    # Combiner les deux sources (priorité aux réponses directes)
+    user_vertu = VERTUS.get(user_vertu_key, ennea_vertu)
+    
+    user_savoirs_etre = user_savoirs_etre_from_answers | set(
+        s.lower() for s in user_vertu.get("savoirs_etre", [])
+    )
+    user_qualites = user_qualites_from_answers | set(
+        q.lower() for q in user_vertu.get("qualites_humaines", [])
+    )
+    user_competences_oms = user_competences_oms_from_answers | set(
+        c.lower() for c in user_vertu.get("competences_oms", [])
+    )
     
     # Récupérer les soft skills requis par le métier
     job_soft_skills = job.get("soft_skills_essentiels", [])
@@ -4569,29 +4919,31 @@ def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any]) -> float:
         elif isinstance(skill, str):
             job_skill_names.add(skill.lower())
     
-    # Récupérer aussi les compétences requises
+    # Récupérer aussi les compétences requises du métier
     job_competences = set(c.lower() for c in job.get("competences_requises", []))
     
     # Calculer les matchs entre vertus et métier
     score = 0.0
-    max_possible = 0.0
     
-    # 1. Match savoirs-être avec soft skills du métier (poids élevé)
+    # 1. Match savoirs-être avec soft skills du métier (poids élevé: 40%)
     if user_savoirs_etre and job_skill_names:
-        max_possible += 0.4
+        matches = 0
         for savoir in user_savoirs_etre:
             for job_skill in job_skill_names:
+                # Match exact
+                if savoir in job_skill or job_skill in savoir:
+                    matches += 1
+                    break
                 # Match partiel sur mots-clés
                 savoir_words = set(w for w in savoir.split() if len(w) > 3)
                 skill_words = set(w for w in job_skill.split() if len(w) > 3)
                 if savoir_words & skill_words:
-                    score += 0.15
+                    matches += 0.5
                     break
-        score = min(score, 0.4)
+        score += min(0.4, matches * 0.1)
     
-    # 2. Match qualités humaines avec soft skills (poids moyen)
+    # 2. Match qualités humaines avec soft skills (poids moyen: 30%)
     if user_qualites and job_skill_names:
-        max_possible += 0.3
         matches = 0
         for qualite in user_qualites:
             for job_skill in job_skill_names:
@@ -4602,30 +4954,30 @@ def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any]) -> float:
                 if len(set(qualite.split()) & set(job_skill.split())) > 0:
                     matches += 0.5
                     break
-        score += min(0.3, matches * 0.05)
+        score += min(0.3, matches * 0.08)
     
-    # 3. Match compétences OMS avec compétences requises (poids moyen)
+    # 3. Match compétences OMS avec compétences requises (poids moyen: 30%)
     if user_competences_oms and job_competences:
-        max_possible += 0.3
+        matches = 0
         for comp_oms in user_competences_oms:
             for job_comp in job_competences:
                 if comp_oms in job_comp or job_comp in comp_oms:
-                    score += 0.1
+                    matches += 1
                     break
                 # Match sur mots-clés
                 oms_words = set(w for w in comp_oms.split() if len(w) > 3)
                 comp_words = set(w for w in job_comp.split() if len(w) > 3)
                 if oms_words & comp_words:
-                    score += 0.05
+                    matches += 0.5
                     break
-        score = min(score, 1.0)
+        score += min(0.3, matches * 0.08)
     
-    # Score minimum si la vertu existe
-    if max_possible == 0:
-        return 0.6
+    # Bonus si les vertus directes correspondent à l'Ennéagramme (cohérence)
+    if vertus_profile and user_vertu_key == ennea_vertu_key:
+        score += 0.1
     
-    # Normaliser et garantir un score minimal
-    final_score = max(0.5, min(1.0, score + 0.3))  # Base de 0.3 car les vertus sont toujours un peu transférables
+    # Score minimum de 0.4 (les vertus sont toujours partiellement transférables)
+    final_score = max(0.4, min(1.0, score + 0.35))
     return final_score
 
 
@@ -4676,7 +5028,7 @@ def get_job_riasec(job: Dict[str, Any]) -> str:
     return "SC"  # Valeur par défaut neutre (Social/Conventionnel)
 
 
-def score_job(profile: Dict[str, Any], job: Dict[str, Any], user_riasec: Dict[str, Any] = None) -> Dict[str, Any]:
+def score_job(profile: Dict[str, Any], job: Dict[str, Any], user_riasec: Dict[str, Any] = None, vertus_profile: Dict[str, Any] = None) -> Dict[str, Any]:
     """Calculate overall job compatibility score including RIASEC model and Archéologie des Compétences."""
     
     # Motivation score (Enneagram)
@@ -4709,8 +5061,8 @@ def score_job(profile: Dict[str, Any], job: Dict[str, Any], user_riasec: Dict[st
     
     riasec_score = riasec_score_raw * WEIGHTS["riasec"]
     
-    # NOUVEAU: Score Archéologie des Compétences (Vertus → Compétences)
-    archeologie_score = score_archeologie(profile, job) * WEIGHTS["archeologie"]
+    # Score Archéologie des Compétences (Vertus → Compétences) avec profil de vertus
+    archeologie_score = score_archeologie(profile, job, vertus_profile) * WEIGHTS["archeologie"]
     
     # Environment score
     env_score = score_environment(profile, job) * WEIGHTS["environment"]
@@ -4904,10 +5256,10 @@ async def search_job_hybrid(query: str) -> tuple[List[Dict[str, Any]], Optional[
     return local_jobs, france_travail_fiche
 
 
-def get_exploration_paths(profile: Dict[str, Any], user_riasec: Dict[str, Any] = None) -> List[Dict[str, Any]]:
+def get_exploration_paths(profile: Dict[str, Any], user_riasec: Dict[str, Any] = None, vertus_profile: Dict[str, Any] = None) -> List[Dict[str, Any]]:
     """Get recommended filieres and jobs for exploration."""
-    # Score all jobs with RIASEC if available
-    all_scores = [score_job(profile, job, user_riasec) for job in METIERS]
+    # Score all jobs with RIASEC and Vertus if available
+    all_scores = [score_job(profile, job, user_riasec, vertus_profile) for job in METIERS]
     all_scores.sort(key=lambda x: x["score"], reverse=True)
     
     # Group by filiere
@@ -5061,14 +5413,17 @@ async def match_job(request: JobSearchRequest):
     # NOUVEAU: Calculer le profil RIASEC de l'utilisateur
     user_riasec = calculate_riasec_profile(request.answers, profile)
     
+    # NOUVEAU: Calculer le profil de vertus depuis les questions vv1-vv6
+    vertus_profile = calculate_vertus_profile(request.answers)
+    
     # Recherche hybride : base locale + France Travail API
     matching_jobs, france_travail_fiche = await search_job_hybrid(request.job_query)
     
     if not matching_jobs:
         raise HTTPException(status_code=404, detail="Aucun métier trouvé pour cette recherche")
     
-    # Score all matching jobs with RIASEC - preserve search order for best_match selection
-    results = [score_job(profile, job, user_riasec) for job in matching_jobs]
+    # Score all matching jobs with RIASEC and Vertus - preserve search order for best_match selection
+    results = [score_job(profile, job, user_riasec, vertus_profile) for job in matching_jobs]
     
     # IMPORTANT: For job-match endpoint, the best_match should be the FIRST job from search results
     # (which is the most relevant to the query), not the one with highest profile compatibility.
@@ -5185,8 +5540,8 @@ async def match_job(request: JobSearchRequest):
     current_score = best_match.get("score", 0) if best_match else 0
     
     if current_score < 70:
-        # Calculer les scores pour tous les métiers de la base locale
-        all_job_scores = [score_job(profile, job, user_riasec) for job in METIERS]
+        # Calculer les scores pour tous les métiers de la base locale avec vertus
+        all_job_scores = [score_job(profile, job, user_riasec, vertus_profile) for job in METIERS]
         all_job_scores.sort(key=lambda x: x["score"], reverse=True)
         
         # Filtrer les métiers avec score >= 70%
@@ -5225,7 +5580,8 @@ async def match_job(request: JobSearchRequest):
             "mbti": profile.get("mbti", ""),
             "ennea_dominant": profile.get("ennea_dominant", 5),
             "ennea_runner_up": profile.get("ennea_runner_up", 5),
-            "riasec": user_riasec  # Profil RIASEC complet
+            "riasec": user_riasec,  # Profil RIASEC complet
+            "vertus": vertus_profile  # NOUVEAU: Profil de vertus complet
         },
         "profile_narrative": profile_narrative,
         "vertus_data": vertu_data,
@@ -5253,11 +5609,14 @@ async def explore_careers(request: ExploreRequest):
     # NOUVEAU: Calculer le profil RIASEC de l'utilisateur
     user_riasec = calculate_riasec_profile(request.answers, profile)
     
-    # Get exploration paths with RIASEC
-    paths = get_exploration_paths(profile, user_riasec)
+    # NOUVEAU: Calculer le profil de vertus depuis les questions vv1-vv6
+    vertus_profile = calculate_vertus_profile(request.answers)
     
-    # Get all job scores with RIASEC and filter by minimum compatibility (>= 75%)
-    all_scores = [score_job(profile, job, user_riasec) for job in METIERS]
+    # Get exploration paths with RIASEC and Vertus
+    paths = get_exploration_paths(profile, user_riasec, vertus_profile)
+    
+    # Get all job scores with RIASEC + Vertus and filter by minimum compatibility (>= 75%)
+    all_scores = [score_job(profile, job, user_riasec, vertus_profile) for job in METIERS]
     all_scores.sort(key=lambda x: x["score"], reverse=True)
     
     # Only keep jobs with score >= 50% (lowered from 75%)
@@ -5308,7 +5667,8 @@ async def explore_careers(request: ExploreRequest):
             "disc_dominant": profile.get("disc", "S"),
             "ennea_dominant": profile.get("ennea_dominant", 5),
             "ennea_runner_up": profile.get("ennea_runner_up", 5),
-            "riasec": user_riasec  # Profil RIASEC complet
+            "riasec": user_riasec,  # Profil RIASEC complet
+            "vertus": vertus_profile  # NOUVEAU: Profil de vertus complet
         },
         "profile_narrative": profile_narrative,
         "vertus_data": vertu_data,
