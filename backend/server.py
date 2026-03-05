@@ -751,7 +751,7 @@ VISUAL_QUESTIONS = [
                 "id": "vv4a",
                 "value": "autonomie",
                 "label": "Autonomie - Liberté de penser et d'agir",
-                "image": "https://images.pexels.com/photos/3756175/pexels-photo-3756175.jpeg?auto=compress&cs=tinysrgb&w=600",
+                "image": "https://images.pexels.com/photos/1051838/pexels-photo-1051838.jpeg?auto=compress&cs=tinysrgb&w=600",
                 "alt": "Liberté et autonomie"
             },
             {
