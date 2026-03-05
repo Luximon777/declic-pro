@@ -2288,7 +2288,7 @@ def generate_fallback_narrative(profile: Dict[str, Any], ennea_profile: Dict[str
 
 
 def generate_fallback_job_narrative(profile: Dict[str, Any], job: Dict[str, Any], score: int, reasons: List[str], risks: List[str]) -> Dict[str, str]:
-    """Fallback template for job match narrative."""
+    """Fallback template for job match narrative with specific soft skills to develop."""
     
     job_label = job.get('label', job.get('intitule_rome', 'ce métier'))
     
@@ -2299,10 +2299,62 @@ def generate_fallback_job_narrative(profile: Dict[str, Any], job: Dict[str, Any]
     else:
         compatibility_text = f"Avec un score de {score}%, le métier de {job_label} pourrait nécessiter quelques ajustements mais reste accessible."
     
+    # Calculer les soft skills à développer
+    job_soft_skills = job.get('soft_skills_essentiels', [])
+    user_competences = set(c.lower() for c in profile.get('competences_fortes', []))
+    
+    # Identifier les soft skills du métier que l'utilisateur n'a pas encore
+    soft_skills_to_develop = []
+    for skill in job_soft_skills:
+        skill_name = skill.get('nom', skill) if isinstance(skill, dict) else skill
+        skill_desc = skill.get('description', '') if isinstance(skill, dict) else ''
+        skill_importance = skill.get('importance', 'importante') if isinstance(skill, dict) else 'importante'
+        
+        # Vérifier si ce skill n'est pas déjà dans les compétences de l'utilisateur
+        skill_words = set(skill_name.lower().split())
+        if not any(word in user_competences for word in skill_words if len(word) > 4):
+            soft_skills_to_develop.append({
+                'nom': skill_name,
+                'description': skill_desc,
+                'importance': skill_importance
+            })
+    
+    # Limiter à 4 soft skills à développer
+    soft_skills_to_develop = soft_skills_to_develop[:4]
+    
+    # Générer le texte pour les axes de progression
+    if soft_skills_to_develop:
+        skills_names = [s['nom'] for s in soft_skills_to_develop]
+        axes_text = f"Pour exceller dans ce métier, nous vous recommandons de développer : {', '.join(skills_names[:3])}. "
+        
+        # Ajouter des conseils spécifiques selon le premier skill
+        if soft_skills_to_develop[0]:
+            first_skill = soft_skills_to_develop[0]['nom'].lower()
+            if 'créatif' in first_skill or 'créativité' in first_skill:
+                axes_text += "Pratiquez des exercices de brainstorming et exposez-vous à différentes sources d'inspiration."
+            elif 'communi' in first_skill:
+                axes_text += "Exercez-vous à présenter vos idées en public et à adapter votre discours à différents interlocuteurs."
+            elif 'rigueur' in first_skill or 'précision' in first_skill:
+                axes_text += "Adoptez des méthodes de travail structurées et vérifiez systématiquement votre travail."
+            elif 'adapt' in first_skill or 'flexib' in first_skill:
+                axes_text += "Confrontez-vous régulièrement à des situations nouvelles et acceptez les changements comme des opportunités."
+            elif 'écoute' in first_skill or 'empathie' in first_skill:
+                axes_text += "Pratiquez l'écoute active et cherchez à comprendre le point de vue des autres avant de répondre."
+            elif 'leader' in first_skill or 'management' in first_skill:
+                axes_text += "Cherchez des opportunités de mener des projets et développez votre capacité à motiver une équipe."
+            elif 'techni' in first_skill:
+                axes_text += "Investissez dans une formation continue et pratiquez régulièrement pour maîtriser les outils du métier."
+            else:
+                axes_text += "Cherchez des formations ou des mises en situation pratiques pour développer ces compétences progressivement."
+    else:
+        axes_text = "Votre profil correspond déjà bien aux exigences du métier. Continuez à cultiver vos forces et restez curieux des évolutions du secteur."
+    
     return {
         "analyse_compatibilite": f"{compatibility_text} {reasons[0] if reasons else ''} Cette adéquation repose sur vos compétences naturelles et votre style de travail.",
         "fiche_metier": job.get('definition', f"Le métier de {job_label} offre des opportunités dans différents secteurs d'activité."),
         "vos_atouts": f"Vos principaux atouts pour ce métier sont : {', '.join(profile['competences_fortes'][:3])}. Ces compétences sont directement mobilisables et vous permettront de vous démarquer.",
+        "axes_progression": axes_text,
+        "soft_skills_to_develop": soft_skills_to_develop,  # Liste structurée pour le frontend
         "recommandations": f"Pour maximiser vos chances de réussite, nous vous conseillons de {'développer ' + risks[0].lower() if risks else 'continuer à cultiver vos forces actuelles'}. N'hésitez pas à explorer également des métiers connexes dans le même secteur."
     }
 
