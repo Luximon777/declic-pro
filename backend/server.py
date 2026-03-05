@@ -3282,13 +3282,318 @@ DISC_ADJACENT = {
     "C": {"D", "S"},
 }
 
+# ============================================================================
+# RIASEC MODEL (Holland Codes) - Intérêts professionnels
+# ============================================================================
+# R = Réaliste (manuel, technique, pratique)
+# I = Investigateur (scientifique, analytique, curieux)
+# A = Artistique (créatif, expressif, original)
+# S = Social (aide, enseigne, accompagne)
+# E = Entreprenant (leader, persuasif, ambitieux)
+# C = Conventionnel (organisé, méthodique, précis)
+
+RIASEC_DESCRIPTIONS = {
+    "R": {
+        "name": "Réaliste",
+        "description": "Préfère les activités pratiques et manuelles, le travail avec des outils, machines ou animaux",
+        "traits": ["Pratique", "Concret", "Manuel", "Technique", "Physique"],
+        "environnements": ["Atelier", "Chantier", "Extérieur", "Laboratoire technique"],
+        "mbti_affinite": ["ISTP", "ESTP", "ISTJ", "ISFP"],
+        "disc_affinite": ["C", "S"],
+        "ennea_affinite": [6, 9, 8]
+    },
+    "I": {
+        "name": "Investigateur", 
+        "description": "Aime observer, analyser, résoudre des problèmes complexes et chercher à comprendre",
+        "traits": ["Analytique", "Curieux", "Méthodique", "Intellectuel", "Indépendant"],
+        "environnements": ["Laboratoire", "Bureau", "Centre de recherche"],
+        "mbti_affinite": ["INTP", "INTJ", "INFJ", "ENTP"],
+        "disc_affinite": ["C", "D"],
+        "ennea_affinite": [5, 1, 4]
+    },
+    "A": {
+        "name": "Artistique",
+        "description": "Valorise la créativité, l'expression personnelle et les activités non structurées",
+        "traits": ["Créatif", "Original", "Expressif", "Imaginatif", "Intuitif"],
+        "environnements": ["Studio", "Scène", "Atelier d'art", "Agence créative"],
+        "mbti_affinite": ["INFP", "ENFP", "ISFP", "INFJ"],
+        "disc_affinite": ["I", "S"],
+        "ennea_affinite": [4, 7, 9]
+    },
+    "S": {
+        "name": "Social",
+        "description": "Aime aider, enseigner, conseiller et interagir avec les autres",
+        "traits": ["Empathique", "Coopératif", "Serviable", "Patient", "Bienveillant"],
+        "environnements": ["École", "Hôpital", "Centre social", "Cabinet"],
+        "mbti_affinite": ["ENFJ", "ESFJ", "INFJ", "ISFJ"],
+        "disc_affinite": ["S", "I"],
+        "ennea_affinite": [2, 9, 6]
+    },
+    "E": {
+        "name": "Entreprenant",
+        "description": "Aime diriger, persuader, vendre et prendre des initiatives",
+        "traits": ["Leader", "Ambitieux", "Persuasif", "Énergique", "Compétitif"],
+        "environnements": ["Bureau direction", "Terrain commercial", "Politique"],
+        "mbti_affinite": ["ENTJ", "ESTJ", "ENTP", "ENFJ"],
+        "disc_affinite": ["D", "I"],
+        "ennea_affinite": [3, 8, 7]
+    },
+    "C": {
+        "name": "Conventionnel",
+        "description": "Préfère les activités structurées, l'organisation des données et le respect des procédures",
+        "traits": ["Organisé", "Méthodique", "Précis", "Fiable", "Consciencieux"],
+        "environnements": ["Bureau", "Administration", "Banque", "Comptabilité"],
+        "mbti_affinite": ["ISTJ", "ESTJ", "ISFJ", "INTJ"],
+        "disc_affinite": ["C", "S"],
+        "ennea_affinite": [1, 6, 5]
+    }
+}
+
+# Hexagone RIASEC - Types adjacents (corrélation positive) et opposés (corrélation négative)
+RIASEC_ADJACENT = {
+    "R": ["I", "C"],  # Adjacent: Investigateur, Conventionnel
+    "I": ["R", "A"],  # Adjacent: Réaliste, Artistique  
+    "A": ["I", "S"],  # Adjacent: Investigateur, Social
+    "S": ["A", "E"],  # Adjacent: Artistique, Entreprenant
+    "E": ["S", "C"],  # Adjacent: Social, Conventionnel
+    "C": ["E", "R"],  # Adjacent: Entreprenant, Réaliste
+}
+
+RIASEC_OPPOSITE = {
+    "R": "S",  # Réaliste ↔ Social
+    "I": "E",  # Investigateur ↔ Entreprenant
+    "A": "C",  # Artistique ↔ Conventionnel
+    "S": "R",
+    "E": "I",
+    "C": "A"
+}
+
+# Mapping ROME Code → RIASEC (basé sur le référentiel France Travail)
+ROME_RIASEC_MAPPING = {
+    # Santé - Principalement I (Investigation) et S (Social)
+    "J1102": "IS",  # Médecin généraliste
+    "J1104": "SI",  # Sage-femme
+    "J1404": "SR",  # Kinésithérapeute
+    "J1406": "SA",  # Orthophoniste
+    "J1202": "IC",  # Pharmacien
+    "J1506": "SI",  # Infirmier
+    "J1501": "SR",  # Aide-soignant
+    
+    # BTP - Principalement R (Réaliste)
+    "F1603": "RC",  # Plombier
+    "F1703": "RC",  # Maçon
+    "F1101": "AI",  # Architecte
+    "F1202": "RE",  # Chef de chantier
+    "F1602": "RC",  # Électricien
+    "I1308": "RC",  # Chauffagiste
+    
+    # Informatique - Principalement I (Investigation) et C (Conventionnel)
+    "M1805": "IC",  # Développeur web
+    "M1801": "IC",  # Admin systèmes
+    "M1844": "IC",  # Cybersécurité
+    "M1828": "EI",  # Chef de projet digital
+    "E1205": "AI",  # UX/UI Designer
+    "I1401": "RC",  # Technicien support
+    
+    # Commerce/Vente - Principalement E (Entreprenant)
+    "D1402": "ES",  # Commercial
+    "D1106": "ES",  # Vendeur conseil
+    "M1705": "EA",  # Responsable marketing
+    
+    # RH/Administration - Principalement S (Social) et C (Conventionnel)
+    "M1503": "SE",  # Responsable RH
+    "M1502": "SE",  # Chargé de recrutement
+    "M1501": "SC",  # Assistant RH
+    "M1604": "CS",  # Assistant de direction
+    
+    # Finance/Comptabilité - Principalement C (Conventionnel) et I (Investigation)
+    "M1203": "CI",  # Comptable
+    "M1201": "IC",  # Analyste financier
+    "M1202": "CI",  # Auditeur
+    "M1204": "CI",  # Contrôleur de gestion
+    
+    # Social/Éducation - Principalement S (Social)
+    "K1207": "SA",  # Éducateur spécialisé
+    "K1801": "SE",  # Conseiller insertion
+    "K2111": "SA",  # Formateur
+    "K2107": "SA",  # Enseignant
+    "K1206": "SA",  # Animateur socioculturel
+    "K1204": "SA",  # Médiateur social
+    "K1104": "IS",  # Psychologue
+    "K1103": "SE",  # Coach professionnel
+    
+    # Communication - Principalement A (Artistique) et E (Entreprenant)
+    "E1103": "AE",  # Chargé de communication
+    "E1101": "AE",  # Community Manager
+    "E1106": "AI",  # Journaliste
+    "E1401": "AR",  # Graphiste
+    
+    # Logistique/Transport - Principalement R (Réaliste) et C (Conventionnel)
+    "N1101": "RC",  # Cariste
+    "N1103": "CR",  # Magasinier
+    "N1105": "RC",  # Manutentionnaire
+    "N4101": "RC",  # Chauffeur PL
+    "N1301": "EC",  # Responsable logistique
+    
+    # Restauration - Principalement R (Réaliste) et S (Social)
+    "G1609": "RA",  # Cuisinier
+    "G1803": "SE",  # Serveur
+    
+    # Juridique - Principalement I (Investigation) et E (Entreprenant)
+    "K1901": "IC",  # Notaire
+    
+    # Recherche - Principalement I (Investigation)
+    "K2401": "IA",  # Chercheur
+    
+    # Industrie
+    "H1206": "IR",  # Ingénieur mécanique
+    "I1304": "RC",  # Technicien maintenance
+    "H1208": "IR",  # Automaticien
+}
+
+def calculate_riasec_profile(answers: Dict[str, Any], profile: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Calcule le profil RIASEC basé sur les réponses au questionnaire et le profil MBTI/DISC.
+    Utilise les correspondances MBTI→RIASEC et DISC→RIASEC pour inférer les intérêts.
+    """
+    riasec_scores = {"R": 0, "I": 0, "A": 0, "S": 0, "E": 0, "C": 0}
+    
+    # 1. Inférence depuis MBTI
+    mbti = profile.get("mbti", "")
+    for riasec_code, riasec_data in RIASEC_DESCRIPTIONS.items():
+        if mbti in riasec_data.get("mbti_affinite", []):
+            riasec_scores[riasec_code] += 3  # Fort poids pour correspondance directe
+    
+    # 2. Inférence depuis DISC
+    disc = profile.get("disc", "S")
+    for riasec_code, riasec_data in RIASEC_DESCRIPTIONS.items():
+        if disc in riasec_data.get("disc_affinite", []):
+            riasec_scores[riasec_code] += 2
+    
+    # 3. Inférence depuis Ennéagramme
+    ennea_dom = profile.get("ennea_dominant", 9)
+    ennea_sec = profile.get("ennea_runner_up", 9)
+    for riasec_code, riasec_data in RIASEC_DESCRIPTIONS.items():
+        if ennea_dom in riasec_data.get("ennea_affinite", []):
+            riasec_scores[riasec_code] += 2
+        if ennea_sec in riasec_data.get("ennea_affinite", []):
+            riasec_scores[riasec_code] += 1
+    
+    # 4. Ajustements basés sur les dimensions MBTI
+    # E/I influence sur E(ntreprenant) et I(nvestigateur)
+    if profile.get("energie") == "E":
+        riasec_scores["E"] += 2
+        riasec_scores["S"] += 1
+    else:
+        riasec_scores["I"] += 2
+        riasec_scores["A"] += 1
+    
+    # S/N influence sur R(éaliste) et A(rtistique)
+    if profile.get("perception") == "S":
+        riasec_scores["R"] += 2
+        riasec_scores["C"] += 1
+    else:
+        riasec_scores["A"] += 2
+        riasec_scores["I"] += 1
+    
+    # T/F influence sur I(nvestigateur) et S(ocial)
+    if profile.get("decision") == "T":
+        riasec_scores["I"] += 2
+        riasec_scores["R"] += 1
+    else:
+        riasec_scores["S"] += 2
+        riasec_scores["A"] += 1
+    
+    # J/P influence sur C(onventionnel) et A(rtistique)
+    if profile.get("structure") == "J":
+        riasec_scores["C"] += 2
+        riasec_scores["E"] += 1
+    else:
+        riasec_scores["A"] += 2
+        riasec_scores["R"] += 1
+    
+    # Calculer les scores normalisés (0-100)
+    max_score = max(riasec_scores.values()) if riasec_scores.values() else 1
+    normalized_scores = {k: round((v / max_score) * 100) for k, v in riasec_scores.items()}
+    
+    # Trier par score décroissant pour obtenir le code RIASEC
+    sorted_riasec = sorted(riasec_scores.items(), key=lambda x: x[1], reverse=True)
+    
+    # Code RIASEC principal (3 lettres) et secondaire (2 lettres)
+    riasec_code_3 = "".join([x[0] for x in sorted_riasec[:3]])
+    riasec_code_2 = "".join([x[0] for x in sorted_riasec[:2]])
+    riasec_major = sorted_riasec[0][0]
+    riasec_minor = sorted_riasec[1][0]
+    
+    return {
+        "scores": normalized_scores,
+        "raw_scores": riasec_scores,
+        "code_3": riasec_code_3,
+        "code_2": riasec_code_2,
+        "major": riasec_major,
+        "minor": riasec_minor,
+        "major_name": RIASEC_DESCRIPTIONS[riasec_major]["name"],
+        "minor_name": RIASEC_DESCRIPTIONS[riasec_minor]["name"],
+        "major_description": RIASEC_DESCRIPTIONS[riasec_major]["description"],
+        "traits": RIASEC_DESCRIPTIONS[riasec_major]["traits"][:3] + RIASEC_DESCRIPTIONS[riasec_minor]["traits"][:2],
+        "environnements_preferes": RIASEC_DESCRIPTIONS[riasec_major]["environnements"][:2]
+    }
+
+
+def riasec_congruence(user_riasec: str, job_riasec: str) -> float:
+    """
+    Calcule la congruence RIASEC entre le profil utilisateur et le métier.
+    Basé sur le modèle hexagonal de Holland.
+    
+    Returns: Score de 0 à 1
+    """
+    if not user_riasec or not job_riasec:
+        return 0.5  # Score neutre si pas de données
+    
+    user_major = user_riasec[0] if len(user_riasec) > 0 else ""
+    user_minor = user_riasec[1] if len(user_riasec) > 1 else ""
+    job_major = job_riasec[0] if len(job_riasec) > 0 else ""
+    job_minor = job_riasec[1] if len(job_riasec) > 1 else ""
+    
+    score = 0.0
+    
+    # Correspondance exacte majeur-majeur (très forte)
+    if user_major == job_major:
+        score += 0.5
+    # Type adjacent au majeur
+    elif job_major in RIASEC_ADJACENT.get(user_major, []):
+        score += 0.3
+    # Type opposé (pénalité)
+    elif job_major == RIASEC_OPPOSITE.get(user_major, ""):
+        score += 0.1
+    else:
+        score += 0.2
+    
+    # Correspondance mineur
+    if user_minor == job_minor:
+        score += 0.3
+    elif user_minor == job_major or user_major == job_minor:
+        score += 0.2
+    elif job_minor in RIASEC_ADJACENT.get(user_minor, []):
+        score += 0.15
+    else:
+        score += 0.1
+    
+    # Bonus si le code complet est très similaire
+    if user_riasec == job_riasec:
+        score += 0.2
+    
+    return min(score, 1.0)
+
+
 WEIGHTS = {
-    "motivation": 15,
-    "disc": 10,
-    "mbti": 35,
-    "environment": 20,
-    "skills": 15,
-    "constraints": 5,
+    "motivation": 12,      # Ennéagramme
+    "disc": 8,             # DISC
+    "mbti": 25,            # MBTI (réduit)
+    "riasec": 20,          # NOUVEAU: RIASEC (Holland)
+    "environment": 15,     # Environnement de travail
+    "skills": 15,          # Compétences
+    "constraints": 5,      # Contraintes
 }
 
 # MBTI Compatibility - Types similaires par fonction dominante et mode de fonctionnement
