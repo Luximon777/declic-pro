@@ -3920,8 +3920,55 @@ def score_skills(profile: Dict[str, Any], job: Dict[str, Any]) -> float:
     return min(1.0, intersection / min(5, len(req)))
 
 
-def score_job(profile: Dict[str, Any], job: Dict[str, Any]) -> Dict[str, Any]:
-    """Calculate overall job compatibility score."""
+def get_job_riasec(job: Dict[str, Any]) -> str:
+    """
+    Obtient le code RIASEC d'un métier à partir de son code ROME.
+    Utilise le mapping ROME_RIASEC_MAPPING ou retourne une valeur par défaut.
+    """
+    code_rome = job.get("code_rome", "")
+    
+    # Lookup direct dans le mapping
+    if code_rome in ROME_RIASEC_MAPPING:
+        return ROME_RIASEC_MAPPING[code_rome]
+    
+    # Si pas de mapping direct, inférer depuis le secteur/filière
+    filiere = job.get("filiere", "").upper()
+    secteur = job.get("secteur", "").lower()
+    
+    # Inférence par filière
+    filiere_riasec = {
+        "SI": "IR",      # Industrielle → Investigateur/Réaliste
+        "SBTP": "RC",    # BTP → Réaliste/Conventionnel
+        "SSS": "SA",     # Santé Social → Social/Artistique
+        "SN": "IR",      # Numérique → Investigateur/Réaliste
+        "SC": "ES",      # Commerce → Entreprenant/Social
+        "SA": "CE",      # Administrative → Conventionnel/Entreprenant
+        "SENV": "RI",    # Environnement → Réaliste/Investigateur
+        "SART": "AE",    # Art/Culture → Artistique/Entreprenant
+    }
+    
+    if filiere in filiere_riasec:
+        return filiere_riasec[filiere]
+    
+    # Inférence par mots-clés du secteur
+    if any(kw in secteur for kw in ["technique", "mécanique", "maintenance", "électricité"]):
+        return "RC"
+    if any(kw in secteur for kw in ["informatique", "développement", "data", "cybersécurité"]):
+        return "IC"
+    if any(kw in secteur for kw in ["santé", "social", "éducation", "aide"]):
+        return "SI"
+    if any(kw in secteur for kw in ["commerce", "vente", "marketing"]):
+        return "ES"
+    if any(kw in secteur for kw in ["art", "design", "créatif", "communication"]):
+        return "AE"
+    if any(kw in secteur for kw in ["comptabilité", "finance", "administration"]):
+        return "CI"
+    
+    return "SC"  # Valeur par défaut neutre (Social/Conventionnel)
+
+
+def score_job(profile: Dict[str, Any], job: Dict[str, Any], user_riasec: Dict[str, Any] = None) -> Dict[str, Any]:
+    """Calculate overall job compatibility score including RIASEC model."""
     
     # Motivation score (Enneagram)
     motivation_score = ennea_similarity(
@@ -3936,11 +3983,22 @@ def score_job(profile: Dict[str, Any], job: Dict[str, Any]) -> Dict[str, Any]:
         job.get("disc_attendu", [])
     ) * WEIGHTS["disc"]
     
-    # MBTI score (NEW)
+    # MBTI score
     mbti_score = mbti_similarity(
         profile.get("mbti", ""),
         job.get("mbti_compatible", [])
     ) * WEIGHTS["mbti"]
+    
+    # RIASEC score (Holland Codes) - NOUVEAU
+    riasec_score_raw = 0.5  # Score neutre par défaut
+    job_riasec = get_job_riasec(job)
+    
+    if user_riasec:
+        user_riasec_code = user_riasec.get("code_2", "")
+        if user_riasec_code and job_riasec:
+            riasec_score_raw = riasec_congruence(user_riasec_code, job_riasec)
+    
+    riasec_score = riasec_score_raw * WEIGHTS["riasec"]
     
     # Environment score
     env_score = score_environment(profile, job) * WEIGHTS["environment"]
@@ -3951,12 +4009,20 @@ def score_job(profile: Dict[str, Any], job: Dict[str, Any]) -> Dict[str, Any]:
     # Constraints (simplified - full score for now)
     constraints_score = WEIGHTS["constraints"] * 1.0
     
-    total = int(round(motivation_score + disc_score + mbti_score + env_score + skills_score + constraints_score))
+    total = int(round(motivation_score + disc_score + mbti_score + riasec_score + env_score + skills_score + constraints_score))
     total = max(0, min(100, total))
     
     # Build reasons and risks
     reasons = []
     risks = []
+    
+    # RIASEC compatibility feedback (NOUVEAU - priorité haute car modèle validé)
+    if riasec_score >= WEIGHTS["riasec"] * 0.7:
+        reasons.append("Intérêts professionnels (Holland) fortement alignés avec ce métier")
+    elif riasec_score >= WEIGHTS["riasec"] * 0.5:
+        reasons.append("Intérêts professionnels partiellement compatibles")
+    elif riasec_score < WEIGHTS["riasec"] * 0.3:
+        risks.append("Intérêts professionnels peu alignés avec ce type de métier")
     
     # MBTI compatibility feedback
     if mbti_score >= WEIGHTS["mbti"] * 0.7:
@@ -4003,10 +4069,12 @@ def score_job(profile: Dict[str, Any], job: Dict[str, Any]) -> Dict[str, Any]:
         "category": category,
         "reasons": reasons[:3],
         "risks": risks[:2],
+        "job_riasec": job_riasec,  # Ajout du code RIASEC du métier
         "breakdown": {
             "motivation": round(motivation_score, 1),
             "disc": round(disc_score, 1),
             "mbti": round(mbti_score, 1),
+            "riasec": round(riasec_score, 1),  # NOUVEAU
             "environment": round(env_score, 1),
             "skills": round(skills_score, 1),
             "constraints": round(constraints_score, 1)
@@ -4115,10 +4183,10 @@ async def search_job_hybrid(query: str) -> tuple[List[Dict[str, Any]], Optional[
     return local_jobs, france_travail_fiche
 
 
-def get_exploration_paths(profile: Dict[str, Any]) -> List[Dict[str, Any]]:
+def get_exploration_paths(profile: Dict[str, Any], user_riasec: Dict[str, Any] = None) -> List[Dict[str, Any]]:
     """Get recommended filieres and jobs for exploration."""
-    # Score all jobs
-    all_scores = [score_job(profile, job) for job in METIERS]
+    # Score all jobs with RIASEC if available
+    all_scores = [score_job(profile, job, user_riasec) for job in METIERS]
     all_scores.sort(key=lambda x: x["score"], reverse=True)
     
     # Group by filiere
@@ -4269,14 +4337,17 @@ async def match_job(request: JobSearchRequest):
     """Match user profile with a specific job."""
     profile = compute_profile(request.answers)
     
+    # NOUVEAU: Calculer le profil RIASEC de l'utilisateur
+    user_riasec = calculate_riasec_profile(request.answers, profile)
+    
     # Recherche hybride : base locale + France Travail API
     matching_jobs, france_travail_fiche = await search_job_hybrid(request.job_query)
     
     if not matching_jobs:
         raise HTTPException(status_code=404, detail="Aucun métier trouvé pour cette recherche")
     
-    # Score all matching jobs - preserve search order for best_match selection
-    results = [score_job(profile, job) for job in matching_jobs]
+    # Score all matching jobs with RIASEC - preserve search order for best_match selection
+    results = [score_job(profile, job, user_riasec) for job in matching_jobs]
     
     # IMPORTANT: For job-match endpoint, the best_match should be the FIRST job from search results
     # (which is the most relevant to the query), not the one with highest profile compatibility.
@@ -4394,7 +4465,7 @@ async def match_job(request: JobSearchRequest):
     
     if current_score < 70:
         # Calculer les scores pour tous les métiers de la base locale
-        all_job_scores = [score_job(profile, job) for job in METIERS]
+        all_job_scores = [score_job(profile, job, user_riasec) for job in METIERS]
         all_job_scores.sort(key=lambda x: x["score"], reverse=True)
         
         # Filtrer les métiers avec score >= 70%
@@ -4429,7 +4500,8 @@ async def match_job(request: JobSearchRequest):
             "competences_fortes": profile["competences_fortes"],
             "dominant_vertus": profile["dominant_vertus"],
             "disc_scores": profile.get("disc_scores", {"D": 0, "I": 0, "S": 0, "C": 0}),
-            "disc_dominant": profile.get("disc", "S")
+            "disc_dominant": profile.get("disc", "S"),
+            "riasec": user_riasec  # NOUVEAU: Profil RIASEC complet
         },
         "profile_narrative": profile_narrative,
         "vertus_data": vertu_data,
@@ -4454,11 +4526,14 @@ async def explore_careers(request: ExploreRequest):
     """Explore career paths based on profile."""
     profile = compute_profile(request.answers)
     
-    # Get exploration paths
-    paths = get_exploration_paths(profile)
+    # NOUVEAU: Calculer le profil RIASEC de l'utilisateur
+    user_riasec = calculate_riasec_profile(request.answers, profile)
     
-    # Get all job scores and filter by minimum compatibility (>= 75%)
-    all_scores = [score_job(profile, job) for job in METIERS]
+    # Get exploration paths with RIASEC
+    paths = get_exploration_paths(profile, user_riasec)
+    
+    # Get all job scores with RIASEC and filter by minimum compatibility (>= 75%)
+    all_scores = [score_job(profile, job, user_riasec) for job in METIERS]
     all_scores.sort(key=lambda x: x["score"], reverse=True)
     
     # Only keep jobs with score >= 50% (lowered from 75%)
@@ -4506,7 +4581,8 @@ async def explore_careers(request: ExploreRequest):
             "competences_fortes": profile["competences_fortes"],
             "dominant_vertus": profile["dominant_vertus"],
             "disc_scores": profile.get("disc_scores", {"D": 0, "I": 0, "S": 0, "C": 0}),
-            "disc_dominant": profile.get("disc", "S")
+            "disc_dominant": profile.get("disc", "S"),
+            "riasec": user_riasec  # NOUVEAU: Profil RIASEC complet
         },
         "profile_narrative": profile_narrative,
         "vertus_data": vertu_data,

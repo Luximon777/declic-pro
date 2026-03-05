@@ -6882,3 +6882,228 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* ============================================================================
+   RIASEC PROFILE STYLES - Intérêts Professionnels (Holland Codes)
+   ============================================================================ */
+.riasec-card {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(30, 30, 60, 0.95) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.riasec-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #f8fafc;
+  font-size: 1.35rem;
+}
+
+.riasec-title svg {
+  color: #6366f1;
+}
+
+/* Main Code Display */
+.riasec-main-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border-radius: 12px;
+}
+
+.riasec-code-display {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.riasec-letter {
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.riasec-letter-secondary {
+  font-size: 2.5rem;
+  font-weight: 700;
+  opacity: 0.85;
+  align-self: flex-end;
+  margin-bottom: 0.25rem;
+}
+
+.riasec-code-names {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.riasec-major-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.riasec-minor-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+/* Description */
+.riasec-description {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.riasec-description p {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Scores */
+.riasec-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.riasec-score-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.riasec-score-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 140px;
+}
+
+.riasec-icon {
+  font-size: 1.25rem;
+}
+
+.riasec-name {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+.riasec-score-bar-container {
+  flex: 1;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.riasec-score-bar {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.6s ease-out;
+}
+
+.riasec-score-value {
+  min-width: 45px;
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+/* Traits */
+.riasec-traits {
+  margin-bottom: 1rem;
+}
+
+.riasec-traits h4 {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.riasec-traits-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.riasec-trait-badge {
+  background: rgba(99, 102, 241, 0.2) !important;
+  color: #a5b4fc !important;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+}
+
+/* Environments */
+.riasec-environments {
+  margin-top: 1rem;
+}
+
+.riasec-environments h4 {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.riasec-env-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.riasec-env-item {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .riasec-main-code {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .riasec-letter {
+    font-size: 2.5rem;
+  }
+  
+  .riasec-letter-secondary {
+    font-size: 1.75rem;
+  }
+  
+  .riasec-score-label {
+    min-width: 100px;
+  }
+  
+  .riasec-name {
+    font-size: 0.8rem;
+  }
+  
+  .riasec-score-value {
+    min-width: 35px;
+    font-size: 0.8rem;
+  }
+}

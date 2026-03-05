@@ -1805,6 +1805,113 @@ const IntegratedAnalysis = ({ analysis }) => {
 };
 
 // ============================================================================
+// RIASEC PROFILE - Intérêts Professionnels (Holland Codes)
+// ============================================================================
+const RiasecProfile = ({ riasec }) => {
+  if (!riasec || !riasec.scores) return null;
+
+  const riasecLabels = {
+    R: { name: 'Réaliste', color: '#f59e0b', icon: '🔧' },
+    I: { name: 'Investigateur', color: '#6366f1', icon: '🔬' },
+    A: { name: 'Artistique', color: '#ec4899', icon: '🎨' },
+    S: { name: 'Social', color: '#10b981', icon: '🤝' },
+    E: { name: 'Entreprenant', color: '#f97316', icon: '📈' },
+    C: { name: 'Conventionnel', color: '#0ea5e9', icon: '📋' }
+  };
+
+  const sortedScores = Object.entries(riasec.scores)
+    .sort((a, b) => b[1] - a[1]);
+
+  return (
+    <Card className="riasec-card" data-testid="riasec-profile">
+      <CardHeader>
+        <CardTitle className="riasec-title">
+          <Target size={24} /> Intérêts Professionnels (RIASEC)
+        </CardTitle>
+        <CardDescription>
+          Modèle de Holland - Vos affinités naturelles avec différents types d'activités
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        {/* Code RIASEC principal */}
+        <div className="riasec-main-code">
+          <div className="riasec-code-display">
+            <span className="riasec-letter" style={{ color: riasecLabels[riasec.major]?.color }}>
+              {riasec.major}
+            </span>
+            <span className="riasec-letter-secondary" style={{ color: riasecLabels[riasec.minor]?.color }}>
+              {riasec.minor}
+            </span>
+          </div>
+          <div className="riasec-code-names">
+            <span className="riasec-major-name">
+              {riasecLabels[riasec.major]?.icon} {riasec.major_name}
+            </span>
+            <span className="riasec-minor-name">
+              {riasecLabels[riasec.minor]?.icon} {riasec.minor_name}
+            </span>
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="riasec-description">
+          <p>{riasec.major_description}</p>
+        </div>
+
+        {/* Barres de score pour chaque dimension */}
+        <div className="riasec-scores">
+          {sortedScores.map(([code, score]) => (
+            <div key={code} className="riasec-score-row">
+              <div className="riasec-score-label">
+                <span className="riasec-icon">{riasecLabels[code]?.icon}</span>
+                <span className="riasec-name">{riasecLabels[code]?.name}</span>
+              </div>
+              <div className="riasec-score-bar-container">
+                <div 
+                  className="riasec-score-bar" 
+                  style={{ 
+                    width: `${score}%`,
+                    backgroundColor: riasecLabels[code]?.color
+                  }}
+                />
+              </div>
+              <span className="riasec-score-value">{score}%</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Traits et environnements */}
+        {riasec.traits && riasec.traits.length > 0 && (
+          <div className="riasec-traits">
+            <h4>Traits dominants</h4>
+            <div className="riasec-traits-list">
+              {riasec.traits.map((trait, idx) => (
+                <Badge key={idx} variant="secondary" className="riasec-trait-badge">
+                  {trait}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {riasec.environnements_preferes && riasec.environnements_preferes.length > 0 && (
+          <div className="riasec-environments">
+            <h4>Environnements préférés</h4>
+            <div className="riasec-env-list">
+              {riasec.environnements_preferes.map((env, idx) => (
+                <span key={idx} className="riasec-env-item">
+                  {env}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
+
+// ============================================================================
 // PROFESSIONAL ID CARD - Carte d'Identité Professionnelle (4 piliers)
 // ============================================================================
 const ProfessionalIdCard = ({ vertus, competences, narrative, lifePath, jobInfo }) => {
@@ -2755,6 +2862,12 @@ const JobMatchResult = ({ result, onBack, onNewSearch }) => {
             <IntegratedAnalysis analysis={integrated_analysis} />
           </div>
 
+          {/* 2.quat Profil RIASEC - Intérêts Professionnels (Holland) */}
+          <div id="section-riasec">
+            <RiasecProfile riasec={profile_summary?.riasec} />
+          </div>
+
+
           {/* 3. Pistes d'Action */}
           <div id="section-actions">
             <MicroActions lifePath={life_path} />
@@ -2927,6 +3040,12 @@ const ExploreResult = ({ result, onBack }) => {
           <div id="section-analyse">
             <IntegratedAnalysis analysis={integrated_analysis} />
           </div>
+
+          {/* 2.quat Profil RIASEC - Intérêts Professionnels (Holland) */}
+          <div id="section-riasec">
+            <RiasecProfile riasec={profile_summary?.riasec} />
+          </div>
+
 
           {/* 3. Pistes d'Action */}
           <div id="section-actions">
