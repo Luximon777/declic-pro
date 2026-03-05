@@ -4119,31 +4119,34 @@ def riasec_congruence(user_riasec: str, job_riasec: str) -> float:
     
     score = 0.0
     
-    # Correspondance exacte majeur-majeur (très forte)
+    # Correspondance exacte majeur-majeur (très forte) = 0.55
     if user_major == job_major:
-        score += 0.5
-    # Type adjacent au majeur
+        score += 0.55
+    # Type adjacent au majeur = 0.4
     elif job_major in RIASEC_ADJACENT.get(user_major, []):
-        score += 0.3
-    # Type opposé (pénalité)
+        score += 0.4
+    # Type opposé (pénalité légère) = 0.15
     elif job_major == RIASEC_OPPOSITE.get(user_major, ""):
-        score += 0.1
+        score += 0.15
     else:
-        score += 0.2
+        score += 0.25
     
     # Correspondance mineur
     if user_minor == job_minor:
-        score += 0.3
+        score += 0.35
     elif user_minor == job_major or user_major == job_minor:
-        score += 0.2
+        score += 0.3  # Cross-match valorisé
     elif job_minor in RIASEC_ADJACENT.get(user_minor, []):
-        score += 0.15
+        score += 0.2
     else:
         score += 0.1
     
-    # Bonus si le code complet est très similaire
+    # Bonus si le code complet est identique ou inversé
     if user_riasec == job_riasec:
-        score += 0.2
+        score += 0.1
+    elif len(user_riasec) >= 2 and len(job_riasec) >= 2:
+        if user_riasec[0] == job_riasec[1] and user_riasec[1] == job_riasec[0]:
+            score += 0.05  # Code inversé (AI vs IA) - encore compatible
     
     return min(score, 1.0)
 
@@ -4184,29 +4187,47 @@ MBTI_SIMILAR = {
 }
 
 def mbti_similarity(user_mbti: str, job_mbti_list: List[str]) -> float:
-    """Calculate MBTI compatibility score (0-1)."""
+    """
+    Calculate MBTI compatibility score (0-1).
+    Optimisé pour atteindre des scores 80-90% pour les profils vraiment compatibles.
+    """
     if not job_mbti_list or not user_mbti:
-        return 0.5  # Neutral score if no MBTI data
+        return 0.65  # Score neutre plus généreux
+    
+    user_mbti = user_mbti.upper()
     
     # Exact match = 100%
     if user_mbti in job_mbti_list:
         return 1.0
     
-    # Similar type match = 75%
+    # Similar type match (même famille NF/NT/SF/ST) = 90%
     similar_types = MBTI_SIMILAR.get(user_mbti, [])
     for similar in similar_types:
         if similar in job_mbti_list:
-            return 0.75
+            return 0.90
     
-    # Partial match (same temperament or 2+ letters in common)
+    # Partial match - optimisé avec bonus pour dimensions critiques
+    best_score = 0.45
     for job_mbti in job_mbti_list:
-        common_letters = sum(1 for i in range(4) if i < len(user_mbti) and i < len(job_mbti) and user_mbti[i] == job_mbti[i])
+        if len(job_mbti) != 4:
+            continue
+            
+        common_letters = sum(1 for i in range(4) if i < len(user_mbti) and user_mbti[i] == job_mbti[i])
+        
+        # Bonus si même core (N/S et F/T identiques - les dimensions les plus importantes)
+        same_core = (len(user_mbti) >= 3 and len(job_mbti) >= 3 and 
+                     user_mbti[1] == job_mbti[1] and user_mbti[2] == job_mbti[2])
+        
         if common_letters >= 3:
-            return 0.6
-        if common_letters >= 2:
-            return 0.4
+            score = 0.80 if same_core else 0.75
+        elif common_letters >= 2:
+            score = 0.65 if same_core else 0.55
+        else:
+            score = 0.45
+        
+        best_score = max(best_score, score)
     
-    return 0.2  # Low compatibility
+    return best_score
 
 ENNEA_TO_PROFILE = {
     1: {"name": "Perfectionniste", "moteur": "Faire correctement", "vertu": "temperance"},
@@ -4408,78 +4429,115 @@ def compute_profile(answers: Dict[str, str]) -> Dict[str, Any]:
 
 
 def disc_similarity(user_disc: str, job_discs: List[str]) -> float:
-    """Calculate DISC similarity score."""
+    """Calculate DISC similarity score - optimisé pour des scores plus élevés."""
     user_disc = user_disc.upper()
-    best = 0.0
+    if not job_discs:
+        return 0.7  # Score neutre plus généreux
+    
+    best = 0.5
     for d in job_discs:
         d = d.upper()
         if user_disc == d:
-            sim = 1.0
+            sim = 1.0  # Match parfait
         elif d in DISC_ADJACENT.get(user_disc, set()):
-            sim = 0.6
+            sim = 0.75  # Adjacent = bon match
         else:
-            sim = 0.3
+            sim = 0.45  # Non adjacent mais pas incompatible
         best = max(best, sim)
-    return best if job_discs else 0.5
+    return best
 
 
 def ennea_similarity(dominant: int, runner_up: int, compatible_list: List[int]) -> float:
-    """Calculate Enneagram similarity score."""
+    """Calculate Enneagram similarity score - optimisé."""
     if not compatible_list:
-        return 0.5
+        return 0.65  # Score neutre plus généreux
     if dominant in compatible_list:
-        return 1.0
+        return 1.0   # Match parfait
     if runner_up in compatible_list:
-        return 0.6
-    return 0.2
+        return 0.75  # Bon match avec secondaire
+    return 0.4  # Pas de match mais pas forcément incompatible
 
 
 def score_environment(profile: Dict[str, Any], job: Dict[str, Any]) -> float:
-    """Calculate environment compatibility score."""
+    """Calculate environment compatibility score - optimisé pour des scores plus élevés."""
     points = []
     
     # Interaction preference
     interaction = job.get("interaction", 1)
     if profile["energie"] == "E":
-        points.append(1.0 if interaction >= 1 else 0.5)
+        points.append(1.0 if interaction >= 1 else 0.7)
     else:
-        points.append(1.0 if interaction <= 1 else 0.5)
+        points.append(1.0 if interaction <= 1 else 0.7)
     
     # Cadre preference
     cadre = job.get("cadre", 1)
     if profile["structure"] == "J":
-        points.append(1.0 if cadre >= 1 else 0.5)
+        points.append(1.0 if cadre >= 1 else 0.7)
     else:
-        points.append(1.0 if cadre <= 1 else 0.5)
+        points.append(1.0 if cadre <= 1 else 0.7)
     
     # Complexity preference
     complexite = job.get("complexite", 1)
     if profile["perception"] == "N":
-        points.append(1.0 if complexite >= 1 else 0.7)
+        points.append(1.0 if complexite >= 1 else 0.8)
     else:
-        points.append(1.0 if complexite <= 1 else 0.7)
+        points.append(1.0 if complexite <= 1 else 0.8)
     
     # Rythme with vigilance
     rythme = job.get("rythme", 1)
     if any(v in str(profile.get("vigilances", [])) for v in ["stress", "surmenage", "perfectionnisme"]):
-        points.append(0.6 if rythme == 2 else 1.0)
+        points.append(0.75 if rythme == 2 else 1.0)
     else:
         points.append(1.0)
     
-    return sum(points) / len(points) if points else 0.7
+    return sum(points) / len(points) if points else 0.8
 
 
 def score_skills(profile: Dict[str, Any], job: Dict[str, Any]) -> float:
-    """Calculate skills match score."""
+    """
+    Calculate skills match score - optimisé pour des scores plus réalistes.
+    Utilise une logique de matching par mots-clés et compétences transverses.
+    """
     req = job.get("competences_requises", [])
+    user_skills = profile.get("competences_fortes", [])
+    
+    # Si pas de compétences définies, score neutre-positif
     if not req:
-        return 0.5
+        return 0.7
+    if not user_skills:
+        return 0.6
     
-    user_skills = set(s.lower() for s in profile.get("competences_fortes", []))
-    job_skills = set(s.lower() for s in req)
+    # Normaliser les compétences
+    user_skills_lower = set(s.lower().strip() for s in user_skills)
+    job_skills_lower = set(s.lower().strip() for s in req)
     
-    intersection = len(user_skills & job_skills)
-    return min(1.0, intersection / min(5, len(req)))
+    # Match direct
+    direct_match = len(user_skills_lower & job_skills_lower)
+    
+    # Match partiel (mots-clés communs)
+    partial_match = 0
+    for user_skill in user_skills_lower:
+        for job_skill in job_skills_lower:
+            # Match si un mot significatif est commun
+            user_words = set(w for w in user_skill.split() if len(w) > 3)
+            job_words = set(w for w in job_skill.split() if len(w) > 3)
+            if user_words & job_words:
+                partial_match += 0.5
+                break
+    
+    # Compétences transverses toujours valorisées
+    transversal_skills = {"communication", "écoute", "analyse", "leadership", "empathie", 
+                         "créativité", "organisation", "adaptabilité", "résolution"}
+    user_transversal = sum(1 for s in user_skills_lower if any(t in s for t in transversal_skills))
+    transversal_bonus = min(0.3, user_transversal * 0.1)
+    
+    # Calcul du score final
+    total_matches = direct_match + partial_match
+    base_score = min(1.0, total_matches / max(3, len(req)))
+    
+    # Score minimum de 0.5 si l'utilisateur a des compétences, + bonus transversal
+    final_score = max(0.5, base_score) + transversal_bonus
+    return min(1.0, final_score)
 
 
 def get_job_riasec(job: Dict[str, Any]) -> str:
