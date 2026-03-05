@@ -3449,6 +3449,286 @@ ROME_RIASEC_MAPPING = {
     "H1206": "IR",  # Ingénieur mécanique
     "I1304": "RC",  # Technicien maintenance
     "H1208": "IR",  # Automaticien
+    
+    # ============================================================================
+    # MÉTIERS PORTEURS - Ajouts des PDF France Travail / Grand Est
+    # ============================================================================
+    
+    # Agriculture / Environnement (R dominant)
+    "A1202": "RC",  # Entretien espaces naturels
+    "A1203": "RC",  # Agent entretien espaces naturels
+    "A1204": "RA",  # Aménagement espaces verts (créativité jardinage)
+    "A1301": "IS",  # Conseil assistance agriculture
+    "A1303": "IR",  # Ingénierie agriculture environnement
+    "A1403": "RS",  # Aide élevage agricole
+    "A1407": "RS",  # Élevage bovin équin
+    "A1416": "RC",  # Polyculture élevage
+    
+    # Artisanat (A/R dominants)
+    "B1302": "AR",  # Décoration objets art artisanaux
+    "B1303": "AR",  # Gravure ciselure
+    "B1401": "AR",  # Réalisation objets fibres végétaux
+    "B1402": "AC",  # Reliure restauration livres
+    "B1501": "AR",  # Fabrication réparation instruments musique
+    "B1601": "RA",  # Métallerie art
+    "B1603": "AR",  # Réalisation bijouterie joaillerie orfèvrerie
+    "B1604": "RC",  # Réparation systèmes horlogers
+    "B1701": "RI",  # Conservation reconstitution espèces animales
+    "B1801": "AR",  # Réalisation articles chapellerie
+    "B1802": "AR",  # Réalisation articles cuir
+    "B1803": "AR",  # Réalisation vêtements mesure
+    "B1804": "AR",  # Réalisation ouvrages art fils
+    
+    # Banque / Assurance / Immobilier (C/E dominants)
+    "C1102": "ES",  # Conseil clientèle assurances
+    "C1103": "EC",  # Courtage assurances
+    "C1105": "IC",  # Études actuarielles assurances
+    "C1106": "IC",  # Expertise risques assurance
+    "C1107": "CS",  # Indemnisations assurances
+    "C1109": "CE",  # Rédaction gestion assurances
+    "C1110": "CE",  # Souscription assurances
+    "C1201": "CS",  # Accueil services bancaires
+    "C1202": "IC",  # Analyse crédits risques bancaires
+    "C1203": "ES",  # Relation clients banque finance
+    "C1205": "EI",  # Conseil gestion patrimoine financier
+    "C1206": "ES",  # Gestion clientèle bancaire
+    "C1302": "CI",  # Gestion back middle-office marchés
+    "C1501": "CE",  # Gérance immobilière
+    "C1502": "CE",  # Gestion locative immobilière
+    "C1503": "EI",  # Management projet immobilier
+    "C1504": "ES",  # Transaction immobilière
+    
+    # Commerce / Vente / Services (E/S dominants)
+    "D1101": "RA",  # Boucherie (artisanat manuel)
+    "D1102": "RA",  # Boulangerie viennoiserie
+    "D1103": "RA",  # Charcuterie traiteur
+    "D1104": "AR",  # Pâtisserie confiserie chocolaterie
+    "D1105": "RS",  # Poissonnerie
+    "D1107": "EC",  # Vente gros produits frais
+    "D1202": "AS",  # Coiffure (créatif + social)
+    "D1203": "SR",  # Hydrothérapie
+    "D1204": "ES",  # Location véhicules matériel
+    "D1205": "RC",  # Nettoyage articles textiles
+    "D1206": "RC",  # Réparation articles cuir
+    "D1207": "RC",  # Retouches habillement
+    "D1208": "AS",  # Soins esthétiques corporels
+    "D1301": "EC",  # Management magasin détail
+    "D1401": "CE",  # Assistance commerciale
+    "D1403": "ES",  # Relation commerciale particuliers
+    "D1404": "ES",  # Relation commerciale véhicules
+    "D1405": "SI",  # Conseil information médicale
+    "D1406": "EC",  # Management force vente
+    "D1407": "EI",  # Relation technico-commerciale
+    "D1408": "ES",  # Téléconseil télévente
+    "D1501": "ES",  # Animation vente
+    "D1504": "EC",  # Direction magasin grande distribution
+    "D1506": "EC",  # Marchandisage
+    "D1509": "EC",  # Management département grande distribution
+    
+    # Communication / Arts graphiques (A dominant)
+    "E1108": "AI",  # Traduction interprétariat
+    "E1202": "AR",  # Production laboratoire cinématographique
+    "E1301": "RC",  # Conduite machines impression
+    "E1302": "RC",  # Conduite machines façonnage routage
+    "E1303": "EC",  # Encadrement industries graphiques
+    "E1304": "RC",  # Façonnage routage
+    "E1305": "AC",  # Préparation correction édition presse
+    "E1306": "AC",  # Prépresse
+    "E1307": "CR",  # Reprographie
+    "E1308": "RC",  # Intervention technique industries graphiques
+    
+    # BTP / Construction (R dominant)
+    "F1103": "IC",  # Contrôle diagnostic bâtiment
+    "F1104": "CI",  # Dessin BTP
+    "F1106": "IR",  # Ingénierie études BTP
+    "F1201": "ER",  # Conduite travaux BTP
+    "F1301": "RC",  # Conduite de grue
+    "F1302": "RC",  # Conduite engins terrassement
+    "F1501": "RC",  # Montage structures charpentes bois
+    "F1502": "RC",  # Montage structures métalliques
+    "F1604": "RC",  # Montage agencements
+    "F1605": "RC",  # Montage réseaux électriques
+    "F1606": "RA",  # Peinture bâtiment
+    "F1607": "RC",  # Pose fermetures menuisées
+    "F1608": "RC",  # Pose revêtements rigides
+    "F1609": "RC",  # Pose revêtements souples
+    "F1610": "RC",  # Pose restauration couvertures
+    "F1611": "RC",  # Réalisation façades
+    "F1613": "RC",  # Travaux étanchéité isolation
+    "F1701": "RC",  # Construction béton
+    "F1702": "RC",  # Construction routes voies
+    "F1705": "RC",  # Pose canalisations
+    
+    # Hôtellerie / Restauration / Tourisme (S/E dominants)
+    "G1101": "SE",  # Accueil touristique
+    "G1302": "EI",  # Optimisation produits touristiques
+    "G1303": "ES",  # Vente voyages
+    "G1401": "EC",  # Assistance direction hôtel-restaurant
+    "G1402": "EC",  # Management hôtel-restaurant
+    "G1403": "EC",  # Gestion structure loisirs hébergement
+    "G1404": "EC",  # Management restauration collective
+    "G1501": "SC",  # Personnel étage
+    "G1502": "SR",  # Personnel polyvalent hôtellerie
+    "G1503": "ES",  # Management personnel étage
+    "G1601": "ES",  # Management personnel cuisine
+    "G1602": "RA",  # Personnel cuisine
+    "G1603": "SR",  # Personnel polyvalent restauration
+    "G1604": "RA",  # Fabrication crêpes pizzas
+    "G1605": "RC",  # Plonge restauration
+    "G1701": "SE",  # Conciergerie hôtellerie
+    "G1702": "SE",  # Personnel hall
+    "G1703": "SE",  # Réception hôtellerie
+    "G1801": "SE",  # Café bar brasserie
+    "G1802": "ES",  # Management service restauration
+    "G1804": "AE",  # Sommellerie
+    
+    # Industrie (R/I/C dominants)
+    "H1101": "SI",  # Assistance support technique client
+    "H1102": "EI",  # Management ingénierie affaires
+    "H1202": "IC",  # Conception dessin électricité électronique
+    "H1203": "IC",  # Conception dessin mécanique
+    "H1207": "CI",  # Rédaction technique
+    "H1209": "IR",  # Intervention études développement électronique
+    "H1303": "IC",  # Intervention technique HSE
+    "H1403": "CI",  # Intervention technique gestion industrielle
+    "H1404": "IC",  # Intervention technique méthodes industrialisation
+    "H1503": "IC",  # Intervention technique laboratoire
+    "H1504": "IC",  # Intervention contrôle qualité électricité
+    "H2201": "RC",  # Assemblage ouvrages bois
+    "H2202": "RC",  # Conduite équipement fabrication bois
+    "H2206": "RA",  # Réalisation menuiserie bois
+    "H2502": "EI",  # Management ingénierie production
+    "H2503": "RC",  # Pilotage unité production mécanique
+    "H2601": "RC",  # Bobinage électrique
+    "H2602": "RC",  # Câblage électrique électromécanique
+    "H2604": "RC",  # Montage produits électriques électroniques
+    "H2901": "RC",  # Ajustement montage fabrication
+    "H2902": "RC",  # Chaudronnerie tôlerie
+    "H2903": "RC",  # Conduite équipement usinage
+    "H2904": "RC",  # Conduite équipement déformation métaux
+    "H2905": "RC",  # Conduite équipement formage découpage
+    "H2906": "RC",  # Conduite installation automatisée
+    "H2909": "RC",  # Montage assemblage mécanique
+    "H2911": "RC",  # Réalisation structures métalliques
+    "H2912": "RC",  # Réglage équipement production
+    "H2913": "RC",  # Soudage manuel
+    "H3202": "RC",  # Réglage équipement formage plastiques
+    "H3401": "RC",  # Conduite traitement abrasion surface
+    "H3402": "RC",  # Conduite traitement dépôt surface
+    "H3403": "RC",  # Conduite traitement thermique
+    "H3404": "RC",  # Peinture industrielle
+    
+    # Installation / Maintenance (R dominant)
+    "I1101": "EI",  # Direction ingénierie entretien infrastructure
+    "I1301": "RC",  # Installation maintenance ascenseurs
+    "I1302": "RC",  # Installation maintenance automatismes
+    "I1303": "RC",  # Installation maintenance distributeurs
+    "I1305": "RC",  # Installation maintenance électronique
+    "I1306": "RC",  # Installation maintenance froid climatisation
+    "I1307": "RC",  # Installation maintenance télécoms
+    "I1309": "RC",  # Maintenance électrique
+    "I1310": "RC",  # Maintenance mécanique industrielle
+    "I1402": "RS",  # Réparation biens électrodomestiques
+    "I1502": "RI",  # Intervention milieu subaquatique
+    "I1503": "RI",  # Intervention milieux produits nocifs
+    "I1601": "RC",  # Installation maintenance nautisme
+    "I1602": "RI",  # Maintenance aéronefs
+    "I1603": "RC",  # Maintenance engins chantier levage
+    "I1604": "RC",  # Mécanique automobile
+    "I1605": "RC",  # Mécanique marine
+    "I1606": "RA",  # Réparation carrosserie
+    "I1607": "RC",  # Réparation cycles motocycles
+    
+    # Santé (I/S dominants)
+    "J1301": "SA",  # Développement personnel bien-être
+    "J1302": "IC",  # Analyses médicales
+    "J1303": "SR",  # Assistance médico-technique
+    "J1304": "SA",  # Aide puériculture
+    "J1305": "SR",  # Conduite véhicules sanitaires
+    "J1306": "IR",  # Imagerie médicale
+    "J1307": "CI",  # Préparation pharmacie
+    "J1401": "IR",  # Audioprothèses
+    "J1402": "SI",  # Diététique
+    "J1403": "SI",  # Ergothérapie
+    "J1405": "IR",  # Optique lunetterie
+    "J1407": "SI",  # Orthoptique
+    "J1408": "SI",  # Ostéopathie chiropraxie
+    "J1409": "SR",  # Pédicurie podologie
+    "J1410": "RI",  # Prothèses dentaires
+    "J1411": "RI",  # Prothèses orthèses
+    "J1412": "SI",  # Rééducation psychomotricité
+    "J1502": "ES",  # Coordination services médicaux
+    "J1503": "IS",  # Soins infirmiers anesthésie
+    "J1504": "IS",  # Soins infirmiers bloc opératoire
+    "J1505": "SI",  # Soins infirmiers prévention
+    "J1507": "SA",  # Soins infirmiers puériculture
+    
+    # Services / Social / Education (S dominant)
+    "K1202": "SA",  # Éducation jeunes enfants
+    "K1203": "SE",  # Encadrement technique insertion
+    "K1301": "SA",  # Accompagnement médicosocial
+    "K1302": "SR",  # Assistance auprès adultes
+    "K1304": "SR",  # Services domestiques
+    "K1305": "SA",  # Intervention sociale familiale
+    "K1903": "IE",  # Défense conseil juridique
+    "K2101": "SE",  # Conseil formation
+    "K2102": "SE",  # Coordination pédagogique
+    "K2110": "SR",  # Formation conduite véhicules
+    "K2301": "RC",  # Distribution assainissement eau
+    "K2303": "RC",  # Nettoyage espaces urbains
+    "K2304": "RC",  # Revalorisation produits industriels
+    "K2305": "RI",  # Salubrité traitement nuisibles
+    "K2402": "IR",  # Recherche sciences univers matière vivant
+    "K2501": "CR",  # Gardiennage locaux
+    "K2502": "EC",  # Management sécurité privée
+    "K2503": "CR",  # Sécurité surveillance privées
+    
+    # Support entreprise / SI (C/I dominants)
+    "M1101": "CE",  # Achats
+    "M1102": "EC",  # Direction achats
+    "M1205": "EC",  # Direction administrative financière
+    "M1206": "CE",  # Management service comptable
+    "M1207": "CI",  # Trésorerie financement
+    "M1402": "EI",  # Conseil organisation management
+    "M1403": "IC",  # Études prospectives socio-économiques
+    "M1601": "SC",  # Accueil renseignements
+    "M1602": "CE",  # Opérations administratives
+    "M1603": "CR",  # Distribution documents
+    "M1701": "CE",  # Administration ventes
+    "M1702": "IC",  # Analyse tendance
+    "M1703": "EI",  # Management gestion produit
+    "M1704": "ES",  # Management relation clientèle
+    "M1706": "EA",  # Promotion ventes
+    "M1707": "EI",  # Stratégie commerciale
+    "M1802": "IC",  # Conseil maîtrise ouvrage SI
+    "M1803": "EI",  # Direction systèmes information
+    "M1804": "IC",  # Études développement réseaux télécoms
+    "M1806": "IC",  # Expertise support technique SI
+    "M1808": "IC",  # Information géographique
+    "M1809": "IC",  # Information météorologique
+    "M1810": "CI",  # Production exploitation SI
+    
+    # Transport / Logistique (R/C dominants)
+    "N1104": "RC",  # Manœuvre conduite engins lourds
+    "N1201": "CE",  # Affrètement transport
+    "N1202": "CE",  # Gestion opérations circulation internationale
+    "N1302": "EC",  # Direction site logistique
+    "N1303": "CR",  # Intervention technique exploitation logistique
+    "N2201": "SE",  # Personnel escale aéroportuaire
+    "N2204": "CI",  # Préparation vols
+    "N3102": "RC",  # Équipage navigation maritime
+    "N3103": "RC",  # Navigation fluviale
+    "N3201": "EC",  # Exploitation opérations portuaires transport maritime
+    "N3202": "EC",  # Exploitation transport fluvial
+    "N4102": "RS",  # Conduite transport particuliers
+    "N4103": "RS",  # Conduite transport commun route
+    "N4104": "RC",  # Courses livraisons express
+    "N4105": "RC",  # Conduite livraison courte distance
+    "N4201": "EC",  # Direction exploitation transports marchandises
+    "N4202": "EC",  # Direction exploitation transports personnes
+    "N4203": "CR",  # Intervention technique transports marchandises
+    "N4204": "CR",  # Intervention technique transports personnes
+    "N4401": "CR",  # Circulation réseau ferré
 }
 
 def calculate_riasec_profile(answers: Dict[str, Any], profile: Dict[str, Any]) -> Dict[str, Any]:
