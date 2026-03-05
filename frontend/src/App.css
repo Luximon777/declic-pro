@@ -7317,3 +7317,152 @@ body {
     min-width: 100px;
   }
 }
+
+/* ============================================================================
+   MBTI TOOLTIP STYLES - Memo au survol du type psychologique
+   ============================================================================ */
+.compass-profile-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mbti-badge-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.mbti-badge {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 8px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: white;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.mbti-badge:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+}
+
+/* Tooltip */
+.mbti-tooltip {
+  position: absolute;
+  bottom: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(30, 30, 50, 0.98) 0%, rgba(40, 30, 60, 0.98) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.mbti-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0 8px;
+  border-style: solid;
+  border-color: rgba(40, 30, 60, 0.98) transparent transparent transparent;
+}
+
+.mbti-badge-wrapper:hover .mbti-tooltip {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mbti-tooltip-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mbti-tooltip-code {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #a5b4fc;
+  letter-spacing: 0.05em;
+}
+
+.mbti-tooltip-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.mbti-tooltip-description {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.mbti-tooltip-forces,
+.mbti-tooltip-metiers {
+  margin-bottom: 0.75rem;
+}
+
+.mbti-tooltip-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.mbti-tooltip-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.mbti-force-tag {
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.mbti-tooltip-metiers-text {
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mbti-tooltip {
+    width: 280px;
+    left: 0;
+    transform: translateX(0);
+  }
+  
+  .mbti-tooltip::after {
+    left: 30px;
+    transform: translateX(0);
+  }
+}

@@ -1612,6 +1612,107 @@ const TripartiteRadar = ({ vertus, lifePath, profileSummary }) => {
 // ============================================================================
 // BOUSSOLE DE FONCTIONNEMENT - Préférences Cognitives
 // ============================================================================
+
+// Descriptions des 16 types MBTI pour le tooltip
+const MBTI_DESCRIPTIONS = {
+  "INTJ": {
+    name: "L'Architecte",
+    description: "Stratège visionnaire, indépendant et déterminé. Excelle dans la planification à long terme et l'innovation.",
+    forces: ["Vision stratégique", "Indépendance", "Détermination", "Pensée systémique"],
+    metiers: "Scientifique, Architecte, Consultant stratégique, Ingénieur"
+  },
+  "INTP": {
+    name: "Le Logicien",
+    description: "Penseur analytique, curieux et inventif. Passionné par la compréhension des systèmes complexes.",
+    forces: ["Analyse logique", "Créativité intellectuelle", "Objectivité", "Résolution de problèmes"],
+    metiers: "Chercheur, Développeur, Analyste, Philosophe"
+  },
+  "ENTJ": {
+    name: "Le Commandant",
+    description: "Leader naturel, ambitieux et efficace. Excelle dans l'organisation et la direction d'équipes.",
+    forces: ["Leadership", "Efficacité", "Vision", "Décision rapide"],
+    metiers: "Dirigeant, Manager, Entrepreneur, Avocat"
+  },
+  "ENTP": {
+    name: "L'Innovateur",
+    description: "Débatteur créatif, curieux et enthousiaste. Aime explorer de nouvelles idées et défier le statu quo.",
+    forces: ["Innovation", "Adaptabilité", "Éloquence", "Pensée créative"],
+    metiers: "Entrepreneur, Consultant, Journaliste, Inventeur"
+  },
+  "INFJ": {
+    name: "L'Avocat",
+    description: "Idéaliste inspirant, empathique et déterminé. Guidé par ses valeurs et sa vision d'un monde meilleur.",
+    forces: ["Intuition", "Empathie profonde", "Créativité", "Engagement"],
+    metiers: "Psychologue, Conseiller, Écrivain, Humanitaire"
+  },
+  "INFP": {
+    name: "Le Médiateur",
+    description: "Idéaliste créatif, empathique et authentique. Recherche l'harmonie et l'expression de soi.",
+    forces: ["Créativité", "Empathie", "Authenticité", "Écoute"],
+    metiers: "Artiste, Psychologue, Écrivain, Designer"
+  },
+  "ENFJ": {
+    name: "Le Protagoniste",
+    description: "Leader charismatique, empathique et inspirant. Naturellement doué pour motiver et guider les autres.",
+    forces: ["Charisme", "Empathie", "Communication", "Leadership inspirant"],
+    metiers: "Enseignant, Coach, RH, Diplomate"
+  },
+  "ENFP": {
+    name: "L'Inspirateur",
+    description: "Enthousiaste créatif, sociable et optimiste. Déborde d'idées et inspire les autres par son énergie.",
+    forces: ["Enthousiasme", "Créativité", "Communication", "Adaptabilité"],
+    metiers: "Journaliste, Consultant, Artiste, Entrepreneur"
+  },
+  "ISTJ": {
+    name: "Le Logisticien",
+    description: "Fiable, méthodique et responsable. Excelle dans l'organisation et le respect des procédures.",
+    forces: ["Fiabilité", "Organisation", "Sens du devoir", "Précision"],
+    metiers: "Comptable, Administrateur, Juriste, Gestionnaire"
+  },
+  "ISFJ": {
+    name: "Le Défenseur",
+    description: "Protecteur dévoué, attentionné et loyal. Attaché aux traditions et au bien-être des autres.",
+    forces: ["Dévouement", "Fiabilité", "Attention aux détails", "Bienveillance"],
+    metiers: "Infirmier, Assistant social, Enseignant, Secrétaire"
+  },
+  "ESTJ": {
+    name: "Le Directeur",
+    description: "Organisateur efficace, direct et pragmatique. Excelle dans la gestion et l'application des règles.",
+    forces: ["Organisation", "Efficacité", "Leadership", "Pragmatisme"],
+    metiers: "Manager, Administrateur, Officier, Chef de projet"
+  },
+  "ESFJ": {
+    name: "Le Consul",
+    description: "Social, attentionné et coopératif. Naturellement doué pour créer l'harmonie et aider les autres.",
+    forces: ["Sociabilité", "Bienveillance", "Coopération", "Organisation"],
+    metiers: "Infirmier, RH, Enseignant, Commercial"
+  },
+  "ISTP": {
+    name: "Le Virtuose",
+    description: "Pragmatique, observateur et habile. Excelle dans la résolution de problèmes pratiques.",
+    forces: ["Pragmatisme", "Analyse", "Adaptabilité", "Habileté technique"],
+    metiers: "Technicien, Mécanicien, Ingénieur, Artisan"
+  },
+  "ISFP": {
+    name: "L'Aventurier",
+    description: "Artiste sensible, spontané et charmant. Vit dans le moment présent avec authenticité.",
+    forces: ["Sensibilité artistique", "Authenticité", "Flexibilité", "Charme"],
+    metiers: "Artiste, Designer, Musicien, Soignant"
+  },
+  "ESTP": {
+    name: "L'Entrepreneur",
+    description: "Énergique, pragmatique et audacieux. Aime l'action et excelle dans les situations d'urgence.",
+    forces: ["Énergie", "Pragmatisme", "Audace", "Adaptabilité"],
+    metiers: "Commercial, Entrepreneur, Sportif, Urgentiste"
+  },
+  "ESFP": {
+    name: "L'Amuseur",
+    description: "Spontané, enthousiaste et sociable. Apporte joie et énergie positive autour de lui.",
+    forces: ["Enthousiasme", "Spontanéité", "Sociabilité", "Optimisme"],
+    metiers: "Animateur, Commercial, Artiste, Hôtesse"
+  }
+};
+
 const FunctioningCompass = ({ compass }) => {
   if (!compass || !compass.axes) return null;
 
@@ -1677,9 +1778,36 @@ const FunctioningCompass = ({ compass }) => {
           ))}
         </div>
         
-        <div className="compass-profile-badge">
+        <div className="compass-profile-section">
           <span className="profile-label">Profil global :</span>
-          <span className="profile-code">{compass.global_profile}</span>
+          <div className="mbti-badge-wrapper">
+            <span className="profile-code mbti-badge" data-testid="mbti-badge">
+              {compass.global_profile}
+            </span>
+            {MBTI_DESCRIPTIONS[compass.global_profile] && (
+              <div className="mbti-tooltip">
+                <div className="mbti-tooltip-header">
+                  <span className="mbti-tooltip-code">{compass.global_profile}</span>
+                  <span className="mbti-tooltip-name">{MBTI_DESCRIPTIONS[compass.global_profile].name}</span>
+                </div>
+                <p className="mbti-tooltip-description">
+                  {MBTI_DESCRIPTIONS[compass.global_profile].description}
+                </p>
+                <div className="mbti-tooltip-forces">
+                  <span className="mbti-tooltip-label">Forces :</span>
+                  <div className="mbti-tooltip-tags">
+                    {MBTI_DESCRIPTIONS[compass.global_profile].forces.map((force, idx) => (
+                      <span key={idx} className="mbti-force-tag">{force}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="mbti-tooltip-metiers">
+                  <span className="mbti-tooltip-label">Métiers typiques :</span>
+                  <span className="mbti-tooltip-metiers-text">{MBTI_DESCRIPTIONS[compass.global_profile].metiers}</span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>
