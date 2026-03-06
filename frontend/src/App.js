@@ -260,7 +260,7 @@ const LandingPage = ({ onSelectPath }) => {
             </div>
             <CardTitle>Je cherche mon job</CardTitle>
             <CardDescription className="path-highlight">
-              <strong className="path-highlight-title">Avant de postuler !</strong> Vérifies si tes compétences sont à jour et valorises toi !
+              <strong className="path-highlight-title">Avant d'envoyer ton CV !</strong> Vérifies si tes compétences sont à jour et valorises toi !
             </CardDescription>
           </CardHeader>
           <CardContent>
