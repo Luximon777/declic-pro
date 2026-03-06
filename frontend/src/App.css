@@ -912,7 +912,7 @@ body {
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch;
   width: 100%;
   max-width: 1000px;
   margin: 0 auto 4rem auto;
@@ -923,6 +923,10 @@ body {
 .path-selection .path-card {
   width: 260px;
   flex-shrink: 0;
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .path-card {
