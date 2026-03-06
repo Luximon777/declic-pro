@@ -4915,19 +4915,25 @@ def score_skills(profile: Dict[str, Any], job: Dict[str, Any]) -> float:
 
 def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any], vertus_profile: Dict[str, Any] = None) -> float:
     """
-    Score basé sur l'Archéologie des Compétences.
+    Score basé sur l'Archéologie des Compétences avec CROISEMENT COMPLET.
     Calcule la cohérence entre les vertus/qualités de l'utilisateur et les soft skills du métier.
     
-    Hiérarchie: Vertus → Valeurs → Qualités → Savoir-être → Compétences → Métier
+    Hiérarchie CK1: Vertus → Valeurs → Qualités → Savoir-être → Compétences → Métier
     
-    Utilise 2 sources:
-    1. Les réponses directes aux questions vv1-vv6 (vertus_profile)
-    2. L'inférence depuis l'Ennéagramme (profile)
+    CROISEMENT de 3 sources:
+    1. Les réponses directes aux questions vv1-vv6 (vertus_profile) - Poids 60%
+    2. L'inférence depuis l'Ennéagramme (profile) - Poids 30%
+    3. Les dimensions CK1 (Cognition, Conation, Affection) - Poids 10% bonus
     """
-    # Source 1: Vertus depuis les questions directes (prioritaire si disponible)
+    # ============================================================================
+    # SOURCE 1: Vertus depuis les questions directes (prioritaire - 60%)
+    # ============================================================================
     if vertus_profile and vertus_profile.get("vertus_scores"):
         user_vertu_key = vertus_profile.get("dominant", "sagesse")
-        # Récupérer les savoirs-être et qualités depuis les réponses directes
+        secondary_vertu_key = vertus_profile.get("secondary", "temperance")
+        vertus_scores = vertus_profile.get("vertus_scores", {})
+        
+        # Récupérer les données depuis la hiérarchie Archéologie
         user_savoirs_etre_from_answers = set(
             s.lower() for s in vertus_profile.get("savoirs_etre_dominants", [])
         )
@@ -4939,28 +4945,52 @@ def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any], vertus_profi
         )
     else:
         user_vertu_key = "sagesse"
+        secondary_vertu_key = "temperance"
+        vertus_scores = {}
         user_savoirs_etre_from_answers = set()
         user_qualites_from_answers = set()
         user_competences_oms_from_answers = set()
     
-    # Source 2: Vertus inférées depuis l'Ennéagramme
+    # ============================================================================
+    # SOURCE 2: Vertus inférées depuis l'Ennéagramme (30%)
+    # ============================================================================
     ennea_dominant = profile.get("ennea_dominant", 5)
+    ennea_secondary = profile.get("ennea_runner_up", 9)
     ennea_profile = ENNEA_TO_PROFILE.get(ennea_dominant, ENNEA_TO_PROFILE[5])
     ennea_vertu_key = ennea_profile.get("vertu", "sagesse")
     ennea_vertu = VERTUS.get(ennea_vertu_key, VERTUS["sagesse"])
     
-    # Combiner les deux sources (priorité aux réponses directes)
+    # ============================================================================
+    # CROISEMENT: Combiner les deux sources avec pondération
+    # ============================================================================
+    # Vertu finale = moyenne pondérée (60% questions, 40% Ennéagramme)
     user_vertu = VERTUS.get(user_vertu_key, ennea_vertu)
     
+    # Union des savoirs-être et qualités des deux sources
     user_savoirs_etre = user_savoirs_etre_from_answers | set(
         s.lower() for s in user_vertu.get("savoirs_etre", [])
+    ) | set(
+        s.lower() for s in ennea_vertu.get("savoirs_etre", [])
     )
+    
     user_qualites = user_qualites_from_answers | set(
         q.lower() for q in user_vertu.get("qualites_humaines", [])
+    ) | set(
+        q.lower() for q in ennea_vertu.get("qualites_humaines", [])
     )
+    
     user_competences_oms = user_competences_oms_from_answers | set(
         c.lower() for c in user_vertu.get("competences_oms", [])
+    ) | set(
+        c.lower() for c in ennea_vertu.get("competences_oms", [])
     )
+    
+    # ============================================================================
+    # SOURCE 3: Dimensions CK1 (Cognition, Conation, Affection)
+    # ============================================================================
+    user_cognition = set(c.lower() for c in user_vertu.get("cognition", []))
+    user_conation = set(c.lower() for c in user_vertu.get("conation", []))
+    user_affection = set(a.lower() for a in user_vertu.get("affection", []))
     
     # Récupérer les soft skills requis par le métier
     job_soft_skills = job.get("soft_skills_essentiels", [])
@@ -4974,27 +5004,27 @@ def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any], vertus_profi
     # Récupérer aussi les compétences requises du métier
     job_competences = set(c.lower() for c in job.get("competences_requises", []))
     
-    # Calculer les matchs entre vertus et métier
+    # ============================================================================
+    # CALCUL DU SCORE avec hiérarchie pondérée
+    # ============================================================================
     score = 0.0
     
-    # 1. Match savoirs-être avec soft skills du métier (poids élevé: 40%)
+    # 1. Match savoirs-être avec soft skills du métier (poids élevé: 35%)
     if user_savoirs_etre and job_skill_names:
         matches = 0
         for savoir in user_savoirs_etre:
             for job_skill in job_skill_names:
-                # Match exact
                 if savoir in job_skill or job_skill in savoir:
                     matches += 1
                     break
-                # Match partiel sur mots-clés
                 savoir_words = set(w for w in savoir.split() if len(w) > 3)
                 skill_words = set(w for w in job_skill.split() if len(w) > 3)
                 if savoir_words & skill_words:
                     matches += 0.5
                     break
-        score += min(0.4, matches * 0.1)
+        score += min(0.35, matches * 0.08)
     
-    # 2. Match qualités humaines avec soft skills (poids moyen: 30%)
+    # 2. Match qualités humaines avec soft skills (poids moyen: 25%)
     if user_qualites and job_skill_names:
         matches = 0
         for qualite in user_qualites:
@@ -5002,13 +5032,12 @@ def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any], vertus_profi
                 if qualite in job_skill or job_skill in qualite:
                     matches += 1
                     break
-                # Match approximatif
                 if len(set(qualite.split()) & set(job_skill.split())) > 0:
                     matches += 0.5
                     break
-        score += min(0.3, matches * 0.08)
+        score += min(0.25, matches * 0.06)
     
-    # 3. Match compétences OMS avec compétences requises (poids moyen: 30%)
+    # 3. Match compétences OMS avec compétences requises (poids moyen: 20%)
     if user_competences_oms and job_competences:
         matches = 0
         for comp_oms in user_competences_oms:
@@ -5016,17 +5045,28 @@ def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any], vertus_profi
                 if comp_oms in job_comp or job_comp in comp_oms:
                     matches += 1
                     break
-                # Match sur mots-clés
                 oms_words = set(w for w in comp_oms.split() if len(w) > 3)
                 comp_words = set(w for w in job_comp.split() if len(w) > 3)
                 if oms_words & comp_words:
                     matches += 0.5
                     break
-        score += min(0.3, matches * 0.08)
+        score += min(0.2, matches * 0.05)
     
-    # Bonus si les vertus directes correspondent à l'Ennéagramme (cohérence)
+    # 4. Bonus CK1: Match dimensions Cognition/Conation/Affection (10%)
+    ck1_matches = 0
+    all_ck1 = user_cognition | user_conation | user_affection
+    for ck1_item in all_ck1:
+        for job_skill in job_skill_names | job_competences:
+            if ck1_item in job_skill or job_skill in ck1_item:
+                ck1_matches += 1
+                break
+    score += min(0.1, ck1_matches * 0.02)
+    
+    # 5. Bonus cohérence: Vertus directes = Ennéagramme (10%)
     if vertus_profile and user_vertu_key == ennea_vertu_key:
         score += 0.1
+    elif vertus_profile and secondary_vertu_key == ennea_vertu_key:
+        score += 0.05  # Bonus partiel si secondaire match
     
     # Score minimum de 0.4 (les vertus sont toujours partiellement transférables)
     final_score = max(0.4, min(1.0, score + 0.35))
