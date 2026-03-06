@@ -316,7 +316,7 @@ const LandingPage = ({ onSelectPath }) => {
             </div>
             <CardTitle>Je cherche encore...</CardTitle>
             <CardDescription className="path-highlight">
-              <strong className="path-highlight-title">Pas encore d'idée précise ?</strong> Peu d'expérience ou nouvelle orientation pro. découvre tes soft skills et des métiers qui pourraient te correspondre.
+              <strong className="path-highlight-title">Découvres tes possibilités</strong> Tu n'as pas encore de projet précis ? Explores tes soft skills et les métiers qui pourraient te correspondre.
             </CardDescription>
           </CardHeader>
           <CardContent>
