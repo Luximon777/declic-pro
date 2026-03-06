@@ -2360,6 +2360,137 @@ def generate_fallback_job_narrative(profile: Dict[str, Any], job: Dict[str, Any]
 
 
 # ============================================================================
+# FILIERE - RIASEC - VERTUS MAPPING (pour scoring des filières)
+# ============================================================================
+
+FILIERE_PROFILE_MAPPING = {
+    "SI": {  # Filière Industrielle
+        "riasec_primary": ["R", "I"],
+        "riasec_secondary": ["C"],
+        "vertus_compatible": ["sagesse", "temperance", "courage"],
+        "disc_compatible": ["C", "D"],
+        "ennea_compatible": [1, 5, 6, 3]
+    },
+    "SBTP": {  # Filière BTP
+        "riasec_primary": ["R"],
+        "riasec_secondary": ["C", "E"],
+        "vertus_compatible": ["courage", "temperance", "justice"],
+        "disc_compatible": ["D", "C"],
+        "ennea_compatible": [8, 1, 3, 6]
+    },
+    "SSS": {  # Filière Santé et Social
+        "riasec_primary": ["S"],
+        "riasec_secondary": ["A", "I"],
+        "vertus_compatible": ["humanite", "justice", "transcendance"],
+        "disc_compatible": ["S", "I"],
+        "ennea_compatible": [2, 9, 6, 1]
+    },
+    "SCV": {  # Filière Commerce et Vente
+        "riasec_primary": ["E"],
+        "riasec_secondary": ["S", "C"],
+        "vertus_compatible": ["courage", "humanite", "justice"],
+        "disc_compatible": ["I", "D"],
+        "ennea_compatible": [3, 7, 8, 2]
+    },
+    "SIN": {  # Filière Informatique et Numérique
+        "riasec_primary": ["I"],
+        "riasec_secondary": ["C", "R"],
+        "vertus_compatible": ["sagesse", "temperance", "transcendance"],
+        "disc_compatible": ["C", "D"],
+        "ennea_compatible": [5, 1, 6, 4]
+    },
+    "SGAE": {  # Filière Gestion et Administration
+        "riasec_primary": ["C"],
+        "riasec_secondary": ["E", "I"],
+        "vertus_compatible": ["temperance", "justice", "sagesse"],
+        "disc_compatible": ["C", "S"],
+        "ennea_compatible": [1, 6, 3, 5]
+    },
+    "SC": {  # Filière Communication et Formation
+        "riasec_primary": ["S", "A"],
+        "riasec_secondary": ["E"],
+        "vertus_compatible": ["humanite", "transcendance", "sagesse"],
+        "disc_compatible": ["I", "S"],
+        "ennea_compatible": [2, 4, 7, 9]
+    }
+}
+
+
+def score_filiere(profile: Dict[str, Any], filiere_id: str, user_riasec: Dict[str, Any] = None, vertus_profile: Dict[str, Any] = None) -> float:
+    """
+    Score de compatibilité avec une filière basé sur le croisement RIASEC + Vertus + DISC + Ennéagramme.
+    Retourne un score entre 0 et 100.
+    """
+    filiere_mapping = FILIERE_PROFILE_MAPPING.get(filiere_id, {})
+    if not filiere_mapping:
+        return 50.0  # Score neutre si filière inconnue
+    
+    score = 0.0
+    max_score = 0.0
+    
+    # 1. Score RIASEC (poids: 35%)
+    max_score += 35
+    if user_riasec:
+        user_riasec_scores = user_riasec.get("scores", {})
+        user_top_codes = sorted(user_riasec_scores.keys(), key=lambda x: user_riasec_scores.get(x, 0), reverse=True)[:3]
+        
+        # Match avec codes primaires (20 pts)
+        primary_match = sum(1 for code in user_top_codes[:2] if code in filiere_mapping.get("riasec_primary", []))
+        score += primary_match * 10
+        
+        # Match avec codes secondaires (15 pts)
+        secondary_match = sum(1 for code in user_top_codes if code in filiere_mapping.get("riasec_secondary", []))
+        score += min(secondary_match * 5, 15)
+    else:
+        score += 17.5  # Score neutre si pas de RIASEC
+    
+    # 2. Score Vertus (poids: 30%)
+    max_score += 30
+    if vertus_profile and vertus_profile.get("vertus_scores"):
+        user_dominant_vertu = vertus_profile.get("dominant", "")
+        user_secondary_vertu = vertus_profile.get("secondary", "")
+        vertus_compatible = filiere_mapping.get("vertus_compatible", [])
+        
+        # Match vertu dominante (20 pts)
+        if user_dominant_vertu in vertus_compatible:
+            position = vertus_compatible.index(user_dominant_vertu)
+            score += 20 - (position * 5)  # 20, 15, 10 pts selon position
+        
+        # Match vertu secondaire (10 pts)
+        if user_secondary_vertu in vertus_compatible:
+            score += 10
+    else:
+        score += 15  # Score neutre si pas de vertus
+    
+    # 3. Score DISC (poids: 20%)
+    max_score += 20
+    user_disc = profile.get("disc", "")
+    if user_disc in filiere_mapping.get("disc_compatible", []):
+        position = filiere_mapping.get("disc_compatible", []).index(user_disc)
+        score += 20 - (position * 5)  # 20, 15, 10, 5 pts selon position
+    else:
+        score += 5  # Score minimal si DISC non compatible
+    
+    # 4. Score Ennéagramme (poids: 15%)
+    max_score += 15
+    user_ennea = profile.get("ennea_dominant", 9)
+    user_ennea_secondary = profile.get("ennea_runner_up", 9)
+    ennea_compatible = filiere_mapping.get("ennea_compatible", [])
+    
+    if user_ennea in ennea_compatible:
+        position = ennea_compatible.index(user_ennea)
+        score += 15 - (position * 3)  # 15, 12, 9, 6 pts selon position
+    elif user_ennea_secondary in ennea_compatible:
+        score += 6  # Bonus si secondaire match
+    else:
+        score += 3  # Score minimal
+    
+    # Normaliser sur 100
+    final_score = (score / max_score) * 100 if max_score > 0 else 50
+    return round(final_score, 1)
+
+
+# ============================================================================
 # STATIC DATA - FILIERES & METIERS
 # ============================================================================
 
@@ -5349,55 +5480,72 @@ async def search_job_hybrid(query: str) -> tuple[List[Dict[str, Any]], Optional[
 
 
 def get_exploration_paths(profile: Dict[str, Any], user_riasec: Dict[str, Any] = None, vertus_profile: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-    """Get recommended filieres and jobs for exploration."""
-    # Score all jobs with RIASEC and Vertus if available
-    all_scores = [score_job(profile, job, user_riasec, vertus_profile) for job in METIERS]
-    all_scores.sort(key=lambda x: x["score"], reverse=True)
+    """
+    Get recommended filieres and jobs for exploration.
+    Utilise le croisement RIASEC + Vertus + DISC + Ennéagramme pour scorer les filières.
+    """
+    # 1. D'abord, scorer toutes les filières directement avec le profil utilisateur
+    filiere_scores = {}
+    for filiere in FILIERES:
+        filiere_id = filiere["id"]
+        filiere_score = score_filiere(profile, filiere_id, user_riasec, vertus_profile)
+        filiere_scores[filiere_id] = {
+            "score": filiere_score,
+            "info": filiere
+        }
     
-    # Group by filiere
+    # 2. Ensuite, scorer tous les métiers
+    all_job_scores = [score_job(profile, job, user_riasec, vertus_profile) for job in METIERS]
+    all_job_scores.sort(key=lambda x: x["score"], reverse=True)
+    
+    # 3. Grouper les métiers par filière
     filiere_jobs = {}
-    for score_result in all_scores:
+    for score_result in all_job_scores:
         filiere = score_result["filiere"]
         if filiere not in filiere_jobs:
             filiere_jobs[filiere] = []
         filiere_jobs[filiere].append(score_result)
     
-    # Build exploration paths
-    MIN_COMPATIBILITY_SCORE = 50  # Lowered from 75 to show more filières
+    # 4. Construire les chemins d'exploration avec pondération filière + métiers
     paths = []
-    for filiere_id, jobs in filiere_jobs.items():
-        if not jobs:
-            continue
+    for filiere_id, filiere_data in filiere_scores.items():
+        filiere_info = filiere_data["info"]
+        filiere_base_score = filiere_data["score"]
         
-        filiere_info = next((f for f in FILIERES if f["id"] == filiere_id), None)
-        if not filiere_info:
-            continue
+        jobs = filiere_jobs.get(filiere_id, [])
         
-        # Consider jobs with score >= 50% for the filiere
-        compatible_jobs = [j for j in jobs if j["score"] >= MIN_COMPATIBILITY_SCORE]
+        # Calculer le score moyen des métiers de cette filière
+        if jobs:
+            # Prendre les 5 meilleurs métiers
+            top_jobs = sorted(jobs, key=lambda x: x["score"], reverse=True)[:5]
+            avg_job_score = sum(j["score"] for j in top_jobs) / len(top_jobs)
+            
+            # Score final = 60% score filière + 40% score métiers
+            final_score = (filiere_base_score * 0.6) + (avg_job_score * 0.4)
+        else:
+            final_score = filiere_base_score * 0.8  # Pénalité si pas de métiers
+            top_jobs = []
         
-        # If no jobs at 50%, take top 2 jobs regardless of score
-        if not compatible_jobs:
-            compatible_jobs = jobs[:2]
-        
-        if not compatible_jobs:
-            continue
-        
-        avg_score = sum(j["score"] for j in compatible_jobs) / len(compatible_jobs)
-        top_jobs = sorted(compatible_jobs, key=lambda x: x["score"], reverse=True)[:5]  # Show up to 5 jobs per filière
+        # Déterminer les secteurs les plus pertinents
+        relevant_sectors = filiere_info["secteurs"][:4]
         
         paths.append({
             "filiere": filiere_info["name"],
             "filiere_id": filiere_id,
-            "avg_compatibility": round(avg_score),
-            "secteurs": filiere_info["secteurs"][:4],
-            "indicative_jobs": [j["job_label"] for j in top_jobs],
-            "top_match": top_jobs[0] if top_jobs else None
+            "avg_compatibility": round(final_score),
+            "filiere_score": round(filiere_base_score),
+            "jobs_score": round(avg_job_score) if jobs else 0,
+            "secteurs": relevant_sectors,
+            "indicative_jobs": [j["job_label"] for j in top_jobs[:5]],
+            "top_match": top_jobs[0] if top_jobs else None,
+            "job_count": len(jobs)
         })
     
-    # Sort by average compatibility
+    # 5. Trier par compatibilité globale
     paths.sort(key=lambda x: x["avg_compatibility"], reverse=True)
-    return paths[:8]  # Return up to 8 filières instead of 5
+    
+    # 6. Retourner toutes les filières (pas de limite arbitraire)
+    return paths
 
 
 # ============================================================================
