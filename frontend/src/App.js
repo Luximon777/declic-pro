@@ -351,7 +351,7 @@ const LandingPage = ({ onSelectPath }) => {
                   <li><Target size={14} className="list-icon-svg" /> Secteur de "gravité professionnelle"</li>
                 </ul>
                 <p className="highlight-outcome">
-                  <Target size={14} /> <strong>Objectif&nbsp;:</strong> proposer des offres cohérentes avec le potentiel réel, pas uniquement le dernier poste occupé.
+                  <Target size={14} /> <strong>Objectif&nbsp;:</strong> proposer des offres cohérentes avec le potentiel réel.
                 </p>
               </div>
 
