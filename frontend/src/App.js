@@ -422,7 +422,7 @@ const LandingPage = ({ onSelectPath }) => {
                   <li><CheckCircle2 size={14} /> Anticipation des besoins futurs</li>
                 </ul>
                 <p className="highlight-conclusion-blue">
-                  <Users size={14} /> Les usagers deviennent <strong>contributeurs</strong> à la lecture des transformations du travail.
+                  <Users size={14} /> Les usagers deviennent <strong className="highlight-word-orange">contributeurs</strong> à la lecture des transformations du travail.
                 </p>
               </div>
 

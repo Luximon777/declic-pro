@@ -1469,6 +1469,13 @@ body {
   color: #93c5fd;
 }
 
+.highlight-word-orange {
+  color: #f97316 !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .highlight-card-header {
   display: flex;
   align-items: center;
