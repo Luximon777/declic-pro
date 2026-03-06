@@ -331,8 +331,8 @@ body {
 }
 
 .phase-2-section {
-  margin-top: 2.5rem;
-  padding-top: 2rem;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--border-dark);
 }
 
@@ -915,7 +915,7 @@ body {
   align-items: stretch;
   width: 100%;
   max-width: 1000px;
-  margin: 0 auto 4rem auto;
+  margin: 0 auto 1.5rem auto;
   position: relative;
   z-index: 1;
 }
