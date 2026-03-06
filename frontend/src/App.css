@@ -345,6 +345,52 @@ body {
   padding: 0 1rem;
 }
 
+.beyond-diploma-section.beyond-diploma-between {
+  margin: 0;
+  padding: 0;
+  width: 340px;
+  flex-shrink: 0;
+}
+
+.beyond-diploma-between .beyond-diploma-container {
+  max-width: 100%;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  height: 100%;
+}
+
+.beyond-diploma-between .beyond-diploma-header {
+  margin-bottom: 1rem;
+}
+
+.beyond-diploma-between .beyond-diploma-header h2 {
+  font-size: 1.25rem;
+}
+
+.beyond-diploma-between .beyond-diploma-intro,
+.beyond-diploma-between .beyond-diploma-description {
+  font-size: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.beyond-diploma-between .beyond-diploma-highlight {
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+}
+
+.beyond-diploma-between .beyond-diploma-highlight p {
+  font-size: 0.8rem;
+}
+
+.beyond-diploma-between .beyond-diploma-conclusion {
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+}
+
+.beyond-diploma-between .beyond-diploma-conclusion p {
+  font-size: 0.8rem;
+}
+
 .beyond-diploma-container {
   max-width: 900px;
   margin: 0 auto;
@@ -862,15 +908,21 @@ body {
 
 /* Path Selection Cards - Modern Design */
 .path-selection {
-  display: grid;
-  grid-template-columns: repeat(2, 260px);
+  display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center;
-  align-items: stretch;
+  align-items: flex-start;
   width: 100%;
-  margin-bottom: 4rem;
+  max-width: 1000px;
+  margin: 0 auto 4rem auto;
   position: relative;
   z-index: 1;
+}
+
+.path-selection .path-card {
+  width: 260px;
+  flex-shrink: 0;
 }
 
 .path-card {
