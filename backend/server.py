@@ -8,6 +8,8 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Dict, Any, Optional
 import uuid
+import secrets
+import string
 from datetime import datetime, timezone
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 
@@ -40,11 +42,87 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+# Collection pour les résultats de tests avec code d'accès
+test_results_collection = db['test_results']
+
 # Create the main app without a prefix
 app = FastAPI(title="RE'ACTIF PRO - Intelligence Professionnelle")
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
+
+
+# ============================================================================
+# FONCTIONS UTILITAIRES - CODE D'ACCÈS
+# ============================================================================
+
+def generate_access_code(length: int = 8) -> str:
+    """
+    Génère un code d'accès unique et lisible.
+    Format: XXXX-XXXX (lettres majuscules et chiffres, sans caractères ambigus)
+    """
+    # Caractères non ambigus (pas de 0/O, 1/I/L)
+    chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
+    code_part1 = ''.join(secrets.choice(chars) for _ in range(4))
+    code_part2 = ''.join(secrets.choice(chars) for _ in range(4))
+    return f"{code_part1}-{code_part2}"
+
+
+async def save_test_result(access_code: str, result_data: Dict[str, Any]) -> bool:
+    """
+    Sauvegarde les résultats du test avec le code d'accès.
+    Les données sont anonymisées (pas de données personnelles).
+    """
+    try:
+        document = {
+            "access_code": access_code,
+            "created_at": datetime.now(timezone.utc),
+            "expires_at": None,  # Pas d'expiration pour l'instant
+            "is_claimed": False,  # Devient True quand récupéré par RE'ACTIF PRO
+            "claimed_at": None,
+            "result_data": result_data
+        }
+        await test_results_collection.insert_one(document)
+        return True
+    except Exception as e:
+        logging.error(f"Erreur sauvegarde résultat test: {e}")
+        return False
+
+
+async def get_test_result_by_code(access_code: str) -> Optional[Dict[str, Any]]:
+    """
+    Récupère les résultats du test par code d'accès.
+    """
+    try:
+        result = await test_results_collection.find_one(
+            {"access_code": access_code.upper()},
+            {"_id": 0}
+        )
+        return result
+    except Exception as e:
+        logging.error(f"Erreur récupération résultat test: {e}")
+        return None
+
+
+async def claim_test_result(access_code: str, user_id: str) -> bool:
+    """
+    Marque un résultat de test comme récupéré par un utilisateur RE'ACTIF PRO.
+    """
+    try:
+        result = await test_results_collection.update_one(
+            {"access_code": access_code.upper(), "is_claimed": False},
+            {
+                "$set": {
+                    "is_claimed": True,
+                    "claimed_at": datetime.now(timezone.utc),
+                    "claimed_by_user_id": user_id
+                }
+            }
+        )
+        return result.modified_count > 0
+    except Exception as e:
+        logging.error(f"Erreur claim résultat test: {e}")
+        return False
 
 
 # ============================================================================
@@ -5839,7 +5917,40 @@ async def match_job(request: JobSearchRequest):
             "optional_skills": esco_details.get("optional_skills", [])[:8]
         }
     
+    # Générer un code d'accès unique pour récupérer les résultats dans RE'ACTIF PRO
+    access_code = generate_access_code()
+    
+    # Préparer les données à sauvegarder (anonymisées)
+    result_to_save = {
+        "profile_summary": {
+            "competences_fortes": profile["competences_fortes"],
+            "dominant_vertus": profile["dominant_vertus"],
+            "disc_scores": profile.get("disc_scores", {"D": 0, "I": 0, "S": 0, "C": 0}),
+            "disc_dominant": profile.get("disc", "S"),
+            "mbti": profile.get("mbti", ""),
+            "ennea_dominant": profile.get("ennea_dominant", 5),
+            "ennea_runner_up": profile.get("ennea_runner_up", 5),
+            "riasec": user_riasec,
+            "vertus": vertus_profile
+        },
+        "vertus_data": vertu_data,
+        "zones_vigilance": zones_vigilance,
+        "life_path": life_path_data,
+        "cross_analysis": cross_analysis,
+        "functioning_compass": functioning_compass,
+        "integrated_analysis": integrated_analysis,
+        "best_match": best_match,
+        "job_query": request.job_query,
+        "job_info": job_info,
+        "other_matches": results_sorted_by_profile[1:5] if len(results_sorted_by_profile) > 1 else [],
+        "suggested_jobs": suggested_jobs
+    }
+    
+    # Sauvegarder les résultats avec le code d'accès
+    await save_test_result(access_code, result_to_save)
+    
     return {
+        "access_code": access_code,  # NOUVEAU: Code d'accès pour RE'ACTIF PRO
         "profile_summary": {
             "competences_fortes": profile["competences_fortes"],
             "dominant_vertus": profile["dominant_vertus"],
@@ -5974,6 +6085,58 @@ async def explore_careers(request: ExploreRequest):
 async def get_vertus():
     """Get all vertus with their details."""
     return {"vertus": VERTUS}
+
+
+
+
+# ============================================================================
+# ENDPOINT POUR RÉCUPÉRER LES RÉSULTATS VIA CODE D'ACCÈS (pour RE'ACTIF PRO)
+# ============================================================================
+
+class AccessCodeRequest(BaseModel):
+    access_code: str
+
+
+@api_router.post("/retrieve-results")
+async def retrieve_test_results(request: AccessCodeRequest):
+    """
+    Récupère les résultats d'un test DE'CLIC PRO via le code d'accès.
+    Utilisé par RE'ACTIF PRO lors de la création de compte.
+    """
+    access_code = request.access_code.upper().strip()
+    
+    # Valider le format du code
+    if len(access_code) != 9 or access_code[4] != '-':
+        raise HTTPException(status_code=400, detail="Format de code invalide. Attendu: XXXX-XXXX")
+    
+    result = await get_test_result_by_code(access_code)
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="Code d'accès non trouvé ou déjà utilisé")
+    
+    if result.get("is_claimed"):
+        raise HTTPException(status_code=400, detail="Ce code a déjà été utilisé pour créer un compte")
+    
+    return {
+        "success": True,
+        "access_code": access_code,
+        "created_at": result.get("created_at"),
+        "result_data": result.get("result_data")
+    }
+
+
+@api_router.post("/claim-results")
+async def claim_test_results(access_code: str, user_id: str):
+    """
+    Marque les résultats comme récupérés par un utilisateur RE'ACTIF PRO.
+    Appelé après création réussie du compte.
+    """
+    success = await claim_test_result(access_code, user_id)
+    
+    if not success:
+        raise HTTPException(status_code=400, detail="Impossible de récupérer ces résultats")
+    
+    return {"success": True, "message": "Résultats associés à votre compte"}
 
 
 # Include the router in the main app

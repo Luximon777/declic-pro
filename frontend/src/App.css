@@ -2722,6 +2722,127 @@ body {
   color: #4338ca;
 }
 
+/* ============================================================================
+   CODE D'ACCÈS RE'ACTIF PRO
+   ============================================================================ */
+
+.access-code-section {
+  margin: 1.5rem 0;
+  padding: 0 1rem;
+}
+
+.access-code-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(16, 185, 129, 0.1) 100%);
+  border: 2px solid rgba(34, 197, 94, 0.4);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.access-code-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #22c55e, #10b981, #059669);
+}
+
+.access-code-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.access-code-header svg {
+  color: #22c55e;
+  flex-shrink: 0;
+}
+
+.access-code-header h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 0.25rem 0;
+}
+
+.access-code-header p {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.access-code-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.access-code-value {
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #22c55e;
+  letter-spacing: 0.15em;
+  flex-grow: 1;
+}
+
+.copy-code-btn {
+  background: rgba(34, 197, 94, 0.2) !important;
+  border-color: rgba(34, 197, 94, 0.5) !important;
+  color: #22c55e !important;
+  transition: all 0.2s ease;
+}
+
+.copy-code-btn:hover {
+  background: rgba(34, 197, 94, 0.3) !important;
+  border-color: #22c55e !important;
+}
+
+.copy-code-btn svg {
+  margin-right: 0.5rem;
+}
+
+.access-code-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+}
+
+.access-code-info svg {
+  color: #22c55e;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+@media (max-width: 640px) {
+  .access-code-display {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .access-code-value {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .copy-code-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 .results-separator {
   margin: 2rem 0;
 }

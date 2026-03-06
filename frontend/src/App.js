@@ -67,7 +67,10 @@ import {
   Cpu,
   Building,
   AlertCircle,
-  GraduationCap
+  GraduationCap,
+  Key,
+  Copy,
+  Check
 } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -3102,9 +3105,19 @@ const ResultsMemo = ({ result, jobInfo, bestMatch }) => {
 // JOB MATCH RESULT
 // ============================================================================
 const JobMatchResult = ({ result, onBack, onNewSearch }) => {
+  const [codeCopied, setCodeCopied] = useState(false);
+
   if (!result) return null;
 
-  const { profile_summary, profile_narrative, vertus_data, zones_vigilance, life_path, cross_analysis, functioning_compass, integrated_analysis, best_match, job_info, job_narrative, other_matches, suggested_jobs } = result;
+  const { access_code, profile_summary, profile_narrative, vertus_data, zones_vigilance, life_path, cross_analysis, functioning_compass, integrated_analysis, best_match, job_info, job_narrative, other_matches, suggested_jobs } = result;
+
+  const copyAccessCode = () => {
+    if (access_code) {
+      navigator.clipboard.writeText(access_code);
+      setCodeCopied(true);
+      setTimeout(() => setCodeCopied(false), 3000);
+    }
+  };
 
   const getScoreColor = (score) => {
     if (score >= 80) return 'score-excellent';
@@ -3135,6 +3148,38 @@ const JobMatchResult = ({ result, onBack, onNewSearch }) => {
         <Info size={16} />
         <p>Cette analyse exploratoire vous offre un premier éclairage sur votre profil. Pour une évaluation approfondie et certifiée, un accompagnement personnalisé est disponible via la plateforme <strong>RE'ACTIF PRO</strong>.</p>
       </div>
+
+      {/* Code d'accès RE'ACTIF PRO */}
+      {access_code && (
+        <div className="access-code-section" data-testid="access-code-section">
+          <div className="access-code-card">
+            <div className="access-code-header">
+              <Key size={24} />
+              <div>
+                <h3>Ton code d'accès RE'ACTIF PRO</h3>
+                <p>Conserve ce code pour créer ton espace personnel et retrouver tes résultats</p>
+              </div>
+            </div>
+            <div className="access-code-display">
+              <span className="access-code-value" data-testid="access-code-value">{access_code}</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={copyAccessCode}
+                className="copy-code-btn"
+                data-testid="copy-code-btn"
+              >
+                {codeCopied ? <Check size={16} /> : <Copy size={16} />}
+                {codeCopied ? 'Copié !' : 'Copier'}
+              </Button>
+            </div>
+            <div className="access-code-info">
+              <Shield size={14} />
+              <span>Ce code est unique et confidentiel. Il te permettra de récupérer tes résultats sans créer de compte avec ton identité civile.</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Layout avec navigation */}
       <div className="results-with-nav">
