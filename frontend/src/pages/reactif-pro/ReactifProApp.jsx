@@ -617,7 +617,7 @@ const DashboardResults = ({ user }) => {
                 <CardDescription>{new Date(result.created_at).toLocaleDateString('fr-FR')}</CardDescription>
               </CardHeader>
               <CardContent>
-                <p>MBTI: {result.result_data?.profile_summary?.mbti}</p>
+                <p>MBTI: {result.content?.profile_summary?.mbti}</p>
                 <Button variant="outline" size="sm">Voir le détail</Button>
               </CardContent>
             </Card>
