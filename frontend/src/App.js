@@ -281,8 +281,7 @@ const LandingPage = ({ onSelectPath }) => {
             
             <div className="beyond-diploma-content">
               <p className="beyond-diploma-intro">
-                Pendant longtemps, le diplôme a été considéré comme la principale clé d'accès à l'emploi.
-                Mais dans un monde du travail en constante transformation, et la mobilité géographique imposée ou choisie, <strong>cette logique ne suffit plus</strong> à révéler la valeur professionnelle d'une personne.
+                Pendant longtemps, le diplôme a été perçu comme la principale porte d'entrée vers l'emploi. Pourtant, dans un monde du travail en mutation permanente, marqué par l'évolution rapide des métiers et par des mobilités géographiques parfois choisies, parfois contraintes, <strong>ce repère ne suffit plus</strong> à refléter pleinement la valeur professionnelle d'une personne.
               </p>
               
               <div className="beyond-diploma-highlight">
