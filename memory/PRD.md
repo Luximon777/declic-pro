@@ -21,9 +21,11 @@ Plateforme d'accompagnement professionnel personnalisé avec 3 espaces :
 
 ### Mars 2026 - Session 3 (08/03/2026)
 - ✅ **Intégration IA Claude Sonnet 4.5** pour génération de fiches métiers
+- ✅ **Cache MongoDB** pour les fiches IA (`ai_job_cache` collection)
 - ✅ **Bug fix** : Fiche métier incorrecte ("aide soignant" au lieu du métier recherché)
+- ✅ **Bug fix** : Vertu par défaut "Sagesse" pour tous les MBTI → Fallback MBTI intelligent
 - ✅ **Amélioration ESCO** : Extraction correcte des descriptions multilingues + vérification pertinence
-- ✅ **Flow de recherche métier** : France Travail → ESCO (pertinent) → Base locale (pertinent) → IA Claude
+- ✅ **Mapping MBTI → Vertu** : ESTP→Courage, INTJ→Sagesse, ENFJ→Humanité, etc.
 
 ### Mars 2026 - Session 2 (06/03/2026)
 - ✅ **Tests complets RE'ACTIF PRO** : 11/11 backend, 100% frontend

@@ -4953,8 +4953,38 @@ ROME_RIASEC_MAPPING = {
     "N4401": "CR",  # Circulation réseau ferré
 }
 
+# ============================================================================
+# MAPPING MBTI → VERTU PAR DÉFAUT (fallback quand questions VV non répondues)
+# ============================================================================
+# Basé sur les caractéristiques psychologiques de chaque type MBTI
+MBTI_TO_VERTU_FALLBACK = {
+    # NT - Analystes/Rationnels → Sagesse (connaissance, analyse, stratégie)
+    "INTJ": ("sagesse", "justice"),
+    "INTP": ("sagesse", "temperance"),
+    "ENTJ": ("justice", "sagesse"),
+    "ENTP": ("sagesse", "courage"),
+    
+    # NF - Diplomates/Idéalistes → Humanité ou Transcendance
+    "INFJ": ("humanite", "transcendance"),
+    "INFP": ("transcendance", "humanite"),
+    "ENFJ": ("humanite", "justice"),
+    "ENFP": ("transcendance", "humanite"),
+    
+    # SJ - Sentinelles/Gardiens → Justice ou Tempérance (ordre, devoir, stabilité)
+    "ISTJ": ("justice", "temperance"),
+    "ISFJ": ("humanite", "temperance"),
+    "ESTJ": ("justice", "courage"),
+    "ESFJ": ("humanite", "justice"),
+    
+    # SP - Explorateurs/Artisans → Courage (action, audace, pragmatisme)
+    "ISTP": ("courage", "sagesse"),
+    "ISFP": ("transcendance", "humanite"),
+    "ESTP": ("courage", "temperance"),  # ESTP = action, prise de risque, pragmatisme
+    "ESFP": ("humanite", "transcendance"),
+}
 
-def calculate_vertus_profile(answers: Dict[str, Any]) -> Dict[str, Any]:
+
+def calculate_vertus_profile(answers: Dict[str, Any], mbti_type: str = None) -> Dict[str, Any]:
     """
     Calcule le profil de vertus basé sur les questions vv1-vv6.
     Retourne les vertus dominantes et les valeurs/qualités associées.
@@ -5065,10 +5095,28 @@ def calculate_vertus_profile(answers: Dict[str, Any]) -> Dict[str, Any]:
                 if savoir in savoir_to_vertu:
                     vertus_scores[savoir_to_vertu[savoir]] += ranking_weights[idx] * 0.5
     
-    # Trier les vertus par score
-    sorted_vertus = sorted(vertus_scores.items(), key=lambda x: x[1], reverse=True)
-    dominant_vertu = sorted_vertus[0][0]
-    secondary_vertu = sorted_vertus[1][0]
+    # ============================================================================
+    # DÉTERMINATION DE LA VERTU DOMINANTE
+    # ============================================================================
+    
+    # Vérifier si des réponses VV ont été fournies (score total > 0)
+    total_score = sum(vertus_scores.values())
+    
+    if total_score > 0:
+        # Cas normal: utiliser les scores calculés
+        sorted_vertus = sorted(vertus_scores.items(), key=lambda x: x[1], reverse=True)
+        dominant_vertu = sorted_vertus[0][0]
+        secondary_vertu = sorted_vertus[1][0]
+    else:
+        # FALLBACK: Aucune réponse VV → utiliser le mapping MBTI
+        if mbti_type and mbti_type.upper() in MBTI_TO_VERTU_FALLBACK:
+            dominant_vertu, secondary_vertu = MBTI_TO_VERTU_FALLBACK[mbti_type.upper()]
+            logging.info(f"Vertu fallback MBTI ({mbti_type}): {dominant_vertu}, {secondary_vertu}")
+        else:
+            # Fallback ultime si pas de MBTI non plus
+            dominant_vertu = "courage"
+            secondary_vertu = "humanite"
+            logging.warning("Aucune donnée VV ni MBTI - utilisation vertu par défaut")
     
     # Normaliser les scores (0-100)
     max_score = max(vertus_scores.values()) if max(vertus_scores.values()) > 0 else 1
@@ -6267,7 +6315,8 @@ async def match_job(request: JobSearchRequest):
     user_riasec = calculate_riasec_profile(request.answers, profile)
     
     # NOUVEAU: Calculer le profil de vertus depuis les questions vv1-vv6
-    vertus_profile = calculate_vertus_profile(request.answers)
+    # Passer le MBTI comme fallback si les questions VV ne sont pas répondues
+    vertus_profile = calculate_vertus_profile(request.answers, mbti_type=profile.get("mbti"))
     
     # Recherche hybride : base locale + France Travail API
     matching_jobs, france_travail_fiche = await search_job_hybrid(request.job_query)
@@ -6627,7 +6676,8 @@ async def explore_careers(request: ExploreRequest):
     user_riasec = calculate_riasec_profile(request.answers, profile)
     
     # NOUVEAU: Calculer le profil de vertus depuis les questions vv1-vv6
-    vertus_profile = calculate_vertus_profile(request.answers)
+    # Passer le MBTI comme fallback si les questions VV ne sont pas répondues
+    vertus_profile = calculate_vertus_profile(request.answers, mbti_type=profile.get("mbti"))
     
     # Get exploration paths with RIASEC and Vertus
     paths = get_exploration_paths(profile, user_riasec, vertus_profile)
