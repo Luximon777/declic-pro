@@ -6195,6 +6195,33 @@ async def match_job(request: JobSearchRequest):
     job_narrative = None
     matched_job = None
     
+    # IMPORTANT: Récupérer les détails ESCO EN PREMIER pour les utiliser dans le narrative
+    esco_details = None
+    esco_is_relevant = False
+    
+    if request.job_query:
+        esco_results = await search_occupations_esco(request.job_query, limit=5, language="fr")
+        if esco_results:
+            # Vérifier la pertinence du résultat ESCO
+            query_words = set(normalize_text(request.job_query).split())
+            query_words_significant = {w for w in query_words if len(w) > 3}
+            
+            for esco_result in esco_results:
+                esco_title = esco_result.get("title", "")
+                title_words = set(normalize_text(esco_title).split())
+                
+                # Vérifier si au moins 50% des mots significatifs de la requête sont dans le titre
+                if query_words_significant:
+                    matching_words = query_words_significant & title_words
+                    relevance = len(matching_words) / len(query_words_significant)
+                    
+                    if relevance >= 0.5:
+                        esco_uri = esco_result.get("uri")
+                        if esco_uri:
+                            esco_details = await get_occupation_details_esco(esco_uri, language="fr")
+                            esco_is_relevant = True
+                            break
+    
     # Si France Travail a trouvé un métier, l'utiliser en priorité pour best_match
     if france_travail_fiche:
         # Créer un best_match basé sur la fiche France Travail
@@ -6209,8 +6236,38 @@ async def match_job(request: JobSearchRequest):
             "source": "france_travail"
         }
         matched_job = france_travail_fiche
+    elif esco_details and esco_is_relevant:
+        # ESCO a trouvé le métier - créer un matched_job basé sur ESCO
+        # Note: ESCO essential_skills sont déjà des dicts {"nom": ..., "importance": ...}
+        esco_essential = esco_details.get("essential_skills", [])[:4]
+        esco_optional = esco_details.get("optional_skills", [])[:4]
+        
+        # S'assurer que les skills sont bien formatés
+        def normalize_skill(s):
+            if isinstance(s, dict):
+                return {"nom": s.get("nom", str(s)), "importance": s.get("importance", "importante"), "description": s.get("description", "")}
+            return {"nom": str(s), "importance": "importante", "description": ""}
+        
+        matched_job = {
+            "label": esco_details.get("title", request.job_query),
+            "intitule_rome": esco_details.get("title", request.job_query),
+            "definition": esco_details.get("description", ""),
+            "soft_skills_essentiels": [normalize_skill(s) for s in esco_essential],
+            "hard_skills_essentiels": [normalize_skill(s) for s in esco_optional],
+            "source": "esco"
+        }
+        best_match = {
+            "job_id": esco_details.get("uri", "esco"),
+            "job_label": esco_details.get("title", request.job_query),
+            "secteur": "Base européenne ESCO",
+            "filiere": "",
+            "score": results[0]["score"] if results else 65,
+            "reasons": results[0].get("reasons", []) if results else [],
+            "risks": results[0].get("risks", []) if results else [],
+            "source": "esco"
+        }
     elif best_match:
-        matched_job = next((j for j in matching_jobs if j["id"] == best_match["job_id"]), matching_jobs[0])
+        matched_job = next((j for j in matching_jobs if j["id"] == best_match["job_id"]), matching_jobs[0] if matching_jobs else None)
     
     if matched_job:
         job_narrative = await generate_job_match_narrative(
@@ -6223,15 +6280,6 @@ async def match_job(request: JobSearchRequest):
     
     # Prepare job info - Priorité à France Travail si disponible, puis ESCO, puis local
     job_info = None
-    esco_details = None
-    
-    # Try to get ESCO details for enrichment
-    if request.job_query:
-        esco_results = await search_occupations_esco(request.job_query, limit=1, language="fr")
-        if esco_results:
-            esco_uri = esco_results[0].get("uri")
-            if esco_uri:
-                esco_details = await get_occupation_details_esco(esco_uri, language="fr")
     
     if france_travail_fiche:
         # Utiliser la fiche France Travail (données officielles)
@@ -6244,7 +6292,7 @@ async def match_job(request: JobSearchRequest):
             "hard_skills_essentiels": france_travail_fiche.get("hard_skills_essentiels", []),
             "source": "france_travail"
         }
-    elif esco_details:
+    elif esco_details and esco_is_relevant:
         # Utiliser ESCO (base européenne 3000+ métiers)
         job_info = {
             "code_esco": esco_details.get("code_esco"),

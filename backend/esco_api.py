@@ -132,12 +132,24 @@ async def get_occupation_details_esco(uri: str, language: str = "fr") -> Optiona
                         elif isinstance(skills, dict):
                             optional_skills = [{"nom": skills.get("title", ""), "importance": "importante"}]
                 
+                # Extraire la description dans la bonne langue
+                raw_description = data.get("description", "")
+                if isinstance(raw_description, dict):
+                    # La description est multilingue, extraire la version française ou anglaise
+                    desc_obj = raw_description.get(language) or raw_description.get("fr") or raw_description.get("en")
+                    if isinstance(desc_obj, dict):
+                        description = desc_obj.get("literal", "")
+                    else:
+                        description = str(desc_obj) if desc_obj else ""
+                else:
+                    description = str(raw_description) if raw_description else ""
+                
                 occupation_details = {
                     "uri": uri,
                     "code_esco": extract_esco_code(uri),
                     "title": data.get("title", ""),
-                    "description": data.get("description", ""),
-                    "definition": data.get("description", ""),
+                    "description": description,
+                    "definition": description,
                     "essential_skills": essential_skills,
                     "optional_skills": optional_skills,
                     "all_skills": essential_skills + optional_skills,
