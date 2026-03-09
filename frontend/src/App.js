@@ -168,6 +168,60 @@ const DeclicProLogo = ({ size = 120, animated = true }) => (
   </svg>
 );
 
+
+// ============================================================================
+// RE'ACTIF PRO LOGO SVG - Purple/Blue Theme (Official Brand Colors)
+// ============================================================================
+const ReactifProLogo = ({ size = 80, animated = false }) => (
+  <svg width={size} height={size} viewBox="0 0 100 100" className="reactif-logo-svg">
+    {/* Outer circle with dashes (traits d'union) - animated rotation */}
+    <circle 
+      cx="50" cy="50" r="45" 
+      fill="none" 
+      stroke="#c7d2fe" 
+      strokeWidth="2" 
+      strokeDasharray="12 6"
+      strokeLinecap="round"
+      className={animated ? "reactif-rotating-circle" : ""}
+    />
+    
+    {/* Hexagonal nodes - connected points (purple) */}
+    <circle cx="50" cy="12" r="5" fill="#6366f1"/>
+    <circle cx="82" cy="30" r="5" fill="#6366f1"/>
+    <circle cx="82" cy="70" r="5" fill="#6366f1"/>
+    <circle cx="50" cy="88" r="5" fill="#6366f1"/>
+    <circle cx="18" cy="70" r="5" fill="#6366f1"/>
+    <circle cx="18" cy="30" r="5" fill="#6366f1"/>
+    
+    {/* Connection lines with dashes (traits d'union) */}
+    <g className={animated ? "reactif-rotating-lines" : ""}>
+      <line x1="50" y1="12" x2="82" y2="30" stroke="#a5b4fc" strokeWidth="2" strokeDasharray="8 4" strokeLinecap="round"/>
+      <line x1="82" y1="30" x2="82" y2="70" stroke="#a5b4fc" strokeWidth="2" strokeDasharray="8 4" strokeLinecap="round"/>
+      <line x1="82" y1="70" x2="50" y2="88" stroke="#a5b4fc" strokeWidth="2" strokeDasharray="8 4" strokeLinecap="round"/>
+      <line x1="50" y1="88" x2="18" y2="70" stroke="#a5b4fc" strokeWidth="2" strokeDasharray="8 4" strokeLinecap="round"/>
+      <line x1="18" y1="70" x2="18" y2="30" stroke="#a5b4fc" strokeWidth="2" strokeDasharray="8 4" strokeLinecap="round"/>
+      <line x1="18" y1="30" x2="50" y2="12" stroke="#a5b4fc" strokeWidth="2" strokeDasharray="8 4" strokeLinecap="round"/>
+    </g>
+    
+    {/* Inner connections to center (medium purple) */}
+    <line x1="50" y1="12" x2="50" y2="35" stroke="#818cf8" strokeWidth="1.5"/>
+    <line x1="82" y1="30" x2="62" y2="42" stroke="#818cf8" strokeWidth="1.5"/>
+    <line x1="82" y1="70" x2="62" y2="58" stroke="#818cf8" strokeWidth="1.5"/>
+    <line x1="50" y1="88" x2="50" y2="65" stroke="#818cf8" strokeWidth="1.5"/>
+    <line x1="18" y1="70" x2="38" y2="58" stroke="#818cf8" strokeWidth="1.5"/>
+    <line x1="18" y1="30" x2="38" y2="42" stroke="#818cf8" strokeWidth="1.5"/>
+    
+    {/* Central element - glow background (pale lavender) */}
+    <circle cx="50" cy="50" r="18" fill="#e0e7ff"/>
+    
+    {/* Central circle (indigo) */}
+    <circle cx="50" cy="50" r="13" fill="#4f46e5"/>
+    
+    {/* R letter in the center */}
+    <text x="50" y="56" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold" fontFamily="Arial, sans-serif">R</text>
+  </svg>
+);
+
 // ============================================================================
 // LANDING PAGE - DE'CLIC PRO Design
 // ============================================================================
@@ -183,7 +237,7 @@ const LandingPage = ({ onSelectPath }) => {
               <h1 className="declic-title">
                 DE'<span className="declic-highlight">CLIC</span> PRO
               </h1>
-              <p className="declic-tagline">Orientation Professionnelle par ALT&ACT</p>
+              <p className="declic-tagline">L'APPLY RE'ACTIF PRO</p>
             </div>
           </div>
         </div>
@@ -236,12 +290,12 @@ const LandingPage = ({ onSelectPath }) => {
               
               <div className="beyond-diploma-highlight">
                 <p>
-                  <strong>DE'CLIC PRO</strong> par <strong>Alt&Act</strong> défend une approche différente : reconnaître les individus à partir de leurs <em>compétences réelles</em>, de leur <em>potentiel</em> et de leur <em>capacité à contribuer</em>.
+                  <strong>RE'ACTIF PRO</strong> (concepteur Alt&Act) créateur de <strong>DE'CLIC PRO</strong>, défend une approche différente : reconnaître les individus à partir de leurs <em>compétences réelles</em>, de leur <em>potentiel</em> et de leur <em>capacité à contribuer</em>.
                 </p>
               </div>
               
               <p className="beyond-diploma-description">
-                À travers ses méthodes d'accompagnement et ses outils technologiques, DE'CLIC PRO aide chacun à <strong>identifier ses talents</strong>, <strong>valoriser son parcours</strong> et <strong>construire une trajectoire professionnelle porteuse de sens</strong>.
+                À travers ses méthodes d'accompagnement et ses outils technologiques, RE'ACTIF PRO aide chacun à <strong>identifier ses talents</strong>, <strong>valoriser son parcours</strong> et <strong>construire une trajectoire professionnelle porteuse de sens</strong>.
               </p>
               
               <div className="beyond-diploma-conclusion">
@@ -277,6 +331,261 @@ const LandingPage = ({ onSelectPath }) => {
         </Card>
       </div>
 
+      {/* PHASE 2 */}
+      <div className="landing-phase-section phase-2-section">
+        <div className="phase-badge phase-2-badge">
+          <span className="phase-number">PHASE 2</span>
+        </div>
+        
+        {/* Logos partenaires : Alt&Act | Ubuntoo | RE'ACTIF PRO | AI Act */}
+        <div className="partners-logos-container">
+          <img src="/logo-altact.png" alt="Alt&Act" className="partner-logo logo-altact" />
+          <img src="/logo-ubuntoo.png" alt="Ubuntoo" className="partner-logo logo-ubuntoo" />
+          <img src="/reactif-pro-logo-full.png" alt="RE'ACTIF PRO" className="partner-logo logo-reactif" />
+          <img src="/logo-ia-act.jpeg" alt="AI Act" className="partner-logo logo-ia-act" />
+        </div>
+        
+        <p className="phase-description">
+          Accèdes à des services professionnels pour garantir ton employabilité <strong>tout au long de ta vie !</strong>
+        </p>
+      </div>
+
+      {/* Services RE'ACTIF PRO */}
+      <div className="reactif-services-pro">
+        {/* NIVEAU 1 */}
+        <div className="service-level-pro">
+          <div className="level-header level-1-header">
+            <div className="level-icon"><Layers size={24} /></div>
+            <div className="level-info">
+              <span className="level-tag">NIVEAU 1</span>
+              <h3>FONDATION</h3>
+              <p>Vision & Cadre Structurant</p>
+            </div>
+          </div>
+          
+          {/* Job Matching Intelligent - Service Principal */}
+          <div className="service-highlight-pro">
+            <div className="highlight-header">
+              <div className="highlight-icon"><Target size={28} /></div>
+              <div className="highlight-title">
+                <h4>Job Matching Intelligent & Évolutif</h4>
+                <p className="highlight-tagline">Au-delà des compétences déclarées, vers le potentiel réel</p>
+              </div>
+            </div>
+            
+            <div className="highlight-grid">
+              {/* Profil Dynamique */}
+              <div className="highlight-card">
+                <div className="highlight-card-header">
+                  <User size={20} />
+                  <h5>Profil Utilisateur Dynamique</h5>
+                </div>
+                <p className="highlight-card-intro">Le dispositif repose sur un profil enrichi intégrant :</p>
+                <ul className="highlight-list">
+                  <li><Briefcase size={14} className="list-icon-svg" /> Compétences techniques</li>
+                  <li><Users size={14} className="list-icon-svg" /> Soft skills</li>
+                  <li><Heart size={14} className="list-icon-svg" /> Valeurs et motivations</li>
+                  <li><TrendingUp size={14} className="list-icon-svg" /> Potentiel d'adaptation</li>
+                  <li><ArrowRight size={14} className="list-icon-svg" /> Trajectoire professionnelle</li>
+                  <li><Target size={14} className="list-icon-svg" /> Secteur de "gravité professionnelle"</li>
+                </ul>
+                <p className="highlight-outcome">
+                  <Target size={14} /> <strong>Objectif&nbsp;:</strong> proposer des offres cohérentes avec le potentiel réel.
+                </p>
+              </div>
+
+              {/* Logique Écosystème */}
+              <div className="highlight-card">
+                <div className="highlight-card-header">
+                  <Network size={20} />
+                  <h5>Logique d'Écosystème</h5>
+                </div>
+                <p className="highlight-card-intro">Le matching positionne la personne dans :</p>
+                <ul className="highlight-list">
+                  <li><Globe size={14} className="list-icon-svg" /> Un écosystème métiers</li>
+                  <li><Building size={14} className="list-icon-svg" /> Des secteurs compatibles</li>
+                  <li><Map size={14} className="list-icon-svg" /> Des trajectoires possibles</li>
+                  <li><Sparkles size={14} className="list-icon-svg" /> Des métiers émergents ou hybrides</li>
+                </ul>
+                <p className="highlight-outcome">
+                  <TrendingUp size={14} /> Ce n'est pas une correspondance statique, mais une <strong>projection évolutive</strong>.
+                </p>
+              </div>
+
+              {/* Observatoire Intégré - Accent */}
+              <div className="highlight-card highlight-card-accent-blue">
+                <div className="highlight-card-header">
+                  <Eye size={20} />
+                  <h5>Observatoire des Compétences Prédictif</h5>
+                </div>
+                <p className="highlight-card-intro">Le job matching est connecté à :</p>
+                <ul className="highlight-list-check">
+                  <li><CheckCircle2 size={14} /> Observatoire dynamique des compétences</li>
+                  <li><CheckCircle2 size={14} /> Analyse des usages réels sur le terrain</li>
+                  <li><CheckCircle2 size={14} /> Identification des compétences hybrides</li>
+                  <li><CheckCircle2 size={14} /> Anticipation des besoins futurs</li>
+                </ul>
+                <p className="highlight-conclusion-blue">
+                  <Users size={14} /> Les usagers deviennent <strong className="highlight-word-orange">contributeurs</strong> à la lecture des transformations du travail.
+                </p>
+              </div>
+
+              {/* Différenciation Stratégique */}
+              <div className="highlight-card highlight-card-accent">
+                <div className="highlight-card-header">
+                  <Award size={20} />
+                  <h5>Différenciation RE'ACTIF PRO</h5>
+                </div>
+                <p className="highlight-card-intro">Notre vision stratégique :</p>
+                <ul className="highlight-list-check">
+                  <li><CheckCircle2 size={14} /> Sortir du matching déclaratif</li>
+                  <li><CheckCircle2 size={14} /> Intégrer la dimension axiologique (sens, valeurs)</li>
+                  <li><CheckCircle2 size={14} /> Identifier les écarts avec micro-actions correctives</li>
+                  <li><CheckCircle2 size={14} /> Valoriser le potentiel plutôt que le passé</li>
+                </ul>
+                <p className="highlight-conclusion">
+                  <Zap size={14} /> <span>Le job matching devient un <strong>outil d'orientation active</strong> et non plus seulement de placement.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Services Complémentaires */}
+          <div className="service-grid-pro service-grid-complementary">
+            <div className="service-item-pro">
+              <div className="service-header-pro">
+                <div className="service-icon-pro"><Compass size={20} /></div>
+                <h4>Parcours d'accompagnement hybride</h4>
+              </div>
+              <div className="service-content-pro">
+                <span className="content-label">Socle opérationnel :</span>
+                <ul className="service-list-check">
+                  <li><CheckCircle2 size={14} className="check-icon" /> Accompagnement humain renforcé par la technologie</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Diagnostic global : compétences, personnalité, aspirations</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Analyse des freins et leviers</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Construction d'un plan d'action individualisé</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Positionnement professionnel aligné avec le sens et la transférabilité</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="service-item-pro">
+              <div className="service-header-pro">
+                <div className="service-icon-pro"><Shield size={20} /></div>
+                <h4>Gouvernance & Éthique IA</h4>
+              </div>
+              <div className="service-content-pro">
+                <ul className="service-list-check">
+                  <li><CheckCircle2 size={14} className="check-icon" /> Charte éthique IA dédiée à l'accompagnement</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> IA explicable et non discriminante</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Transparence des algorithmes décisionnels</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Protection des données</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Comité éthique et mission</li>
+                </ul>
+              </div>
+              <p className="service-note-pro">
+                <AlertCircle size={14} /> L'IA reste un outil d'aide à la décision, jamais un substitut au conseiller.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* NIVEAU 2 */}
+        <div className="service-level-pro">
+          <div className="level-header level-2-header">
+            <div className="level-icon"><Settings size={24} /></div>
+            <div className="level-info">
+              <span className="level-tag">NIVEAU 2</span>
+              <h3>DISPOSITIFS OPÉRATIONNELS</h3>
+              <p>Outils & Méthodes</p>
+            </div>
+          </div>
+          
+          <div className="service-grid-pro service-grid-3">
+            <div className="service-item-pro">
+              <div className="service-header-pro">
+                <div className="service-icon-pro"><User size={20} /></div>
+                <h4>Dispositif VSI (Valoriser Son Identité)</h4>
+              </div>
+              <div className="service-content-pro">
+                <ul className="service-list-check">
+                  <li><CheckCircle2 size={14} className="check-icon" /> Diagnostic des compétences visibles et invisibles</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Travail sur posture et identité professionnelle</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Développement de la confiance</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Objectifs personnalisés</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Consolidation du projet</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="service-item-pro">
+              <div className="service-header-pro">
+                <div className="service-icon-pro"><Users size={20} /></div>
+                <h4>Ateliers & Programmes collectifs</h4>
+              </div>
+              <div className="service-content-pro">
+                <ul className="service-list-check">
+                  <li><CheckCircle2 size={14} className="check-icon" /> Développement des soft skills</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Simulation d'entretiens</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Narration professionnelle</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Travail sur les biais et discriminations</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Appropriation des outils numériques</li>
+                </ul>
+              </div>
+              <p className="service-note-pro">
+                Renforce la cohérence entre compétences, valeurs et environnement professionnel.
+              </p>
+            </div>
+
+            <div className="service-item-pro">
+              <div className="service-header-pro">
+                <div className="service-icon-pro"><Map size={20} /></div>
+                <h4>Cartographie Interactive</h4>
+              </div>
+              <div className="service-content-pro">
+                <ul className="service-list-check">
+                  <li><CheckCircle2 size={14} className="check-icon" /> Visualisation profil ↔ métiers</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Identification de passerelles</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Lecture des compétences transférables</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Projection sectorielle</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Support d'aide à la décision</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* NIVEAU 3 */}
+        <div className="service-level-pro">
+          <div className="level-header level-3-header">
+            <div className="level-icon"><Globe size={24} /></div>
+            <div className="level-info">
+              <span className="level-tag">NIVEAU 3</span>
+              <h3>IMPACT & ÉCOSYSTÈME</h3>
+              <p>Dimension Collective</p>
+            </div>
+          </div>
+          
+          <div className="service-grid-pro">
+            <div className="service-item-pro service-item-wide">
+              <div className="service-header-pro">
+                <div className="service-icon-pro"><Network size={20} /></div>
+                <h4>Dimension communautaire & Intelligence collective</h4>
+              </div>
+              <div className="service-content-pro service-content-columns">
+                <ul className="service-list-check">
+                  <li><CheckCircle2 size={14} className="check-icon" /> Mise en réseau bénéficiaires – entreprises – partenaires</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Communautés sectorielles</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Dynamique contributive</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Valorisation des parcours atypiques</li>
+                  <li><CheckCircle2 size={14} className="check-icon" /> Intelligence collective au service des trajectoires</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
 
       <div className="landing-features declic-features hidden">
         <div className="feature">
@@ -2084,10 +2393,10 @@ const ProfessionalIdCard = ({ vertus, competences, narrative, lifePath, jobInfo 
           {/* Header */}
           <div className="id-card-v2-header">
             <div className="id-logo">
-              <span className="logo-name">DE'CLIC PRO</span>
+              <span className="logo-name">John DO</span>
             </div>
-            <div className="id-badge-declic-logo">
-              <DeclicProLogoCompact size={32} />
+            <div className="id-badge-reactif-logo">
+              <img src="/reactif-pro-logo.png" alt="RE'ACTIF PRO" className="reactif-logo-img-small" />
             </div>
           </div>
 
@@ -2244,6 +2553,74 @@ const ProfessionalIdCard = ({ vertus, competences, narrative, lifePath, jobInfo 
             <Share2 size={16} /> Partager
             <Badge variant="secondary" className="coming-soon">Bientôt</Badge>
           </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+
+// ============================================================================
+// CTA RE'ACTIF PRO - Invitation to continue
+// ============================================================================
+const ReactifProCTA = () => {
+  // Generate unique alphanumeric code with date
+  const generateProfileCode = () => {
+    const now = new Date();
+    const dateStr = now.getFullYear().toString() +
+      String(now.getMonth() + 1).padStart(2, '0') +
+      String(now.getDate()).padStart(2, '0');
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let randomPart = '';
+    for (let i = 0; i < 5; i++) {
+      randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return `DECLIC-${dateStr}-${randomPart}`;
+  };
+
+  const [profileCode] = useState(() => generateProfileCode());
+
+  return (
+    <Card className="reactif-cta-card institutional-style" data-testid="reactif-pro-cta">
+      <CardContent className="cta-card-content">
+        {/* Header with partner logos */}
+        <div className="cta-header-institutional">
+          <div className="cta-partner-logos">
+            <img src="/reactif-pro-logo.png" alt="RE'ACTIF PRO" className="cta-logo-partner" />
+            <span className="cta-logo-separator">×</span>
+            <img src="/logo-ubuntoo.png" alt="UBUNTOO" className="cta-logo-partner cta-logo-ubuntoo" />
+          </div>
+        </div>
+        
+        {/* Main content */}
+        <div className="cta-body-institutional">
+          <h3 className="cta-title-institutional">
+            Récupérez votre rapport complet
+          </h3>
+          <p className="cta-subtitle-institutional">
+            Profil personnalité & compétences
+          </p>
+          <p className="cta-description-institutional">
+            Accédez à votre espace personnel sur <strong>RE'ACTIF PRO</strong> et rejoignez 
+            le réseau socio-professionnel <strong>UBUNTOO</strong> pour poursuivre votre 
+            parcours en développant confiance et estime de soi.
+          </p>
+          
+          {/* Footer with code and button side by side */}
+          <div className="cta-footer-institutional">
+            {/* Code section */}
+            <div className="cta-code-institutional">
+              <div className="cta-code-label-institutional">Votre code d'accès</div>
+              <div className="cta-code-value-institutional">{profileCode}</div>
+            </div>
+            
+            {/* CTA Button */}
+            <Button className="cta-button-institutional" disabled data-testid="discover-reactif-btn">
+              <span>Accéder à RE'ACTIF PRO</span>
+              <ExternalLink size={16} />
+              <Badge className="cta-badge-institutional">Bientôt disponible</Badge>
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>
@@ -2848,18 +3225,18 @@ const JobMatchResult = ({ result, onBack, onNewSearch }) => {
       {/* Disclaimer */}
       <div className="results-disclaimer">
         <Info size={16} />
-        <p>Cette analyse exploratoire vous offre un premier éclairage sur votre profil. Pour une évaluation approfondie et certifiée, un accompagnement personnalisé est disponible via <strong>ALT&ACT</strong>.</p>
+        <p>Cette analyse exploratoire vous offre un premier éclairage sur votre profil. Pour une évaluation approfondie et certifiée, un accompagnement personnalisé est disponible via la plateforme <strong>RE'ACTIF PRO</strong>.</p>
       </div>
 
-      {/* Code d'accès DE'CLIC PRO */}
+      {/* Code d'accès RE'ACTIF PRO */}
       {access_code && (
         <div className="access-code-section" data-testid="access-code-section">
           <div className="access-code-card">
             <div className="access-code-header">
               <Key size={24} />
               <div>
-                <h3>Ton code d'accès DE'CLIC PRO</h3>
-                <p>Conserve ce code pour retrouver tes résultats</p>
+                <h3>Ton code d'accès RE'ACTIF PRO</h3>
+                <p>Conserve ce code pour créer ton espace personnel et retrouver tes résultats</p>
               </div>
             </div>
             <div className="access-code-display">
@@ -2877,7 +3254,7 @@ const JobMatchResult = ({ result, onBack, onNewSearch }) => {
             </div>
             <div className="access-code-info">
               <Shield size={14} />
-              <span>Ce code est unique et confidentiel. Il te permettra de récupérer tes résultats.</span>
+              <span>Ce code est unique et confidentiel. Il te permettra de récupérer tes résultats sans créer de compte avec ton identité civile.</span>
             </div>
           </div>
         </div>
@@ -3025,6 +3402,9 @@ const JobMatchResult = ({ result, onBack, onNewSearch }) => {
       {/* 6. Synthèse Professionnelle (à la fin, concise) */}
       <ProfileSummary narrative={profile_narrative} competences={profile_summary?.competences_fortes} />
 
+      {/* 7. CTA RE'ACTIF PRO */}
+      <ReactifProCTA />
+
         </div>
       </div>
     </div>
@@ -3063,7 +3443,7 @@ const ExploreResult = ({ result, onBack }) => {
       {/* Disclaimer */}
       <div className="results-disclaimer">
         <Info size={16} />
-        <p>Cette analyse exploratoire vous offre un premier éclairage sur votre profil. Pour une évaluation approfondie et certifiée, un accompagnement personnalisé est disponible via <strong>ALT&ACT</strong>.</p>
+        <p>Cette analyse exploratoire vous offre un premier éclairage sur votre profil. Pour une évaluation approfondie et certifiée, un accompagnement personnalisé est disponible via la plateforme <strong>RE'ACTIF PRO</strong>.</p>
       </div>
 
       {/* Layout avec navigation */}
@@ -3207,6 +3587,9 @@ const ExploreResult = ({ result, onBack }) => {
 
       {/* 7. Synthèse Professionnelle (à la fin, concise) */}
       <ProfileSummary narrative={profile_narrative} competences={profile_summary?.competences_fortes} />
+
+      {/* 8. CTA RE'ACTIF PRO */}
+      <ReactifProCTA />
 
         </div>
       </div>
