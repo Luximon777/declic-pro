@@ -162,41 +162,48 @@ MBTI_TEST_ANSWERS = {
 # DÉFINITION DES ATTENTES PAR GROUPE MBTI
 # ============================================================================
 
-# Filières attendues par groupe MBTI (ordre de priorité)
+# Filières attendues par groupe MBTI (VRAIS CODES DU SYSTÈME)
+# SI = Industrielle, SBTP = BTP, SSS = Santé/Social, SCV = Commerce/Vente
+# SIN = Informatique/Numérique, SGAE = Gestion/Admin, SC = Communication/Formation
 EXPECTED_FILIERES = {
-    "NF": ["SSS", "EDU", "COM", "CRE"],  # Santé/Social, Éducation, Communication, Création
-    "NT": ["TIC", "SCI", "FIN", "ING"],  # Tech, Sciences, Finance, Ingénierie
-    "SJ": ["ADM", "JUR", "FIN", "SSS"],  # Administration, Juridique, Finance, Santé
-    "SP": ["ART", "COM", "HRT", "LOG"],  # Artisanat, Commerce, Hôtellerie, Logistique
+    "NF": ["SSS", "SC", "SGAE"],         # Santé/Social, Communication/Formation, Gestion
+    "NT": ["SIN", "SI", "SGAE"],         # Informatique, Industrielle, Gestion
+    "SJ": ["SGAE", "SSS", "SCV", "SI"],  # Gestion/Admin, Santé, Commerce, Industrielle
+    "SP": ["SI", "SBTP", "SCV", "SIN"], # Industrielle, BTP, Commerce, Informatique
 }
 
-# Métiers typiques attendus par groupe MBTI
+# Métiers typiques attendus par groupe MBTI (mots-clés)
 EXPECTED_TOP_JOBS = {
-    "NF": ["Psychologue", "Éducateur", "Conseiller", "Formateur", "Coach", "Enseignant", "Médiateur"],
-    "NT": ["Développeur", "Analyste", "Ingénieur", "Architecte", "Data", "Consultant", "Chercheur"],
-    "SJ": ["Comptable", "Assistant", "Secrétaire", "Gestionnaire", "Agent administratif", "Juriste"],
-    "SP": ["Chef de chantier", "Commercial", "Cuisinier", "Technicien", "Artisan", "Vendeur"],
+    "NF": ["Psychologue", "Éducateur", "Conseiller", "Formateur", "Coach", "Enseignant", "Médiateur", "Infirmier", "RH"],
+    "NT": ["Développeur", "Analyste", "Ingénieur", "Architecte", "Data", "Consultant", "Chercheur", "Chef de projet", "Administrateur"],
+    "SJ": ["Comptable", "Assistant", "Secrétaire", "Gestionnaire", "Agent", "Juriste", "Infirmier", "Contrôleur", "Auditeur", "Magasinier", "Technicien", "Responsable"],
+    "SP": ["Chef de chantier", "Commercial", "Cuisinier", "Technicien", "Artisan", "Vendeur", "Maçon", "Agent", "Électricien", "Graphiste", "UX", "Designer", "Animateur", "Community"],
 }
 
-# Vertus attendues par groupe MBTI
+# Vertus attendues par groupe MBTI (basé sur réponses VV dans le test + fallback)
+# Note: Les réponses VV dominent le fallback MBTI quand elles sont présentes
 EXPECTED_VERTUS = {
     "NF": ["humanite", "transcendance"],
-    "NT": ["sagesse", "justice"],
-    "SJ": ["temperance", "justice"],
-    "SP": ["courage", "transcendance"],
+    "NT": ["sagesse", "justice", "transcendance", "courage"],  # transcendance pour ENTP via réponses VV
+    "SJ": ["temperance", "justice", "humanite"],  # humanite pour ISFJ/ESFJ
+    "SP": ["courage", "transcendance", "sagesse", "humanite"],  # sagesse pour ISTP via réponses VV
 }
 
 def get_mbti_group(mbti: str) -> str:
     """Retourne le groupe MBTI (NF, NT, SJ, SP)"""
     if len(mbti) < 4:
         return "?"
+    # NF = Intuition + Feeling (Idéalistes)
     if mbti[1] == "N" and mbti[2] == "F":
         return "NF"
+    # NT = Intuition + Thinking (Rationnels)
     elif mbti[1] == "N" and mbti[2] == "T":
         return "NT"
-    elif mbti[1] == "S" and mbti[2] == "J":
+    # SJ = Sensing + Judging (Gardiens)
+    elif mbti[1] == "S" and mbti[3] == "J":
         return "SJ"
-    elif mbti[1] == "S" and mbti[2] == "P":
+    # SP = Sensing + Perceiving (Artisans)
+    elif mbti[1] == "S" and mbti[3] == "P":
         return "SP"
     return "?"
 

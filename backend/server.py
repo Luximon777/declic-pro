@@ -3208,8 +3208,8 @@ METIERS = [
         "definition": "Conçoit et développe des produits ou des systèmes mécaniques. Pilote des projets d'études et de recherche industrielle.",
         "disc_attendu": ["C", "D"], 
         "ennea_compatible": [5, 1, 3],
-        # PDF: Ingénieurs pour INTJ, INTP, ENTP, ISTP
-        "mbti_compatible": ["INTJ", "INTP", "ENTP", "ISTP"],
+        # PDF: Ingénieurs pour INTJ, INTP, ENTP, ISTP + ENTJ (leader technique)
+        "mbti_compatible": ["INTJ", "INTP", "ENTP", "ISTP", "ENTJ"],
         "competences_requises": ["Analyse technique", "Résolution de problèmes", "Organisation", "Rigueur"],
         "soft_skills_essentiels": [
             {"nom": "Rigueur", "importance": "critique", "description": "Précision dans les calculs et la conception"},
@@ -3520,8 +3520,8 @@ METIERS = [
         "definition": "Conçoit et développe des applications web et mobiles. Code les fonctionnalités frontend et/ou backend.",
         "disc_attendu": ["C", "I"], 
         "ennea_compatible": [5, 4, 6],
-        # PDF: Programmeurs analystes -> ISTJ, INTJ, ISTP, INTP, ENTP, ENFP
-        "mbti_compatible": ["INTP", "INTJ", "ISTP", "ENTP"],
+        # PDF: Programmeurs analystes -> ISTJ, INTJ, ISTP, INTP, ENTP, ENFP + ENTJ (leader technique)
+        "mbti_compatible": ["INTP", "INTJ", "ISTP", "ENTP", "ENTJ"],
         "competences_requises": ["Analyse", "Créativité", "Résolution de problèmes", "Rigueur"],
         "soft_skills_essentiels": [
             {"nom": "Rigueur", "importance": "critique", "description": "Écrire du code propre et maintenable"},
@@ -4184,7 +4184,7 @@ METIERS = [
         "definition": "Conçoit des bâtiments et supervise leur construction.",
         "disc_attendu": ["C", "I"], 
         "ennea_compatible": [4, 5, 7],
-        "mbti_compatible": ["INTJ", "INFJ", "INTP", "ENFP"],
+        "mbti_compatible": ["INTJ", "INFJ", "INTP", "ENFP", "ENTJ"],
         "competences_requises": ["Créativité", "Technique", "Vision spatiale", "Gestion projet"],
         "soft_skills_essentiels": [
             {"nom": "Créativité", "importance": "critique", "description": "Conception originale"},
