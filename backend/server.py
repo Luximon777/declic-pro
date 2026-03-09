@@ -5102,21 +5102,27 @@ def calculate_vertus_profile(answers: Dict[str, Any], mbti_type: str = None) -> 
     # Vérifier si des réponses VV ont été fournies (score total > 0)
     total_score = sum(vertus_scores.values())
     
+    logging.info(f"[VERTUS] Scores calculés: {vertus_scores}")
+    logging.info(f"[VERTUS] Score total VV: {total_score}")
+    
     if total_score > 0:
         # Cas normal: utiliser les scores calculés
         sorted_vertus = sorted(vertus_scores.items(), key=lambda x: x[1], reverse=True)
         dominant_vertu = sorted_vertus[0][0]
         secondary_vertu = sorted_vertus[1][0]
+        logging.info(f"[VERTUS] Source: Réponses VV directes")
     else:
         # FALLBACK: Aucune réponse VV → utiliser le mapping MBTI
         if mbti_type and mbti_type.upper() in MBTI_TO_VERTU_FALLBACK:
             dominant_vertu, secondary_vertu = MBTI_TO_VERTU_FALLBACK[mbti_type.upper()]
-            logging.info(f"Vertu fallback MBTI ({mbti_type}): {dominant_vertu}, {secondary_vertu}")
+            logging.info(f"[VERTUS] Source: Fallback MBTI ({mbti_type}) → {dominant_vertu}, {secondary_vertu}")
         else:
             # Fallback ultime si pas de MBTI non plus
             dominant_vertu = "courage"
             secondary_vertu = "humanite"
-            logging.warning("Aucune donnée VV ni MBTI - utilisation vertu par défaut")
+            logging.warning(f"[VERTUS] Source: Défaut (aucune donnée VV ni MBTI)")
+    
+    logging.info(f"[VERTUS] RÉSULTAT - Dominant: {dominant_vertu}, Secondaire: {secondary_vertu}")
     
     # Normaliser les scores (0-100)
     max_score = max(vertus_scores.values()) if max(vertus_scores.values()) > 0 else 1
@@ -5407,114 +5413,229 @@ ENNEA_TO_PROFILE = {
 def compute_profile(answers: Dict[str, str]) -> Dict[str, Any]:
     """Compute user profile from questionnaire answers.
     Supports both legacy format (q1-q15) and visual format (v1-v12).
+    
+    SÉCURISATION:
+    - Validation du format des réponses
+    - Logging détaillé pour debug
+    - Valeurs par défaut sécurisées
+    - Vérification de cohérence
     """
     
-    # Detect format: visual (v1, v2...) or legacy (q1, q2...)
-    is_visual = any(k.startswith("v") for k in answers.keys())
+    # ========================================================================
+    # ÉTAPE 1: DÉTECTION ET VALIDATION DU FORMAT
+    # ========================================================================
+    visual_keys = [k for k in answers.keys() if k.startswith("v")]
+    legacy_keys = [k for k in answers.keys() if k.startswith("q")]
+    
+    is_visual = len(visual_keys) > len(legacy_keys)
+    
+    logging.info(f"[PROFILING] Format détecté: {'VISUEL' if is_visual else 'LEGACY'}")
+    logging.info(f"[PROFILING] Clés visuelles: {len(visual_keys)}, Clés legacy: {len(legacy_keys)}")
+    
+    # Valeurs par défaut pour éviter les erreurs
+    energie_e, energie_i = 0, 0
+    perception_s, perception_n = 0, 0
+    decision_t, decision_f = 0, 0
+    structure_j, structure_p = 0, 0
+    disc_counts = {"D": 0, "I": 0, "S": 0, "C": 0}
+    ennea_counts = {str(i): 0 for i in range(1, 10)}
     
     if is_visual:
+        # ====================================================================
         # VISUAL QUESTIONNAIRE FORMAT (v1-v12)
-        # Énergie (v1, v2)
-        energie_e = sum(1 for q in ["v1", "v2"] if answers.get(q) == "E")
-        energie_i = sum(1 for q in ["v1", "v2"] if answers.get(q) == "I")
+        # ====================================================================
         
-        # Perception (v3) - binary question
-        perception_s = 1 if answers.get("v3") == "S" else 0
-        perception_n = 1 if answers.get("v3") == "N" else 0
+        # Énergie (v1, v2) - E/I
+        for q in ["v1", "v2"]:
+            val = answers.get(q, "").upper()
+            if val == "E":
+                energie_e += 1
+            elif val == "I":
+                energie_i += 1
+            else:
+                logging.warning(f"[PROFILING] Réponse invalide pour {q}: '{val}' (attendu: E ou I)")
         
-        # Perception (v4) - RANKING question with S1,S2,N1,N2
+        # Perception (v3) - S/N binary
+        v3 = answers.get("v3", "").upper()
+        if v3 == "S":
+            perception_s += 1
+        elif v3 == "N":
+            perception_n += 1
+        else:
+            logging.warning(f"[PROFILING] Réponse invalide pour v3: '{v3}' (attendu: S ou N)")
+        
+        # Perception (v4) - RANKING S1,S2,N1,N2
         v4_answer = answers.get("v4", "")
         if "," in v4_answer:
-            v4_ranks = v4_answer.split(",")
+            v4_ranks = [x.strip().upper() for x in v4_answer.split(",")]
             for idx, val in enumerate(v4_ranks[:4]):
                 weight = 4 - idx  # 1st=4, 2nd=3, 3rd=2, 4th=1
                 if val.startswith("S"):
                     perception_s += weight
                 elif val.startswith("N"):
                     perception_n += weight
-        else:
-            if v4_answer.startswith("S"):
-                perception_s += 1
-            elif v4_answer.startswith("N"):
-                perception_n += 1
+        elif v4_answer:
+            if v4_answer.upper().startswith("S"):
+                perception_s += 2
+            elif v4_answer.upper().startswith("N"):
+                perception_n += 2
         
-        # Décision (v5, v6)
-        decision_t = sum(1 for q in ["v5", "v6"] if answers.get(q) == "T")
-        decision_f = sum(1 for q in ["v5", "v6"] if answers.get(q) == "F")
+        # Décision (v5, v6) - T/F
+        for q in ["v5", "v6"]:
+            val = answers.get(q, "").upper()
+            if val == "T":
+                decision_t += 1
+            elif val == "F":
+                decision_f += 1
+            else:
+                logging.warning(f"[PROFILING] Réponse invalide pour {q}: '{val}' (attendu: T ou F)")
         
-        # Structure (v7, v8)
-        structure_j = sum(1 for q in ["v7", "v8"] if answers.get(q) == "J")
-        structure_p = sum(1 for q in ["v7", "v8"] if answers.get(q) == "P")
+        # Structure (v7, v8) - J/P
+        for q in ["v7", "v8"]:
+            val = answers.get(q, "").upper()
+            if val == "J":
+                structure_j += 1
+            elif val == "P":
+                structure_p += 1
+            else:
+                logging.warning(f"[PROFILING] Réponse invalide pour {q}: '{val}' (attendu: J ou P)")
         
-        # DISC (v9, v10) - RANKING questions
-        disc_counts = {"D": 0, "I": 0, "S": 0, "C": 0}
+        # DISC (v9, v10) - RANKING
         for q in ["v9", "v10"]:
             val = answers.get(q, "")
             if "," in val:
-                # Ranking format: "D,I,S,C" - first choice gets highest weight
-                ranks = val.split(",")
+                ranks = [x.strip().upper() for x in val.split(",")]
                 for idx, disc_val in enumerate(ranks[:4]):
-                    disc_val = disc_val.strip().upper()
                     if disc_val in disc_counts:
-                        weight = 4 - idx  # 1st=4, 2nd=3, 3rd=2, 4th=1
+                        weight = 4 - idx
                         disc_counts[disc_val] += weight
-            elif val in disc_counts:
-                disc_counts[val] += 4  # Single choice gets full weight
+            elif val.upper() in disc_counts:
+                disc_counts[val.upper()] += 4
         
-        # Ennéagramme (v11, v12) - RANKING questions
-        ennea_counts = {str(i): 0 for i in range(1, 10)}
+        # Ennéagramme (v11, v12) - RANKING
         for q in ["v11", "v12"]:
             val = answers.get(q, "")
             if "," in val:
-                # Ranking format: "7,2,4,3" - first choice gets highest weight
-                ranks = val.split(",")
+                ranks = [x.strip() for x in val.split(",")]
                 for idx, ennea_val in enumerate(ranks[:4]):
-                    ennea_val = ennea_val.strip()
                     if ennea_val in ennea_counts:
-                        weight = 4 - idx  # 1st=4, 2nd=3, 3rd=2, 4th=1
+                        weight = 4 - idx
                         ennea_counts[ennea_val] += weight
             elif val in ennea_counts:
-                ennea_counts[val] += 4  # Single choice gets full weight
+                ennea_counts[val] += 4
+                
     else:
+        # ====================================================================
         # LEGACY QUESTIONNAIRE FORMAT (q1-q15)
-        # Count MBTI dimensions
-        energie_e = sum(1 for q in ["q1", "q2"] if answers.get(q) == "E")
-        energie_i = sum(1 for q in ["q1", "q2"] if answers.get(q) == "I")
+        # ====================================================================
         
-        perception_s = sum(1 for q in ["q4", "q6"] if answers.get(q) == "S")
-        perception_n = sum(1 for q in ["q4", "q6"] if answers.get(q) == "N")
+        # MBTI - Énergie (q1, q2)
+        for q in ["q1", "q2"]:
+            val = answers.get(q, "").upper()
+            if val == "E":
+                energie_e += 1
+            elif val == "I":
+                energie_i += 1
         
-        decision_t = sum(1 for q in ["q5"] if answers.get(q) == "T")
-        decision_f = sum(1 for q in ["q5"] if answers.get(q) == "F")
+        # MBTI - Perception (q4, q6)
+        for q in ["q4", "q6"]:
+            val = answers.get(q, "").upper()
+            if val == "S":
+                perception_s += 1
+            elif val == "N":
+                perception_n += 1
         
-        structure_j = sum(1 for q in ["q7"] if answers.get(q) == "J")
-        structure_p = sum(1 for q in ["q7"] if answers.get(q) == "P")
+        # MBTI - Décision (q5)
+        val = answers.get("q5", "").upper()
+        if val == "T":
+            decision_t += 1
+        elif val == "F":
+            decision_f += 1
         
-        # Count DISC
-        disc_counts = {"D": 0, "I": 0, "S": 0, "C": 0}
+        # MBTI - Structure (q7)
+        val = answers.get("q7", "").upper()
+        if val == "J":
+            structure_j += 1
+        elif val == "P":
+            structure_p += 1
+        
+        # DISC (q3, q8, q9, q13, q14, q15)
         for q in ["q3", "q8", "q9", "q13", "q14", "q15"]:
-            val = answers.get(q)
+            val = answers.get(q, "").upper()
             if val in disc_counts:
                 disc_counts[val] += 1
         
-        # Count Enneagram
-        ennea_counts = {str(i): 0 for i in range(1, 10)}
+        # Ennéagramme (q10, q11, q12)
         for q in ["q10", "q11", "q12"]:
-            val = answers.get(q)
+            val = answers.get(q, "")
             if val in ennea_counts:
                 ennea_counts[val] += 1
     
-    # Determine dominant values
-    energie = "E" if energie_e >= energie_i else "I"
-    perception = "S" if perception_s >= perception_n else "N"
-    decision = "T" if decision_t >= decision_f else "F"
-    structure = "J" if structure_j >= structure_p else "P"
+    # ========================================================================
+    # ÉTAPE 2: CALCUL DES DIMENSIONS AVEC VALIDATION
+    # ========================================================================
     
-    disc = max(disc_counts, key=disc_counts.get)
+    # MBTI - Détermination avec gestion des égalités
+    # En cas d'égalité, on choisit une valeur par défaut cohérente
+    if energie_e > energie_i:
+        energie = "E"
+    elif energie_i > energie_e:
+        energie = "I"
+    else:
+        # Égalité: défaut vers I (plus introspectif pour l'orientation)
+        energie = "I"
+        logging.info(f"[PROFILING] Égalité E/I ({energie_e}/{energie_i}), défaut: I")
     
+    if perception_s > perception_n:
+        perception = "S"
+    elif perception_n > perception_s:
+        perception = "N"
+    else:
+        perception = "N"  # Défaut vers N (plus ouvert aux possibilités)
+        logging.info(f"[PROFILING] Égalité S/N ({perception_s}/{perception_n}), défaut: N")
+    
+    if decision_t > decision_f:
+        decision = "T"
+    elif decision_f > decision_t:
+        decision = "F"
+    else:
+        decision = "T"  # Défaut vers T
+        logging.info(f"[PROFILING] Égalité T/F ({decision_t}/{decision_f}), défaut: T")
+    
+    if structure_j > structure_p:
+        structure = "J"
+    elif structure_p > structure_j:
+        structure = "P"
+    else:
+        structure = "J"  # Défaut vers J (plus structuré)
+        logging.info(f"[PROFILING] Égalité J/P ({structure_j}/{structure_p}), défaut: J")
+    
+    mbti = f"{energie}{perception}{decision}{structure}"
+    
+    # DISC - Détermination du dominant
+    disc_max = max(disc_counts.values())
+    if disc_max == 0:
+        disc = "S"  # Défaut: Stabilité
+        logging.warning(f"[PROFILING] Aucune réponse DISC, défaut: S")
+    else:
+        disc = max(disc_counts, key=disc_counts.get)
+    
+    # Ennéagramme - Détermination
     sorted_ennea = sorted(ennea_counts.items(), key=lambda x: x[1], reverse=True)
-    ennea_dominant = int(sorted_ennea[0][0]) if sorted_ennea[0][1] > 0 else 5
-    ennea_runner_up = int(sorted_ennea[1][0]) if len(sorted_ennea) > 1 and sorted_ennea[1][1] > 0 else ennea_dominant
+    if sorted_ennea[0][1] > 0:
+        ennea_dominant = int(sorted_ennea[0][0])
+        ennea_runner_up = int(sorted_ennea[1][0]) if len(sorted_ennea) > 1 and sorted_ennea[1][1] > 0 else ennea_dominant
+    else:
+        ennea_dominant = 9  # Défaut: Type 9 (Médiateur, neutre)
+        ennea_runner_up = 9
+        logging.warning(f"[PROFILING] Aucune réponse Ennéagramme, défaut: 9")
+    
+    # ========================================================================
+    # ÉTAPE 3: LOGGING DE VALIDATION
+    # ========================================================================
+    logging.info(f"[PROFILING] RÉSULTAT - MBTI: {mbti} (E:{energie_e}/I:{energie_i}, S:{perception_s}/N:{perception_n}, T:{decision_t}/F:{decision_f}, J:{structure_j}/P:{structure_p})")
+    logging.info(f"[PROFILING] RÉSULTAT - DISC: {disc} (D:{disc_counts['D']}, I:{disc_counts['I']}, S:{disc_counts['S']}, C:{disc_counts['C']})")
+    logging.info(f"[PROFILING] RÉSULTAT - Ennéagramme: {ennea_dominant} (runner-up: {ennea_runner_up})")
     
     # Determine motivations and competences
     ennea_profile = ENNEA_TO_PROFILE.get(ennea_dominant, ENNEA_TO_PROFILE[5])
@@ -6780,6 +6901,89 @@ async def get_vertus():
     return {"vertus": VERTUS}
 
 
+# ============================================================================
+# ENDPOINT DE DIAGNOSTIC - VALIDATION DU PROFILAGE
+# ============================================================================
+
+class DiagnosticRequest(BaseModel):
+    answers: Dict[str, str]
+
+@api_router.post("/diagnostic/profile")
+async def diagnostic_profile(request: DiagnosticRequest):
+    """
+    Endpoint de diagnostic pour valider le calcul du profil.
+    Retourne tous les détails intermédiaires du calcul.
+    """
+    answers = request.answers
+    
+    # Détection du format
+    visual_keys = [k for k in answers.keys() if k.startswith("v")]
+    legacy_keys = [k for k in answers.keys() if k.startswith("q")]
+    is_visual = len(visual_keys) > len(legacy_keys)
+    
+    # Calcul du profil
+    profile = compute_profile(answers)
+    
+    # Calcul des vertus
+    vertus_profile = calculate_vertus_profile(answers, mbti_type=profile.get("mbti"))
+    
+    # Calcul RIASEC
+    riasec_profile = calculate_riasec_profile(answers, profile)
+    
+    # Validation de cohérence MBTI
+    mbti = profile.get("mbti", "")
+    mbti_validation = {
+        "type": mbti,
+        "energie": mbti[0] if len(mbti) > 0 else "?",
+        "perception": mbti[1] if len(mbti) > 1 else "?",
+        "decision": mbti[2] if len(mbti) > 2 else "?",
+        "structure": mbti[3] if len(mbti) > 3 else "?",
+        "groupe": get_mbti_group(mbti),
+        "vertu_attendue": MBTI_TO_VERTU_FALLBACK.get(mbti, ("?", "?"))
+    }
+    
+    # Validation de cohérence Vertu
+    vertu_validation = {
+        "dominant": vertus_profile.get("dominant"),
+        "dominant_name": vertus_profile.get("dominant_name"),
+        "secondary": vertus_profile.get("secondary"),
+        "source": "VV direct" if sum(vertus_profile.get("scores", {}).values()) > 0 else "Fallback MBTI",
+        "coherent_avec_mbti": vertus_profile.get("dominant") == MBTI_TO_VERTU_FALLBACK.get(mbti, ("", ""))[0]
+    }
+    
+    return {
+        "format_detecte": "VISUEL" if is_visual else "LEGACY",
+        "nombre_reponses": len(answers),
+        "cles_recues": list(answers.keys()),
+        "profil_complet": {
+            "mbti": profile.get("mbti"),
+            "disc": profile.get("disc"),
+            "disc_scores": profile.get("disc_scores"),
+            "ennea_dominant": profile.get("ennea_dominant"),
+            "ennea_runner_up": profile.get("ennea_runner_up")
+        },
+        "validation_mbti": mbti_validation,
+        "validation_vertu": vertu_validation,
+        "riasec": riasec_profile,
+        "vertus_scores": vertus_profile.get("scores", {}),
+        "recommendations": {
+            "coherence_globale": vertu_validation["coherent_avec_mbti"] or vertu_validation["source"] == "VV direct"
+        }
+    }
+
+def get_mbti_group(mbti: str) -> str:
+    """Retourne le groupe MBTI (NT, NF, SJ, SP)."""
+    if len(mbti) < 4:
+        return "?"
+    if mbti[1] == "N" and mbti[2] == "T":
+        return "NT (Analystes)"
+    elif mbti[1] == "N" and mbti[2] == "F":
+        return "NF (Diplomates)"
+    elif mbti[1] == "S" and mbti[3] == "J":
+        return "SJ (Sentinelles)"
+    elif mbti[1] == "S" and mbti[3] == "P":
+        return "SP (Explorateurs)"
+    return "?"
 
 
 # ============================================================================
