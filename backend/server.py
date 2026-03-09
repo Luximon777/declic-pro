@@ -6202,9 +6202,14 @@ def get_exploration_paths(profile: Dict[str, Any], user_riasec: Dict[str, Any] =
     # 5. Trier par compatibilité globale
     paths.sort(key=lambda x: x["avg_compatibility"], reverse=True)
     
-    # 6. Filtrer les filières avec score >= 65%
-    MIN_FILIERE_SCORE = 65
+    # 6. Filtrer les filières avec score >= 50% (abaissé de 65% pour plus de résultats)
+    # et garder au minimum 3 filières
+    MIN_FILIERE_SCORE = 50
     filtered_paths = [p for p in paths if p["avg_compatibility"] >= MIN_FILIERE_SCORE]
+    
+    # Si moins de 3 filières après filtrage, prendre les 3 meilleures
+    if len(filtered_paths) < 3:
+        filtered_paths = paths[:3]
     
     return filtered_paths
 
