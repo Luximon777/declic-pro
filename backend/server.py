@@ -2979,57 +2979,71 @@ FILIERE_PROFILE_MAPPING = {
         "riasec_secondary": ["C"],
         "vertus_compatible": ["sagesse", "temperance", "courage"],
         "disc_compatible": ["C", "D"],
-        "ennea_compatible": [1, 5, 6, 3]
+        "ennea_compatible": [1, 5, 6, 3],
+        "mbti_compatible": ["ISTJ", "ISTP", "INTJ", "INTP", "ESTJ", "ESTP"]
     },
     "SBTP": {  # Filière BTP
         "riasec_primary": ["R"],
         "riasec_secondary": ["C", "E"],
         "vertus_compatible": ["courage", "temperance", "justice"],
         "disc_compatible": ["D", "C"],
-        "ennea_compatible": [8, 1, 3, 6]
+        "ennea_compatible": [8, 1, 3, 6],
+        "mbti_compatible": ["ISTP", "ESTP", "ISTJ", "ESTJ"]
     },
     "SSS": {  # Filière Santé et Social
-        "riasec_primary": ["S"],
-        "riasec_secondary": ["A", "I"],
-        "vertus_compatible": ["humanite", "justice", "transcendance"],
+        "riasec_primary": ["S", "A"],
+        "riasec_secondary": ["I"],
+        "vertus_compatible": ["humanite", "transcendance", "justice"],
         "disc_compatible": ["S", "I"],
-        "ennea_compatible": [2, 9, 6, 1]
+        "ennea_compatible": [2, 4, 9, 6, 1],  # Ajout du type 4 pour INFP
+        "mbti_compatible": ["INFP", "INFJ", "ENFJ", "ENFP", "ISFJ", "ESFJ"]  # NF et SF prioritaires
     },
     "SCV": {  # Filière Commerce et Vente
         "riasec_primary": ["E"],
         "riasec_secondary": ["S", "C"],
         "vertus_compatible": ["courage", "humanite", "justice"],
         "disc_compatible": ["I", "D"],
-        "ennea_compatible": [3, 7, 8, 2]
+        "ennea_compatible": [3, 7, 8, 2],
+        "mbti_compatible": ["ENTJ", "ENTP", "ESTP", "ESFP", "ESTJ"]
     },
     "SIN": {  # Filière Informatique et Numérique
         "riasec_primary": ["I"],
         "riasec_secondary": ["C", "R"],
-        "vertus_compatible": ["sagesse", "temperance", "transcendance"],
+        "vertus_compatible": ["sagesse", "temperance"],
         "disc_compatible": ["C", "D"],
-        "ennea_compatible": [5, 1, 6, 4]
+        "ennea_compatible": [5, 1, 6],  # Retiré le 4 qui n'est pas adapté à l'informatique
+        "mbti_compatible": ["INTJ", "INTP", "ISTJ", "ENTJ", "ENTP"]  # NT et STJ
     },
     "SGAE": {  # Filière Gestion et Administration
         "riasec_primary": ["C"],
         "riasec_secondary": ["E", "I"],
         "vertus_compatible": ["temperance", "justice", "sagesse"],
         "disc_compatible": ["C", "S"],
-        "ennea_compatible": [1, 6, 3, 5]
+        "ennea_compatible": [1, 6, 3, 5],
+        "mbti_compatible": ["ISTJ", "ESTJ", "ISFJ", "ESFJ", "INTJ"]
     },
     "SC": {  # Filière Communication et Formation
         "riasec_primary": ["S", "A"],
         "riasec_secondary": ["E"],
         "vertus_compatible": ["humanite", "transcendance", "sagesse"],
         "disc_compatible": ["I", "S"],
-        "ennea_compatible": [2, 4, 7, 9]
+        "ennea_compatible": [2, 4, 7, 9],  # Type 4 inclus
+        "mbti_compatible": ["ENFJ", "ENFP", "INFJ", "INFP", "ESFJ", "ISFJ"]  # NF prioritaires
     }
 }
 
 
 def score_filiere(profile: Dict[str, Any], filiere_id: str, user_riasec: Dict[str, Any] = None, vertus_profile: Dict[str, Any] = None) -> float:
     """
-    Score de compatibilité avec une filière basé sur le croisement RIASEC + Vertus + DISC + Ennéagramme.
+    Score de compatibilité avec une filière basé sur le croisement MBTI + RIASEC + Vertus + DISC + Ennéagramme.
     Retourne un score entre 0 et 100.
+    
+    PONDÉRATION:
+    - MBTI: 25% (nouveau)
+    - RIASEC: 25%
+    - Vertus: 20%
+    - DISC: 15%
+    - Ennéagramme: 15%
     """
     filiere_mapping = FILIERE_PROFILE_MAPPING.get(filiere_id, {})
     if not filiere_mapping:
@@ -3038,50 +3052,73 @@ def score_filiere(profile: Dict[str, Any], filiere_id: str, user_riasec: Dict[st
     score = 0.0
     max_score = 0.0
     
-    # 1. Score RIASEC (poids: 35%)
-    max_score += 35
+    # 1. Score MBTI (poids: 25%) - NOUVEAU
+    max_score += 25
+    user_mbti = profile.get("mbti", "")
+    mbti_compatible = filiere_mapping.get("mbti_compatible", [])
+    
+    if user_mbti in mbti_compatible:
+        position = mbti_compatible.index(user_mbti)
+        # Premier = 25pts, 2ème = 20pts, 3ème = 15pts, 4ème = 12pts, 5ème+ = 10pts
+        if position == 0:
+            score += 25
+        elif position == 1:
+            score += 20
+        elif position == 2:
+            score += 15
+        elif position == 3:
+            score += 12
+        else:
+            score += 10
+    else:
+        # Vérifier compatibilité partielle (même groupe NF, NT, SJ, SP)
+        user_group = get_mbti_group_code(user_mbti)
+        for compatible_mbti in mbti_compatible[:3]:
+            if get_mbti_group_code(compatible_mbti) == user_group:
+                score += 8  # Bonus partiel si même groupe
+                break
+    
+    # 2. Score RIASEC (poids: 25%)
+    max_score += 25
     if user_riasec:
         user_riasec_scores = user_riasec.get("scores", {})
         user_top_codes = sorted(user_riasec_scores.keys(), key=lambda x: user_riasec_scores.get(x, 0), reverse=True)[:3]
         
-        # Match avec codes primaires (20 pts)
+        # Match avec codes primaires (15 pts)
         primary_match = sum(1 for code in user_top_codes[:2] if code in filiere_mapping.get("riasec_primary", []))
-        score += primary_match * 10
+        score += primary_match * 7.5
         
-        # Match avec codes secondaires (15 pts)
+        # Match avec codes secondaires (10 pts)
         secondary_match = sum(1 for code in user_top_codes if code in filiere_mapping.get("riasec_secondary", []))
-        score += min(secondary_match * 5, 15)
+        score += min(secondary_match * 3.5, 10)
     else:
-        score += 17.5  # Score neutre si pas de RIASEC
+        score += 12.5  # Score neutre si pas de RIASEC
     
-    # 2. Score Vertus (poids: 30%)
-    max_score += 30
-    if vertus_profile and vertus_profile.get("vertus_scores"):
-        user_dominant_vertu = vertus_profile.get("dominant", "")
-        user_secondary_vertu = vertus_profile.get("secondary", "")
-        vertus_compatible = filiere_mapping.get("vertus_compatible", [])
-        
-        # Match vertu dominante (20 pts)
-        if user_dominant_vertu in vertus_compatible:
-            position = vertus_compatible.index(user_dominant_vertu)
-            score += 20 - (position * 5)  # 20, 15, 10 pts selon position
-        
-        # Match vertu secondaire (10 pts)
-        if user_secondary_vertu in vertus_compatible:
-            score += 10
-    else:
-        score += 15  # Score neutre si pas de vertus
-    
-    # 3. Score DISC (poids: 20%)
+    # 3. Score Vertus (poids: 20%)
     max_score += 20
+    user_dominant_vertu = vertus_profile.get("dominant", "") if vertus_profile else ""
+    user_secondary_vertu = vertus_profile.get("secondary", "") if vertus_profile else ""
+    vertus_compatible = filiere_mapping.get("vertus_compatible", [])
+    
+    # Match vertu dominante (14 pts)
+    if user_dominant_vertu in vertus_compatible:
+        position = vertus_compatible.index(user_dominant_vertu)
+        score += 14 - (position * 4)  # 14, 10, 6 pts selon position
+    
+    # Match vertu secondaire (6 pts)
+    if user_secondary_vertu in vertus_compatible:
+        score += 6
+    
+    # 4. Score DISC (poids: 15%)
+    max_score += 15
     user_disc = profile.get("disc", "")
     if user_disc in filiere_mapping.get("disc_compatible", []):
         position = filiere_mapping.get("disc_compatible", []).index(user_disc)
-        score += 20 - (position * 5)  # 20, 15, 10, 5 pts selon position
+        score += 15 - (position * 4)  # 15, 11, 7, 3 pts selon position
     else:
-        score += 5  # Score minimal si DISC non compatible
+        score += 3  # Score minimal si DISC non compatible
     
-    # 4. Score Ennéagramme (poids: 15%)
+    # 5. Score Ennéagramme (poids: 15%)
     max_score += 15
     user_ennea = profile.get("ennea_dominant", 9)
     user_ennea_secondary = profile.get("ennea_runner_up", 9)
@@ -3098,6 +3135,21 @@ def score_filiere(profile: Dict[str, Any], filiere_id: str, user_riasec: Dict[st
     # Normaliser sur 100
     final_score = (score / max_score) * 100 if max_score > 0 else 50
     return round(final_score, 1)
+
+
+def get_mbti_group_code(mbti: str) -> str:
+    """Retourne le code du groupe MBTI (NT, NF, SJ, SP)."""
+    if len(mbti) < 4:
+        return ""
+    if mbti[1] == "N" and mbti[2] == "T":
+        return "NT"
+    elif mbti[1] == "N" and mbti[2] == "F":
+        return "NF"
+    elif mbti[1] == "S" and mbti[3] == "J":
+        return "SJ"
+    elif mbti[1] == "S" and mbti[3] == "P":
+        return "SP"
+    return ""
 
 
 # ============================================================================
