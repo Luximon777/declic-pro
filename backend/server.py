@@ -679,10 +679,12 @@ class JobSearchRequest(BaseModel):
     answers: Dict[str, str]
     job_query: str
     birth_date: Optional[str] = None  # Format: YYYY-MM-DD ou DD/MM/YYYY
+    education_level: Optional[str] = None  # 0, 3, 5, 6, 7, 8 (niveau Bac+)
 
 class ExploreRequest(BaseModel):
     answers: Dict[str, str]
     birth_date: Optional[str] = None  # Format: YYYY-MM-DD ou DD/MM/YYYY
+    education_level: Optional[str] = None  # 0, 3, 5, 6, 7, 8 (niveau Bac+)
 
 class ProfileResult(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -3193,6 +3195,132 @@ FILIERES = [
         "secteurs": ["Communication", "Formation", "Accompagnement", "Médias", "Digital", "Éducation"]
     }
 ]
+
+# ============================================================================
+# NIVEAU D'ÉTUDES PAR MÉTIER
+# 0 = Sans diplôme/CAP, 3 = Bac, 5 = Bac+2, 6 = Bac+3, 7 = Bac+5, 8 = Bac+8
+# ============================================================================
+METIER_NIVEAU_ETUDES = {
+    # Filière Industrielle (SI)
+    "M001": 7,  # Ingénieur en mécanique - Bac+5
+    "M002": 5,  # Technicien de maintenance industrielle - Bac+2
+    "M003": 5,  # Automaticien - Bac+2
+    
+    # Filière BTP (SBTP)
+    "M004": 5,  # Chef de chantier - Bac+2 + expérience
+    "M005": 3,  # Électricien bâtiment - CAP/Bac Pro
+    "M038": 3,  # Plombier / Plombière - CAP
+    "M053": 3,  # Maçon / Maçonne - CAP
+    "M054": 3,  # Chauffagiste - CAP
+    "M039": 7,  # Architecte - Bac+5
+    
+    # Filière Santé et Social (SSS)
+    "M006": 6,  # Infirmier(e) - Bac+3
+    "M007": 6,  # Éducateur spécialisé - Bac+3
+    "M008": 6,  # Conseiller en insertion professionnelle - Bac+3
+    "M017": 3,  # Aide-soignant(e) - Formation 10 mois
+    "M028": 7,  # Psychologue - Bac+5 (Master obligatoire)
+    "M029": 6,  # Médiateur(rice) social(e) - Bac+3
+    "M034": 8,  # Médecin généraliste - Bac+9
+    "M035": 7,  # Sage-femme - Bac+5
+    "M036": 6,  # Kinésithérapeute - Bac+4
+    "M037": 7,  # Pharmacien(ne) - Bac+6
+    "M052": 7,  # Orthophoniste - Bac+5
+    
+    # Filière Commerce et Vente (SCV)
+    "M009": 5,  # Commercial / Attaché commercial - Bac+2
+    "M010": 7,  # Responsable marketing - Bac+5
+    "M018": 3,  # Vendeur conseil en magasin - Bac
+    
+    # Filière Informatique et Numérique (SIN)
+    "M011": 5,  # Développeur web / fullstack - Bac+2 à Bac+5
+    "M012": 5,  # Administrateur systèmes et réseaux - Bac+2
+    "M013": 6,  # UX/UI Designer - Bac+3
+    "M019": 5,  # Technicien support informatique - Bac+2
+    "M040": 7,  # Analyste Cybersécurité - Bac+5
+    "M041": 7,  # Chef de projet digital - Bac+5
+    
+    # Filière Gestion et Administration (SGAE)
+    "M014": 5,  # Comptable - Bac+2
+    "M015": 7,  # Responsable RH / Chargé(e) RH - Bac+5
+    "M016": 7,  # Contrôleur de gestion - Bac+5
+    "M020": 5,  # Assistant(e) de direction - Bac+2
+    "M042": 7,  # Analyste financier - Bac+5
+    "M043": 7,  # Auditeur / Auditrice - Bac+5
+    "M044": 5,  # Assistant(e) RH - Bac+2
+    "M049": 7,  # Notaire - Bac+7
+    
+    # Formation et Communication (SC)
+    "M024": 5,  # Chargé(e) de communication - Bac+2
+    "M025": 6,  # Formateur / Formatrice - Bac+3
+    "M026": 6,  # Coach professionnel / Coach de vie - Bac+3
+    "M027": 6,  # Journaliste / Rédacteur(rice) - Bac+3
+    "M030": 5,  # Community Manager - Bac+2
+    "M031": 6,  # Enseignant(e) / Professeur(e) - Bac+3 à Bac+5
+    "M032": 5,  # Animateur(rice) socioculturel(le) - Bac+2
+    "M033": 6,  # Chargé(e) de recrutement - Bac+3
+    "M051": 5,  # Graphiste - Bac+2
+    
+    # Logistique et Transport
+    "M021": 0,  # Cariste - Sans diplôme/CACES
+    "M022": 0,  # Magasinier / Préparateur de commandes - Sans diplôme
+    "M023": 0,  # Agent de quai / Manutentionnaire - Sans diplôme
+    "M045": 3,  # Chauffeur poids lourd - Permis C
+    "M046": 5,  # Responsable logistique - Bac+2 à Bac+5
+    
+    # Hôtellerie/Restauration
+    "M047": 3,  # Cuisinier / Cuisinière - CAP
+    "M048": 0,  # Serveur / Serveuse - Sans diplôme
+    
+    # Recherche
+    "M050": 8,  # Chercheur / Chercheuse - Bac+8
+}
+
+def get_metier_niveau(metier_id: str) -> int:
+    """Retourne le niveau d'études requis pour un métier (défaut: 5 = Bac+2)"""
+    return METIER_NIVEAU_ETUDES.get(metier_id, 5)
+
+def filter_jobs_by_education(jobs: List[Dict], user_level: str) -> List[Dict]:
+    """
+    Filtre et priorise les métiers selon le niveau d'études de l'utilisateur.
+    Les métiers du niveau exact ou inférieur sont priorisés.
+    """
+    if not user_level:
+        return jobs
+    
+    try:
+        user_level_int = int(user_level)
+    except (ValueError, TypeError):
+        return jobs
+    
+    # Séparer les métiers accessibles et ceux nécessitant plus de formation
+    accessible = []
+    stretch = []  # Métiers nécessitant 1 niveau de plus (objectif réaliste)
+    aspirational = []  # Métiers nécessitant beaucoup plus de formation
+    
+    for job in jobs:
+        job_id = job.get("job_id", job.get("id", ""))
+        job_level = get_metier_niveau(job_id)
+        
+        # Ajouter le niveau au job pour l'affichage
+        job_with_level = {**job, "niveau_etudes_requis": job_level}
+        
+        level_diff = job_level - user_level_int
+        
+        if level_diff <= 0:
+            # Accessible avec le niveau actuel
+            accessible.append(job_with_level)
+        elif level_diff <= 2:
+            # Stretch goal - atteignable avec formation complémentaire
+            stretch.append(job_with_level)
+        else:
+            # Aspirationnel - nécessite formation longue
+            aspirational.append(job_with_level)
+    
+    # Retourner les métiers ordonnés: accessibles d'abord, puis stretch, puis aspirationnels
+    return accessible + stretch + aspirational
+
+
 
 METIERS = [
     # ============================================================================
@@ -6872,6 +7000,10 @@ async def explore_careers(request: ExploreRequest):
     if len(compatible_jobs) < 10:
         compatible_jobs = [job for job in all_scores if job["score"] >= 40][:10]
     
+    # NOUVEAU: Filtrer/prioriser par niveau d'études si fourni
+    if request.education_level:
+        compatible_jobs = filter_jobs_by_education(compatible_jobs, request.education_level)
+    
     # Limit to top 10 compatible jobs
     top_jobs = compatible_jobs[:10]
     
@@ -6943,7 +7075,8 @@ async def explore_careers(request: ExploreRequest):
         "functioning_compass": functioning_compass,
         "integrated_analysis": integrated_analysis,
         "exploration_paths": paths,
-        "top_jobs": top_jobs  # Top 10 métiers compatibles
+        "top_jobs": top_jobs,  # Top 10 métiers compatibles (filtrés par niveau si fourni)
+        "education_level": request.education_level  # Niveau d'études utilisé pour le filtrage
     }
 
 

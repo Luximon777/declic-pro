@@ -652,15 +652,17 @@ const DeclicProLogoCompact = ({ size = 40 }) => (
 );
 
 const Questionnaire = ({ questions, onComplete, onBack }) => {
-  const [currentIndex, setCurrentIndex] = useState(-1); // Start at -1 for birth date step
+  const [currentIndex, setCurrentIndex] = useState(-2); // Start at -2 for birth date, -1 for education level
   const [answers, setAnswers] = useState({});
   const [birthDate, setBirthDate] = useState("");
+  const [educationLevel, setEducationLevel] = useState(""); // Niveau d'études
   const [rankingSelections, setRankingSelections] = useState({}); // For ranking questions
   
-  const isAskingBirthDate = currentIndex === -1;
-  const currentQuestion = isAskingBirthDate ? null : questions[currentIndex];
-  const totalSteps = questions.length + 1; // +1 for birth date
-  const progress = ((currentIndex + 2) / totalSteps) * 100;
+  const isAskingBirthDate = currentIndex === -2;
+  const isAskingEducationLevel = currentIndex === -1;
+  const currentQuestion = (isAskingBirthDate || isAskingEducationLevel) ? null : questions[currentIndex];
+  const totalSteps = questions.length + 2; // +2 for birth date and education level
+  const progress = ((currentIndex + 3) / totalSteps) * 100;
   const isLastQuestion = currentIndex === questions.length - 1;
   
   // For ranking questions, check if 4 items are selected
@@ -670,9 +672,11 @@ const Questionnaire = ({ questions, onComplete, onBack }) => {
   
   const canProceed = isAskingBirthDate 
     ? birthDate.length >= 8 
-    : isRankingQuestion 
-      ? rankingComplete 
-      : answers[currentQuestion?.id];
+    : isAskingEducationLevel
+      ? educationLevel !== ""
+      : isRankingQuestion 
+        ? rankingComplete 
+        : answers[currentQuestion?.id];
 
   const handleAnswer = (value) => {
     setAnswers(prev => ({
@@ -725,9 +729,11 @@ const Questionnaire = ({ questions, onComplete, onBack }) => {
 
   const handleNext = () => {
     if (isAskingBirthDate) {
-      setCurrentIndex(0);
+      setCurrentIndex(-1); // Go to education level
+    } else if (isAskingEducationLevel) {
+      setCurrentIndex(0); // Go to first question
     } else if (isLastQuestion && canProceed) {
-      onComplete(answers, birthDate);
+      onComplete(answers, birthDate, educationLevel);
     } else if (canProceed) {
       setCurrentIndex(prev => prev + 1);
     }
@@ -736,10 +742,12 @@ const Questionnaire = ({ questions, onComplete, onBack }) => {
   const handlePrevious = () => {
     if (isAskingBirthDate) {
       onBack();
+    } else if (isAskingEducationLevel) {
+      setCurrentIndex(-2); // Go back to birth date
     } else if (currentIndex > 0) {
       setCurrentIndex(prev => prev - 1);
     } else {
-      setCurrentIndex(-1);
+      setCurrentIndex(-1); // Go back to education level
     }
   };
 
@@ -781,6 +789,75 @@ const Questionnaire = ({ questions, onComplete, onBack }) => {
                 data-testid="birth-date-input"
                 max={new Date().toISOString().split('T')[0]}
               />
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="questionnaire-actions">
+          <Button 
+            onClick={handleNext} 
+            disabled={!canProceed}
+            className="next-button"
+            data-testid="questionnaire-next-btn"
+          >
+            Continuer
+            <ChevronRight size={20} />
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Education level step
+  if (isAskingEducationLevel) {
+    const educationOptions = [
+      { value: "0", label: "Sans diplôme / CAP / BEP", description: "Niveau inférieur au Bac" },
+      { value: "3", label: "Bac / Bac Pro", description: "Niveau Bac" },
+      { value: "5", label: "Bac+2 (BTS / DUT / DEUST)", description: "Technicien supérieur" },
+      { value: "6", label: "Bac+3 (Licence / BUT)", description: "Licence ou équivalent" },
+      { value: "7", label: "Bac+5 (Master / Ingénieur)", description: "Master ou école" },
+      { value: "8", label: "Bac+8 (Doctorat)", description: "Doctorat / PhD" },
+    ];
+
+    return (
+      <div className="questionnaire-container declic-questionnaire">
+        <div className="questionnaire-header">
+          <Button variant="ghost" onClick={handlePrevious} data-testid="questionnaire-back-btn" className="declic-back-btn">
+            <ChevronLeft size={20} /> Retour
+          </Button>
+          <DeclicProLogoCompact size={36} />
+          <div className="progress-info">
+            <span>Étape 2 / {totalSteps}</span>
+          </div>
+        </div>
+
+        <Progress value={progress} className="questionnaire-progress declic-progress" />
+
+        <Card className="question-card education-level-card declic-card">
+          <CardHeader>
+            <div className="education-level-icon declic-icon">
+              <GraduationCap size={48} />
+            </div>
+            <CardTitle className="question-text" data-testid="education-level-question">
+              Quel est votre niveau d'études actuel ou visé ?
+            </CardTitle>
+            <CardDescription>
+              Cette information permet de vous proposer des métiers adaptés à votre parcours de formation
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="education-options-grid">
+              {educationOptions.map((option) => (
+                <button
+                  key={option.value}
+                  onClick={() => setEducationLevel(option.value)}
+                  className={`education-option ${educationLevel === option.value ? 'selected' : ''}`}
+                  data-testid={`education-option-${option.value}`}
+                >
+                  <span className="education-option-label">{option.label}</span>
+                  <span className="education-option-description">{option.description}</span>
+                </button>
+              ))}
             </div>
           </CardContent>
         </Card>
@@ -3525,6 +3602,7 @@ const Home = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [birthDate, setBirthDate] = useState("");
+  const [educationLevel, setEducationLevel] = useState(""); // Niveau d'études
   const [jobResult, setJobResult] = useState(null);
   const [exploreResult, setExploreResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -3555,9 +3633,10 @@ const Home = () => {
     setStep('questionnaire');
   };
 
-  const handleQuestionnaireComplete = async (completedAnswers, completedBirthDate) => {
+  const handleQuestionnaireComplete = async (completedAnswers, completedBirthDate, completedEducationLevel) => {
     setAnswers(completedAnswers);
     setBirthDate(completedBirthDate);
+    setEducationLevel(completedEducationLevel);
     
     if (pathType === 'job') {
       setStep('job-search');
@@ -3567,7 +3646,8 @@ const Home = () => {
       try {
         const response = await axios.post(`${API}/explore`, {
           answers: completedAnswers,
-          birth_date: completedBirthDate
+          birth_date: completedBirthDate,
+          education_level: completedEducationLevel
         });
         setExploreResult(response.data);
         setStep('explore-result');
@@ -3584,7 +3664,8 @@ const Home = () => {
       const response = await axios.post(`${API}/job-match`, {
         answers: answers,
         job_query: query,
-        birth_date: birthDate
+        birth_date: birthDate,
+        education_level: educationLevel
       });
       setJobResult(response.data);
       setStep('job-result');
@@ -3599,6 +3680,7 @@ const Home = () => {
     setPathType(null);
     setAnswers({});
     setBirthDate("");
+    setEducationLevel("");
     setJobResult(null);
     setExploreResult(null);
   };

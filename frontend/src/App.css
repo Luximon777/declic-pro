@@ -3589,6 +3589,73 @@ body {
   background: rgba(255, 255, 255, 0.15);
 }
 
+
+/* Education Level Options */
+.education-level-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.education-level-icon svg {
+  color: var(--declic-orange);
+}
+
+.education-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .education-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.education-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.education-option:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(249, 115, 22, 0.4);
+  transform: translateY(-2px);
+}
+
+.education-option.selected {
+  background: rgba(249, 115, 22, 0.2);
+  border-color: var(--declic-orange);
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
+}
+
+.education-option-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--declic-text);
+  margin-bottom: 0.25rem;
+}
+
+.education-option-description {
+  font-size: 0.85rem;
+  color: var(--declic-text-muted);
+}
+
+.education-option.selected .education-option-label {
+  color: var(--declic-orange);
+}
+
+
 /* ============================================================================
    MICRO-ACTIONS COMPONENT
    ============================================================================ */

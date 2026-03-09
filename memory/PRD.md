@@ -25,6 +25,13 @@ Plateforme d'accompagnement professionnel personnalisé avec 3 espaces :
 - ✅ **Ajustement poids WEIGHTS** : MBTI 20% → 35% (facteur clé pour compatibilité métier)
 - ✅ **Tests de régression** : ESTP (Psychologue #48), INTJ (Psychologue #27) - appropriés
 - ✅ **Fichier test** : `/app/backend/tests/test_infj_psychologue.py`
+- ✅ **Validation complète système profilage** : 89/89 tests (100%) - `/app/backend/tests/test_full_profiling_validation.py`
+- ✅ **NOUVEAU: Filtre niveau d'études** :
+  - Question ajoutée après la date de naissance dans le questionnaire
+  - 6 niveaux : Sans diplôme, Bac, Bac+2, Bac+3, Bac+5, Bac+8
+  - Métiers filtrés/priorisés selon le niveau de l'utilisateur
+  - Mapping niveau d'études pour les 54 métiers (`METIER_NIVEAU_ETUDES`)
+- ✅ **Ajout ENTJ aux métiers techniques** : Développeur, Ingénieur, Architecte
 
 ### Mars 2026 - Session 3 (08/03/2026)
 - ✅ **Intégration IA Claude Sonnet 4.5** pour génération de fiches métiers
