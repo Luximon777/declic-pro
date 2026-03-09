@@ -3003,16 +3003,16 @@ FILIERE_PROFILE_MAPPING = {
         "riasec_secondary": ["S", "C"],
         "vertus_compatible": ["courage", "humanite", "justice"],
         "disc_compatible": ["I", "D"],
-        "ennea_compatible": [3, 7, 8, 2],
-        "mbti_compatible": ["ENTJ", "ENTP", "ESTP", "ESFP", "ESTJ"]
+        "ennea_compatible": [3, 8, 7, 2],  # Type 7 moins prioritaire
+        "mbti_compatible": ["ESTP", "ESTJ", "ENTJ", "ESFP", "ESFJ"]  # ENTP retiré - plus adapté à SIN/SC
     },
     "SIN": {  # Filière Informatique et Numérique
-        "riasec_primary": ["I"],
+        "riasec_primary": ["I", "A"],  # Ajout de A pour les innovateurs
         "riasec_secondary": ["C", "R"],
-        "vertus_compatible": ["sagesse", "temperance"],
+        "vertus_compatible": ["sagesse", "temperance", "transcendance"],  # Ajout transcendance
         "disc_compatible": ["C", "D"],
-        "ennea_compatible": [5, 1, 6],  # Retiré le 4 qui n'est pas adapté à l'informatique
-        "mbti_compatible": ["INTJ", "INTP", "ISTJ", "ENTJ", "ENTP"]  # NT et STJ
+        "ennea_compatible": [5, 7, 1, 6],  # Ajout du 7 pour ENTP
+        "mbti_compatible": ["INTJ", "INTP", "ENTP", "ENTJ", "ISTJ"]  # ENTP monté en priorité
     },
     "SGAE": {  # Filière Gestion et Administration
         "riasec_primary": ["C"],
@@ -3024,11 +3024,11 @@ FILIERE_PROFILE_MAPPING = {
     },
     "SC": {  # Filière Communication et Formation
         "riasec_primary": ["S", "A"],
-        "riasec_secondary": ["E"],
+        "riasec_secondary": ["E", "I"],  # Ajout de I pour les introvertis créatifs
         "vertus_compatible": ["humanite", "transcendance", "sagesse"],
         "disc_compatible": ["I", "S"],
-        "ennea_compatible": [2, 4, 7, 9],  # Type 4 inclus
-        "mbti_compatible": ["ENFJ", "ENFP", "INFJ", "INFP", "ESFJ", "ISFJ"]  # NF prioritaires
+        "ennea_compatible": [2, 4, 7, 9],  # Type 7 pour ENTP
+        "mbti_compatible": ["ENFJ", "ENFP", "ENTP", "INFJ", "INFP", "ESFJ", "ISFJ"]  # ENTP ajouté
     }
 }
 
