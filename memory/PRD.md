@@ -5,7 +5,7 @@
 ### 1. DE'CLIC PRO
 Plateforme d'orientation professionnelle guidant les utilisateurs à travers un questionnaire multi-modèles (MBTI, DISC, Ennéagramme, RIASEC, Archéologie des Compétences) pour déterminer leur profil de personnalité et recommander des métiers compatibles.
 
-**URL**: https://reactif-pro.preview.emergentagent.com
+**URL**: https://career-compass-844.preview.emergentagent.com
 
 ### 2. RE'ACTIF PRO (NOUVEAU)
 Plateforme d'accompagnement professionnel personnalisé avec 3 espaces :
@@ -13,11 +13,18 @@ Plateforme d'accompagnement professionnel personnalisé avec 3 espaces :
 - **Entreprise RH** : Espace professionnels RH (à venir)
 - **Partenaires Sociaux** : Consultation et collaboration (à venir)
 
-**URL**: https://reactif-pro.preview.emergentagent.com/reactif-pro
+**URL**: https://career-compass-844.preview.emergentagent.com/reactif-pro
 
 ---
 
 ## Ce qui a été implémenté
+
+
+### Décembre 2025 - Session 4 (09/12/2025)
+- ✅ **Bug fix P0** : Scoring des métiers pour profils INFJ/INFP - "Psychologue" passe de #8 à #4
+- ✅ **Ajustement poids WEIGHTS** : MBTI 20% → 35% (facteur clé pour compatibilité métier)
+- ✅ **Tests de régression** : ESTP (Psychologue #48), INTJ (Psychologue #27) - appropriés
+- ✅ **Fichier test** : `/app/backend/tests/test_infj_psychologue.py`
 
 ### Mars 2026 - Session 3 (08/03/2026)
 - ✅ **Intégration IA Claude Sonnet 4.5** pour génération de fiches métiers

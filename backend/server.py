@@ -5370,14 +5370,14 @@ def riasec_congruence(user_riasec: str, job_riasec: str) -> float:
 
 
 WEIGHTS = {
-    "motivation": 10,      # Ennéagramme - motivation profonde
-    "disc": 8,             # Style comportemental DISC
-    "mbti": 20,            # Personnalité MBTI
-    "riasec": 17,          # Intérêts professionnels (Holland)
-    "archeologie": 15,     # NOUVEAU: Archéologie des compétences (Vertus → Compétences)
-    "environment": 12,     # Environnement de travail
-    "skills": 13,          # Compétences directes
-    "constraints": 5,      # Contraintes
+    "motivation": 8,       # Ennéagramme - motivation profonde
+    "disc": 7,             # Style comportemental DISC
+    "mbti": 35,            # Personnalité MBTI - AUGMENTÉ (facteur clé pour profils NF/NT/SJ/SP)
+    "riasec": 15,          # Intérêts professionnels (Holland)
+    "archeologie": 12,     # Archéologie des compétences (Vertus → Compétences)
+    "environment": 10,     # Environnement de travail
+    "skills": 10,          # Compétences directes
+    "constraints": 3,      # Contraintes
     # Total = 100
 }
 
