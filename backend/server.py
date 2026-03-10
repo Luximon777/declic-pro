@@ -3313,8 +3313,9 @@ METIERS = [
         "definition": "Conçoit l'expérience utilisateur et les interfaces des applications et sites web.",
         "disc_attendu": ["I", "C"], 
         "ennea_compatible": [4, 7, 5],
-        # PDF: Designers, Décorateurs -> ISFJ, ESFP ; Créateurs -> ISFP ; Artistes -> INFP
-        "mbti_compatible": ["ISFP", "INFP", "ISFJ", "ESFP"],
+        # CORRIGÉ: UX/UI Designer = métier technique + créatif (pas INFP qui est trop introspectif)
+        # France Travail: transition numérique, développement, tests, paramétrage
+        "mbti_compatible": ["ISFP", "ENTP", "INTP", "ISTP"],  # Créatifs techniques, pas NF purs
         "competences_requises": ["Créativité", "Empathie", "Communication", "Analyse"],
         "soft_skills_essentiels": [
             {"nom": "Empathie", "importance": "critique", "description": "Se mettre à la place de l'utilisateur"},
@@ -4900,7 +4901,7 @@ METIER_TO_VERTU = {
     "M051": "temperance",  # Graphiste (rigueur créative)
     
     # Transcendance (créativité, sens, vision)
-    "M013": "transcendance",  # UX/UI Designer
+    "M013": "sagesse",  # UX/UI Designer - Tech + Analyse + Tests (pas transcendance car métier technique)
     "M024": "transcendance",  # Chargé de communication
     "M025": "transcendance",  # Formateur
     "M026": "transcendance",  # Coach professionnel
