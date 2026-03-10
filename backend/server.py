@@ -4769,6 +4769,223 @@ MBTI_TO_VERTU_FALLBACK = {
 }
 
 
+# ============================================================================
+# ARCHÉOLOGIE DES COMPÉTENCES - Système de hiérarchisation
+# Basé sur Seligman & Peterson (Vertus) + Schwartz (Valeurs) + OMS (Compétences)
+# ============================================================================
+# Hiérarchie: VERTU (socle) → Forces → Valeurs → Qualités → Compétences → Savoirs-être
+
+ARCHEOLOGIE_COMPETENCES = {
+    "sagesse": {
+        "forces": ["Créativité", "Curiosité", "Jugement", "Amour de l'apprentissage", "Perspective"],
+        "valeurs_schwartz": ["Autonomie", "Stimulation", "Réalisation de soi"],
+        "qualites": ["Indépendance", "Créativité", "Curiosité", "Ouverture d'esprit", "Audace", "Liberté de pensée"],
+        "competences_oms": ["Pensée critique", "Pensée créative", "Prise de décision"],
+        "savoirs_etre_pro": ["Curiosité", "Créativité", "Prise d'initiatives", "Esprit d'analyse"],
+        "filieres_naturelles": ["SIN", "SI"],  # Informatique, Industrielle/Sciences
+        "mbti_coherents": ["INTJ", "INTP", "ENTJ", "ENTP", "ISTP"],
+        "disc_coherents": ["C", "D"],  # Conformité (analyse) ou Dominance (stratégie)
+        "ennea_coherents": [5, 1, 7],  # Observateur, Perfectionniste, Enthousiaste
+    },
+    "courage": {
+        "forces": ["Bravoure", "Persévérance", "Honnêteté", "Enthousiasme"],
+        "valeurs_schwartz": ["Hédonisme", "Réalisation de soi", "Stimulation"],
+        "qualites": ["Joie de vivre", "Optimisme", "Gratitude", "Ambition", "Détermination", "Passion"],
+        "competences_oms": ["Gestion du stress", "Résilience", "Estime de soi"],
+        "savoirs_etre_pro": ["Persévérance", "Gestion du stress", "Réactivité", "Prise de risque"],
+        "filieres_naturelles": ["SBTP", "SCV", "SI"],  # BTP, Commerce, Industrielle
+        "mbti_coherents": ["ESTP", "ISTP", "ESTJ", "ENTJ"],
+        "disc_coherents": ["D", "I"],  # Dominance ou Influence
+        "ennea_coherents": [8, 3, 7],  # Leader, Performeur, Enthousiaste
+    },
+    "humanite": {
+        "forces": ["Amour", "Gentillesse", "Intelligence sociale"],
+        "valeurs_schwartz": ["Bienveillance", "Universalisme", "Affiliation"],
+        "qualites": ["Empathie", "Gentillesse", "Générosité", "Altruisme", "Compassion", "Écoute", "Solidarité"],
+        "competences_oms": ["Communication efficace", "Compétences relationnelles", "Empathie"],
+        "savoirs_etre_pro": ["Écoute", "Sens du service", "Travail en équipe", "Bienveillance"],
+        "filieres_naturelles": ["SSS", "SC"],  # Santé/Social, Communication/Formation
+        "mbti_coherents": ["INFJ", "ENFJ", "ISFJ", "ESFJ", "INFP", "ENFP", "ESFP"],
+        "disc_coherents": ["S", "I"],  # Stabilité ou Influence
+        "ennea_coherents": [2, 9, 6],  # Altruiste, Médiateur, Loyal
+    },
+    "justice": {
+        "forces": ["Travail d'équipe", "Équité", "Leadership"],
+        "valeurs_schwartz": ["Égalité", "Responsabilité sociale", "Pouvoir"],
+        "qualites": ["Justice", "Impartialité", "Équité", "Intégrité", "Humilité", "Charisme", "Influence"],
+        "competences_oms": ["Prise de décision", "Pensée critique", "Compétences relationnelles"],
+        "savoirs_etre_pro": ["Leadership", "Donner du sens", "Respect des engagements", "Responsabilité"],
+        "filieres_naturelles": ["SGAE", "SC"],  # Gestion/Admin, Communication
+        "mbti_coherents": ["ENTJ", "ESTJ", "ENFJ", "INTJ"],
+        "disc_coherents": ["D", "C"],  # Dominance ou Conformité
+        "ennea_coherents": [1, 8, 3],  # Perfectionniste, Leader, Performeur
+    },
+    "temperance": {
+        "forces": ["Pardon", "Humilité", "Prudence", "Maîtrise de soi"],
+        "valeurs_schwartz": ["Conformité", "Sécurité", "Tradition"],
+        "qualites": ["Respect des règles", "Prudence", "Stabilité", "Patience", "Modération", "Gratitude"],
+        "competences_oms": ["Gestion des émotions", "Estime de soi", "Résilience"],
+        "savoirs_etre_pro": ["Rigueur", "Précision", "Organisation", "Respect des priorités"],
+        "filieres_naturelles": ["SGAE", "SI"],  # Gestion/Admin, Industrielle
+        "mbti_coherents": ["ISTJ", "ISFJ", "ESTJ", "ESFJ", "INTP"],
+        "disc_coherents": ["S", "C"],  # Stabilité ou Conformité
+        "ennea_coherents": [6, 1, 9],  # Loyal, Perfectionniste, Médiateur
+    },
+    "transcendance": {
+        "forces": ["Appréciation de la beauté", "Gratitude", "Espoir", "Humour", "Spiritualité"],
+        "valeurs_schwartz": ["Universalisme", "Spiritualité", "Bienveillance"],
+        "qualites": ["Tolérance", "Ouverture d'esprit", "Sagesse", "Recherche de sens", "Sérénité", "Harmonie"],
+        "competences_oms": ["Pensée créative", "Gestion du stress", "Résilience"],
+        "savoirs_etre_pro": ["Adaptation aux changements", "Autonomie", "Créativité", "Vision globale"],
+        "filieres_naturelles": ["SC", "SSS", "SIN"],  # Communication, Santé/Social, Informatique (UX/Design)
+        "mbti_coherents": ["INFP", "ENFP", "ISFP", "INFJ"],
+        "disc_coherents": ["I", "S"],  # Influence ou Stabilité
+        "ennea_coherents": [4, 9, 7],  # Créatif, Médiateur, Enthousiaste
+    },
+}
+
+# Mapping inverse : Métier → Vertu principale
+# Utilisé pour le parcours "Je cherche mon job" (droite → gauche)
+METIER_TO_VERTU = {
+    # Sagesse (analyse, tech, recherche)
+    "M001": "sagesse",  # Ingénieur en mécanique
+    "M011": "sagesse",  # Développeur web
+    "M012": "sagesse",  # Administrateur systèmes
+    "M040": "sagesse",  # Analyste Cybersécurité
+    "M050": "sagesse",  # Chercheur
+    "M037": "sagesse",  # Pharmacien
+    "M042": "sagesse",  # Analyste financier
+    
+    # Courage (action, terrain, commerce)
+    "M004": "courage",  # Chef de chantier
+    "M005": "courage",  # Électricien bâtiment
+    "M009": "courage",  # Commercial
+    "M010": "courage",  # Responsable marketing
+    "M038": "courage",  # Plombier
+    "M047": "courage",  # Cuisinier
+    "M053": "courage",  # Maçon
+    "M054": "courage",  # Chauffagiste
+    
+    # Humanité (soin, aide, service)
+    "M006": "humanite",  # Infirmier
+    "M007": "humanite",  # Éducateur spécialisé
+    "M008": "humanite",  # Conseiller insertion
+    "M017": "humanite",  # Aide-soignant
+    "M028": "humanite",  # Psychologue
+    "M029": "humanite",  # Médiateur social
+    "M032": "humanite",  # Animateur socioculturel
+    "M035": "humanite",  # Sage-femme
+    "M036": "humanite",  # Kinésithérapeute
+    "M048": "humanite",  # Serveur (service client)
+    "M052": "humanite",  # Orthophoniste
+    
+    # Justice (management, organisation, responsabilité)
+    "M015": "justice",  # Responsable RH
+    "M016": "justice",  # Contrôleur de gestion
+    "M041": "justice",  # Chef de projet digital
+    "M043": "justice",  # Auditeur
+    "M046": "justice",  # Responsable logistique
+    "M049": "justice",  # Notaire
+    
+    # Tempérance (rigueur, précision, organisation)
+    "M002": "temperance",  # Technicien maintenance
+    "M003": "temperance",  # Automaticien
+    "M014": "temperance",  # Comptable
+    "M019": "temperance",  # Technicien support
+    "M020": "temperance",  # Assistant de direction
+    "M021": "temperance",  # Cariste
+    "M022": "temperance",  # Magasinier
+    "M034": "temperance",  # Médecin (rigueur + humanité)
+    "M044": "temperance",  # Assistant RH
+    "M051": "temperance",  # Graphiste (rigueur créative)
+    
+    # Transcendance (créativité, sens, vision)
+    "M013": "transcendance",  # UX/UI Designer
+    "M024": "transcendance",  # Chargé de communication
+    "M025": "transcendance",  # Formateur
+    "M026": "transcendance",  # Coach professionnel
+    "M027": "transcendance",  # Journaliste
+    "M030": "transcendance",  # Community Manager
+    "M031": "transcendance",  # Enseignant
+    "M033": "transcendance",  # Chargé de recrutement
+    "M039": "transcendance",  # Architecte
+    
+    # Métiers logistique sans diplôme
+    "M023": "courage",  # Agent de quai (action physique)
+    "M045": "temperance",  # Chauffeur PL (rigueur, règles)
+    "M018": "humanite",  # Vendeur conseil (relation client)
+}
+
+def get_vertu_for_metier(metier_id: str) -> str:
+    """Retourne la vertu principale associée à un métier."""
+    return METIER_TO_VERTU.get(metier_id, "temperance")  # Défaut: tempérance
+
+def calculate_vertu_coherence(user_vertu: str, metier_id: str) -> float:
+    """
+    Calcule la cohérence entre la vertu de l'utilisateur et celle du métier.
+    Score de 0.0 à 1.0
+    """
+    metier_vertu = get_vertu_for_metier(metier_id)
+    
+    if user_vertu == metier_vertu:
+        return 1.0  # Parfaite cohérence
+    
+    # Vertus proches (affinités naturelles)
+    VERTU_AFFINITES = {
+        "sagesse": ["transcendance", "justice"],
+        "courage": ["justice", "temperance"],
+        "humanite": ["transcendance", "justice"],
+        "justice": ["courage", "sagesse", "temperance"],
+        "temperance": ["justice", "sagesse"],
+        "transcendance": ["humanite", "sagesse"],
+    }
+    
+    if metier_vertu in VERTU_AFFINITES.get(user_vertu, []):
+        return 0.7  # Bonne affinité
+    
+    return 0.3  # Faible cohérence
+
+def check_profile_coherence_for_job(profile: Dict, metier: Dict, user_riasec: Dict, vertus_profile: Dict) -> Dict:
+    """
+    Parcours "Je cherche mon job" : Métier → Vertus → Validation du profil
+    Retourne un diagnostic de cohérence.
+    """
+    metier_id = metier.get("id", "")
+    metier_vertu = get_vertu_for_metier(metier_id)
+    archeologie = ARCHEOLOGIE_COMPETENCES.get(metier_vertu, {})
+    
+    user_vertu = vertus_profile.get("dominant", "temperance")
+    user_mbti = profile.get("mbti", "")
+    user_disc = profile.get("disc", "")
+    user_ennea = profile.get("ennea_dominant", 5)
+    
+    coherence_scores = {
+        "vertu": 1.0 if user_vertu == metier_vertu else (0.7 if metier_vertu in ARCHEOLOGIE_COMPETENCES.get(user_vertu, {}).get("filieres_naturelles", []) else 0.3),
+        "mbti": 1.0 if user_mbti in archeologie.get("mbti_coherents", []) else 0.4,
+        "disc": 1.0 if user_disc in archeologie.get("disc_coherents", []) else 0.5,
+        "ennea": 1.0 if user_ennea in archeologie.get("ennea_coherents", []) else 0.5,
+    }
+    
+    # Score global pondéré
+    global_score = (
+        coherence_scores["vertu"] * 0.40 +
+        coherence_scores["mbti"] * 0.30 +
+        coherence_scores["disc"] * 0.15 +
+        coherence_scores["ennea"] * 0.15
+    )
+    
+    return {
+        "metier_vertu": metier_vertu,
+        "user_vertu": user_vertu,
+        "coherence_scores": coherence_scores,
+        "global_coherence": round(global_score * 100),
+        "is_coherent": global_score >= 0.6,
+        "qualites_requises": archeologie.get("qualites", []),
+        "savoirs_etre_requis": archeologie.get("savoirs_etre_pro", []),
+    }
+
+
+
 def calculate_vertus_profile(answers: Dict[str, Any], mbti_type: str = None) -> Dict[str, Any]:
     """
     Calcule le profil de vertus basé sur les questions vv1-vv6.
@@ -5103,14 +5320,15 @@ def riasec_congruence(user_riasec: str, job_riasec: str) -> float:
 
 
 WEIGHTS = {
+    # ARCHÉOLOGIE DES COMPÉTENCES - La Vertu est le socle principal
+    "archeologie": 35,     # Vertu → Compétences (SOCLE PRINCIPAL)
+    "mbti": 25,            # Personnalité MBTI (doit être cohérent avec Vertu)
+    "riasec": 15,          # Intérêts professionnels (Holland)
     "motivation": 8,       # Ennéagramme - motivation profonde
     "disc": 7,             # Style comportemental DISC
-    "mbti": 35,            # Personnalité MBTI - AUGMENTÉ (facteur clé pour profils NF/NT/SJ/SP)
-    "riasec": 15,          # Intérêts professionnels (Holland)
-    "archeologie": 12,     # Archéologie des compétences (Vertus → Compétences)
-    "environment": 10,     # Environnement de travail
-    "skills": 10,          # Compétences directes
-    "constraints": 3,      # Contraintes
+    "environment": 5,      # Environnement de travail
+    "skills": 3,           # Compétences directes
+    "constraints": 2,      # Contraintes
     # Total = 100
 }
 
@@ -5763,14 +5981,31 @@ def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any], vertus_profi
                 break
     score += min(0.1, ck1_matches * 0.02)
     
-    # 5. Bonus cohérence: Vertus directes = Ennéagramme (10%)
-    if vertus_profile and user_vertu_key == ennea_vertu_key:
-        score += 0.1
-    elif vertus_profile and secondary_vertu_key == ennea_vertu_key:
-        score += 0.05  # Bonus partiel si secondaire match
+    # 5. COHÉRENCE VERTU-MÉTIER : Le facteur le plus important
+    # La vertu de l'utilisateur doit correspondre à la vertu naturelle du métier
+    metier_id = job.get("id", "")
+    metier_vertu = get_vertu_for_metier(metier_id)
     
-    # Score minimum de 0.4 (les vertus sont toujours partiellement transférables)
-    final_score = max(0.4, min(1.0, score + 0.35))
+    # Calculer la cohérence vertu utilisateur ↔ vertu métier
+    vertu_coherence = calculate_vertu_coherence(user_vertu_key, metier_id)
+    
+    # Bonus/Malus basé sur la cohérence Vertu-Métier (FACTEUR DÉCISIF)
+    if vertu_coherence >= 1.0:
+        score += 0.25  # Parfaite cohérence = gros bonus
+    elif vertu_coherence >= 0.7:
+        score += 0.10  # Bonne affinité = bonus modéré
+    else:
+        score -= 0.15  # Faible cohérence = malus
+
+    # 6. Bonus cohérence: Vertus directes = Ennéagramme
+    if vertus_profile and user_vertu_key == ennea_vertu_key:
+        score += 0.08
+    elif vertus_profile and secondary_vertu_key == ennea_vertu_key:
+        score += 0.04  # Bonus partiel si secondaire match
+    
+    # Score minimum de 0.25 (réduit car l'archéologie doit discriminer)
+    # Score maximum de 1.0
+    final_score = max(0.25, min(1.0, score + 0.30))
     return final_score
 
 
