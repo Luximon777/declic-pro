@@ -4986,6 +4986,163 @@ def check_profile_coherence_for_job(profile: Dict, metier: Dict, user_riasec: Di
     }
 
 
+def generate_job_fiche_with_archeology(metier: Dict, profile: Dict = None, vertus_profile: Dict = None) -> Dict:
+    """
+    Génère une fiche métier enrichie avec la chaîne complète d'archéologie des compétences.
+    
+    Chaîne : Vertu → Valeurs → Qualités → Savoirs-être → Savoir-faire (Métier)
+    
+    Cette fonction est utilisée pour :
+    1. Afficher la fiche métier avec contexte de l'archéologie
+    2. Calculer le score de compatibilité basé sur l'alignement de la chaîne
+    """
+    metier_id = metier.get("id", "")
+    metier_vertu = get_vertu_for_metier(metier_id)
+    archeologie = ARCHEOLOGIE_COMPETENCES.get(metier_vertu, {})
+    
+    # Soft skills du métier (savoir-faire comportementaux)
+    soft_skills_metier = [s["nom"] for s in metier.get("soft_skills_essentiels", [])]
+    competences_metier = metier.get("competences_requises", [])
+    
+    # Construire la chaîne d'archéologie
+    chaine_archeologie = {
+        "niveau_1_vertu": {
+            "nom": metier_vertu.capitalize(),
+            "description": f"Socle fondamental - {metier_vertu}",
+            "forces_caractere": archeologie.get("forces", [])
+        },
+        "niveau_2_valeurs": {
+            "valeurs_schwartz": archeologie.get("valeurs_schwartz", []),
+            "description": "Valeurs qui guident l'action"
+        },
+        "niveau_3_qualites": {
+            "qualites": archeologie.get("qualites", []),
+            "description": "Qualités personnelles mobilisées"
+        },
+        "niveau_4_savoirs_etre": {
+            "savoirs_etre_pro": archeologie.get("savoirs_etre_pro", []),
+            "description": "Comportements professionnels attendus"
+        },
+        "niveau_5_savoir_faire": {
+            "competences_techniques": competences_metier,
+            "soft_skills": soft_skills_metier,
+            "description": "Compétences opérationnelles du métier"
+        }
+    }
+    
+    # Calculer le score de cohérence entre les savoirs-être de l'archéologie et ceux du métier
+    savoirs_etre_arch = set([s.lower() for s in archeologie.get("savoirs_etre_pro", [])])
+    savoirs_etre_metier = set([s.lower() for s in soft_skills_metier])
+    qualites_arch = set([q.lower() for q in archeologie.get("qualites", [])])
+    
+    # Intersection entre archéologie et métier
+    coherence_savoirs_etre = len(savoirs_etre_arch.intersection(savoirs_etre_metier)) / max(len(savoirs_etre_metier), 1)
+    coherence_qualites = len(qualites_arch.intersection(savoirs_etre_metier)) / max(len(savoirs_etre_metier), 1)
+    
+    # Score de cohérence interne de la fiche (archéologie ↔ métier)
+    coherence_interne = (coherence_savoirs_etre * 0.6) + (coherence_qualites * 0.4)
+    
+    # Si profil utilisateur fourni, calculer la compatibilité
+    compatibilite_utilisateur = None
+    if profile and vertus_profile:
+        user_vertu = vertus_profile.get("dominant", "temperance")
+        user_qualites = vertus_profile.get("qualites", [])
+        
+        # Vérifier alignement Vertu
+        alignement_vertu = 1.0 if user_vertu == metier_vertu else (0.7 if metier_vertu in ARCHEOLOGIE_COMPETENCES.get(user_vertu, {}).get("filieres_naturelles", []) else 0.3)
+        
+        # Vérifier alignement Qualités
+        user_qualites_set = set([q.lower() for q in user_qualites])
+        alignement_qualites = len(qualites_arch.intersection(user_qualites_set)) / max(len(qualites_arch), 1)
+        
+        # Vérifier alignement MBTI
+        user_mbti = profile.get("mbti", "")
+        mbti_coherents = archeologie.get("mbti_coherents", [])
+        alignement_mbti = 1.0 if user_mbti in mbti_coherents else 0.4
+        
+        # Score global de compatibilité
+        score_compatibilite = (
+            alignement_vertu * 0.40 +      # Vertu = socle
+            alignement_qualites * 0.25 +   # Qualités
+            alignement_mbti * 0.25 +       # MBTI
+            coherence_interne * 0.10       # Cohérence interne fiche
+        )
+        
+        compatibilite_utilisateur = {
+            "score_global": round(score_compatibilite * 100),
+            "alignement_vertu": round(alignement_vertu * 100),
+            "alignement_qualites": round(alignement_qualites * 100),
+            "alignement_mbti": round(alignement_mbti * 100),
+            "user_vertu": user_vertu,
+            "metier_vertu": metier_vertu,
+            "est_coherent": score_compatibilite >= 0.6
+        }
+    
+    return {
+        "metier": {
+            "id": metier_id,
+            "label": metier.get("label", ""),
+            "definition": metier.get("definition", ""),
+            "filiere": metier.get("filiere", ""),
+            "secteur": metier.get("secteur", ""),
+            "acces_emploi": metier.get("acces_emploi", ""),
+        },
+        "archeologie": chaine_archeologie,
+        "vertu_associee": metier_vertu,
+        "coherence_interne": round(coherence_interne * 100),
+        "compatibilite_utilisateur": compatibilite_utilisateur,
+        "mbti_compatibles": archeologie.get("mbti_coherents", []),
+        "disc_compatibles": archeologie.get("disc_coherents", []),
+        "ennea_compatibles": archeologie.get("ennea_coherents", []),
+    }
+
+
+def generate_savoirs_etre_from_archeology(metier_vertu: str, metier_soft_skills: List[str] = None) -> List[Dict]:
+    """
+    Génère les savoirs-être pour un métier en se basant sur l'archéologie des compétences.
+    
+    Les savoirs-être sont dérivés de :
+    1. La vertu du métier → Qualités → Savoirs-être pro
+    2. Les soft skills spécifiques du métier (si fournis)
+    
+    Utilisé par l'IA pour générer des fiches cohérentes.
+    """
+    archeologie = ARCHEOLOGIE_COMPETENCES.get(metier_vertu, {})
+    
+    # Savoirs-être de base depuis l'archéologie
+    savoirs_etre_base = archeologie.get("savoirs_etre_pro", [])
+    qualites = archeologie.get("qualites", [])
+    forces = archeologie.get("forces", [])
+    
+    # Construire la liste enrichie
+    savoirs_etre_enrichis = []
+    
+    for se in savoirs_etre_base:
+        # Trouver la qualité source
+        qualite_source = next((q for q in qualites if q.lower() in se.lower() or se.lower() in q.lower()), qualites[0] if qualites else "Non défini")
+        
+        savoirs_etre_enrichis.append({
+            "nom": se,
+            "source_qualite": qualite_source,
+            "source_vertu": metier_vertu,
+            "importance": "critique" if se in savoirs_etre_base[:2] else "importante"
+        })
+    
+    # Ajouter les soft skills du métier s'ils ne sont pas déjà présents
+    if metier_soft_skills:
+        existants = [s["nom"].lower() for s in savoirs_etre_enrichis]
+        for skill in metier_soft_skills:
+            if skill.lower() not in existants:
+                savoirs_etre_enrichis.append({
+                    "nom": skill,
+                    "source_qualite": "Compétence métier",
+                    "source_vertu": metier_vertu,
+                    "importance": "importante"
+                })
+    
+    return savoirs_etre_enrichis
+
+
 
 def calculate_vertus_profile(answers: Dict[str, Any], mbti_type: str = None) -> Dict[str, Any]:
     """
@@ -6161,6 +6318,15 @@ def score_job(profile: Dict[str, Any], job: Dict[str, Any], user_riasec: Dict[st
     else:
         category = "À risque"
     
+    # Obtenir les détails d'archéologie pour enrichir la fiche
+    metier_vertu = get_vertu_for_metier(job["id"])
+    archeologie_data = ARCHEOLOGIE_COMPETENCES.get(metier_vertu, {})
+    user_vertu = vertus_profile.get("dominant", "temperance") if vertus_profile else "temperance"
+    
+    # Générer les savoirs-être enrichis
+    soft_skills = [s["nom"] for s in job.get("soft_skills_essentiels", [])]
+    savoirs_etre_enrichis = generate_savoirs_etre_from_archeology(metier_vertu, soft_skills)
+    
     return {
         "job_id": job["id"],
         "job_label": job["label"],
@@ -6170,16 +6336,26 @@ def score_job(profile: Dict[str, Any], job: Dict[str, Any], user_riasec: Dict[st
         "category": category,
         "reasons": reasons[:3],
         "risks": risks[:2],
-        "job_riasec": job_riasec,  # Code RIASEC du métier
+        "job_riasec": job_riasec,
         "breakdown": {
             "motivation": round(motivation_score, 1),
             "disc": round(disc_score, 1),
             "mbti": round(mbti_score, 1),
             "riasec": round(riasec_score, 1),
-            "archeologie": round(archeologie_score, 1),  # NOUVEAU: Archéologie des compétences
+            "archeologie": round(archeologie_score, 1),
             "environment": round(env_score, 1),
             "skills": round(skills_score, 1),
             "constraints": round(constraints_score, 1)
+        },
+        # NOUVEAU: Détails archéologie des compétences
+        "archeologie_details": {
+            "metier_vertu": metier_vertu,
+            "user_vertu": user_vertu,
+            "vertu_alignee": user_vertu == metier_vertu,
+            "qualites_requises": archeologie_data.get("qualites", [])[:5],
+            "valeurs_associees": archeologie_data.get("valeurs_schwartz", [])[:3],
+            "savoirs_etre": savoirs_etre_enrichis[:5],
+            "forces_mobilisees": archeologie_data.get("forces", [])[:3]
         }
     }
 
