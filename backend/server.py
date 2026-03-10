@@ -5117,35 +5117,36 @@ WEIGHTS = {
 # MBTI Compatibility - Types similaires par fonction dominante et mode de fonctionnement
 # Correction: Les types Feeling (F) ne sont PAS similaires aux types Thinking (T)
 MBTI_SIMILAR = {
+    # Groupes basés sur les 2 lettres centrales (S/N et T/F) qui définissent le "core"
     # NF - Les Idéalistes (Intuition + Feeling) - orientés relations et valeurs
     "ENFP": ["INFP", "ENFJ", "INFJ"],          # Tous NF
-    "INFP": ["ENFP", "INFJ", "ENFJ"],          # Tous NF (retiré INTP)
+    "INFP": ["ENFP", "INFJ", "ENFJ"],          # Tous NF
     "ENFJ": ["INFJ", "ENFP", "INFP"],          # Tous NF
     "INFJ": ["ENFJ", "INFP", "ENFP"],          # Tous NF
     # NT - Les Rationnels (Intuition + Thinking) - orientés analyse et stratégie
     "ENTP": ["INTP", "ENTJ", "INTJ"],          # Tous NT
-    "INTP": ["ENTP", "INTJ", "ENTJ"],          # Tous NT (retiré INFP)
+    "INTP": ["ENTP", "INTJ", "ENTJ"],          # Tous NT
     "ENTJ": ["INTJ", "ENTP", "INTP"],          # Tous NT
     "INTJ": ["ENTJ", "INTP", "ENTP"],          # Tous NT
-    # SJ - Les Gardiens (Sensing + Judging) - orientés stabilité et tradition
-    "ESTJ": ["ISTJ", "ESFJ", "ISFJ"],          # Tous SJ
-    "ISTJ": ["ESTJ", "ISFJ", "ESFJ"],          # Tous SJ
-    "ESFJ": ["ISFJ", "ESTJ", "ISTJ"],          # Tous SJ
-    "ISFJ": ["ESFJ", "ISTJ", "ESTJ"],          # Tous SJ
-    # SP - Les Artisans (Sensing + Perceiving) - orientés action et adaptation
-    "ESTP": ["ISTP", "ESFP", "ISFP"],          # Tous SP
-    "ISTP": ["ESTP", "ISFP", "ESFP"],          # Tous SP
-    "ESFP": ["ISFP", "ESTP", "ISTP"],          # Tous SP
-    "ISFP": ["ESFP", "ISTP", "ESTP"],          # Tous SP
+    # ST - Les Praticiens (Sensing + Thinking) - orientés efficacité et logique pratique
+    "ESTP": ["ISTP", "ESTJ", "ISTJ"],          # Tous ST (pas ESFP/ISFP qui sont SF!)
+    "ISTP": ["ESTP", "ISTJ", "ESTJ"],          # Tous ST
+    "ESTJ": ["ISTJ", "ESTP", "ISTP"],          # Tous ST
+    "ISTJ": ["ESTJ", "ISTP", "ESTP"],          # Tous ST
+    # SF - Les Protecteurs (Sensing + Feeling) - orientés service et harmonie
+    "ESFP": ["ISFP", "ESFJ", "ISFJ"],          # Tous SF (pas ESTP/ISTP qui sont ST!)
+    "ISFP": ["ESFP", "ISFJ", "ESFJ"],          # Tous SF
+    "ESFJ": ["ISFJ", "ESFP", "ISFP"],          # Tous SF
+    "ISFJ": ["ESFJ", "ISFP", "ESFP"],          # Tous SF
 }
 
 def mbti_similarity(user_mbti: str, job_mbti_list: List[str]) -> float:
     """
     Calculate MBTI compatibility score (0-1).
-    Optimisé pour atteindre des scores 80-90% pour les profils vraiment compatibles.
+    PÉNALITÉ FORTE si le MBTI n'est pas compatible.
     """
     if not job_mbti_list or not user_mbti:
-        return 0.65  # Score neutre plus généreux
+        return 0.5  # Score neutre
     
     user_mbti = user_mbti.upper()
     
@@ -5153,30 +5154,35 @@ def mbti_similarity(user_mbti: str, job_mbti_list: List[str]) -> float:
     if user_mbti in job_mbti_list:
         return 1.0
     
-    # Similar type match (même famille NF/NT/SF/ST) = 90%
+    # Similar type match (même famille NF/NT/SF/ST) = 85%
     similar_types = MBTI_SIMILAR.get(user_mbti, [])
     for similar in similar_types:
         if similar in job_mbti_list:
-            return 0.90
+            return 0.85
     
-    # Partial match - optimisé avec bonus pour dimensions critiques
-    best_score = 0.45
+    # Partial match - avec PÉNALITÉ plus forte pour incompatibilité
+    best_score = 0.20  # Score minimum beaucoup plus bas (était 0.45)
+    
     for job_mbti in job_mbti_list:
         if len(job_mbti) != 4:
             continue
-            
+        
+        # Compter les lettres communes
         common_letters = sum(1 for i in range(4) if i < len(user_mbti) and user_mbti[i] == job_mbti[i])
         
-        # Bonus si même core (N/S et F/T identiques - les dimensions les plus importantes)
+        # Vérifier si même "core" (N/S et F/T identiques)
         same_core = (len(user_mbti) >= 3 and len(job_mbti) >= 3 and 
                      user_mbti[1] == job_mbti[1] and user_mbti[2] == job_mbti[2])
         
         if common_letters >= 3:
-            score = 0.80 if same_core else 0.75
+            score = 0.70 if same_core else 0.60
         elif common_letters >= 2:
-            score = 0.65 if same_core else 0.55
+            if same_core:
+                score = 0.55  # Même core mais 2 lettres différentes
+            else:
+                score = 0.35  # 2 lettres communes mais core différent = faible
         else:
-            score = 0.45
+            score = 0.20  # Très incompatible
         
         best_score = max(best_score, score)
     
