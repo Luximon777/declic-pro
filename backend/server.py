@@ -6046,69 +6046,68 @@ async def search_job_hybrid(query: str) -> tuple[List[Dict[str, Any]], Optional[
 def get_exploration_paths(profile: Dict[str, Any], user_riasec: Dict[str, Any] = None, vertus_profile: Dict[str, Any] = None) -> List[Dict[str, Any]]:
     """
     Get recommended filieres and jobs for exploration.
-    Utilise le croisement RIASEC + Vertus + DISC + Ennéagramme pour scorer les filières.
+    Le score de filière est principalement basé sur les métiers qu'elle contient.
+    Si un métier est très compatible (85%), sa filière devrait l'être aussi.
     """
-    # 1. D'abord, scorer toutes les filières directement avec le profil utilisateur
-    filiere_scores = {}
-    for filiere in FILIERES:
-        filiere_id = filiere["id"]
-        filiere_score = score_filiere(profile, filiere_id, user_riasec, vertus_profile)
-        filiere_scores[filiere_id] = {
-            "score": filiere_score,
-            "info": filiere
-        }
-    
-    # 2. Ensuite, scorer tous les métiers
+    # 1. D'abord, scorer tous les métiers
     all_job_scores = [score_job(profile, job, user_riasec, vertus_profile) for job in METIERS]
     all_job_scores.sort(key=lambda x: x["score"], reverse=True)
     
-    # 3. Grouper les métiers par filière
+    # 2. Grouper les métiers par filière et calculer le score basé sur les métiers
     filiere_jobs = {}
+    filiere_best_scores = {}  # Score max par filière
+    
     for score_result in all_job_scores:
         filiere = score_result["filiere"]
         if filiere not in filiere_jobs:
             filiere_jobs[filiere] = []
+            filiere_best_scores[filiere] = 0
         filiere_jobs[filiere].append(score_result)
+        
+        # Garder le meilleur score de métier pour cette filière
+        if score_result["score"] > filiere_best_scores[filiere]:
+            filiere_best_scores[filiere] = score_result["score"]
     
-    # 4. Construire les chemins d'exploration avec pondération filière + métiers
+    # 3. Construire les chemins d'exploration
     paths = []
-    for filiere_id, filiere_data in filiere_scores.items():
-        filiere_info = filiere_data["info"]
-        filiere_base_score = filiere_data["score"]
+    for filiere in FILIERES:
+        filiere_id = filiere["id"]
         
         jobs = filiere_jobs.get(filiere_id, [])
         
-        # Calculer le score moyen des métiers de cette filière
         if jobs:
-            # Prendre les 5 meilleurs métiers
+            # Prendre les 5 meilleurs métiers de cette filière
             top_jobs = sorted(jobs, key=lambda x: x["score"], reverse=True)[:5]
-            avg_job_score = sum(j["score"] for j in top_jobs) / len(top_jobs)
             
-            # Score final = 60% score filière + 40% score métiers
-            final_score = (filiere_base_score * 0.6) + (avg_job_score * 0.4)
+            # Score basé sur les métiers (plus réaliste)
+            best_job_score = top_jobs[0]["score"]
+            avg_top_3_score = sum(j["score"] for j in top_jobs[:3]) / min(3, len(top_jobs))
+            
+            # Score final = 70% meilleur métier + 30% moyenne top 3
+            # Cela garantit que si UX Designer = 85%, la filière ≈ 80%+
+            final_score = (best_job_score * 0.7) + (avg_top_3_score * 0.3)
         else:
-            final_score = filiere_base_score * 0.8  # Pénalité si pas de métiers
+            final_score = 40  # Score bas si pas de métiers
             top_jobs = []
         
         # Déterminer les secteurs les plus pertinents
-        relevant_sectors = filiere_info["secteurs"][:4]
+        relevant_sectors = filiere["secteurs"][:4]
         
         paths.append({
-            "filiere": filiere_info["name"],
+            "filiere": filiere["name"],
             "filiere_id": filiere_id,
             "avg_compatibility": round(final_score),
-            "filiere_score": round(filiere_base_score),
-            "jobs_score": round(avg_job_score) if jobs else 0,
+            "best_job_score": round(top_jobs[0]["score"]) if top_jobs else 0,
             "secteurs": relevant_sectors,
             "indicative_jobs": [j["job_label"] for j in top_jobs[:5]],
             "top_match": top_jobs[0] if top_jobs else None,
             "job_count": len(jobs)
         })
     
-    # 5. Trier par compatibilité globale
+    # 4. Trier par compatibilité globale
     paths.sort(key=lambda x: x["avg_compatibility"], reverse=True)
     
-    # 6. Filtrer les filières avec score >= 50% (abaissé de 65% pour plus de résultats)
+    # 5. Filtrer les filières avec score >= 50%
     # et garder au minimum 3 filières
     MIN_FILIERE_SCORE = 50
     filtered_paths = [p for p in paths if p["avg_compatibility"] >= MIN_FILIERE_SCORE]
