@@ -6837,13 +6837,28 @@ async def explore_careers(request: ExploreRequest):
     all_scores = [score_job(profile, job, user_riasec, vertus_profile) for job in METIERS]
     all_scores.sort(key=lambda x: x["score"], reverse=True)
     
-    # Only keep jobs with score >= 50% (lowered from 75%)
+    # NOUVEAU: Les métiers doivent être cohérents avec les filières recommandées
+    # Récupérer les filières des 3 meilleurs chemins d'exploration
+    top_filieres = [p["filiere_id"] for p in paths[:3]]
+    
+    # Filtrer pour ne garder que les métiers des filières recommandées
+    jobs_from_top_filieres = [
+        job for job in all_scores 
+        if job.get("filiere") in top_filieres
+    ]
+    
+    # Si pas assez de métiers dans les filières top, compléter avec les autres
+    if len(jobs_from_top_filieres) < 10:
+        other_jobs = [job for job in all_scores if job.get("filiere") not in top_filieres]
+        jobs_from_top_filieres.extend(other_jobs[:10 - len(jobs_from_top_filieres)])
+    
+    # Only keep jobs with score >= 50%
     MIN_COMPATIBILITY_SCORE = 50
-    compatible_jobs = [job for job in all_scores if job["score"] >= MIN_COMPATIBILITY_SCORE]
+    compatible_jobs = [job for job in jobs_from_top_filieres if job["score"] >= MIN_COMPATIBILITY_SCORE]
     
     # If not enough compatible jobs, take top 10 with score >= 40%
     if len(compatible_jobs) < 10:
-        compatible_jobs = [job for job in all_scores if job["score"] >= 40][:10]
+        compatible_jobs = [job for job in jobs_from_top_filieres if job["score"] >= 40][:10]
     
     # NOUVEAU: Filtrer/prioriser par niveau d'études si fourni
     if request.education_level:
