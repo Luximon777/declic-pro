@@ -5,7 +5,7 @@
 ### 1. DE'CLIC PRO
 Plateforme d'orientation professionnelle guidant les utilisateurs à travers un questionnaire multi-modèles (MBTI, DISC, Ennéagramme, RIASEC, Archéologie des Compétences) pour déterminer leur profil de personnalité et recommander des métiers compatibles.
 
-**URL**: https://career-compass-844.preview.emergentagent.com
+**URL**: https://declicpro-eval.preview.emergentagent.com
 
 ### 2. RE'ACTIF PRO (NOUVEAU)
 Plateforme d'accompagnement professionnel personnalisé avec 3 espaces :
@@ -13,7 +13,7 @@ Plateforme d'accompagnement professionnel personnalisé avec 3 espaces :
 - **Entreprise RH** : Espace professionnels RH (à venir)
 - **Partenaires Sociaux** : Consultation et collaboration (à venir)
 
-**URL**: https://career-compass-844.preview.emergentagent.com/reactif-pro
+**URL**: https://declicpro-eval.preview.emergentagent.com/reactif-pro
 
 ---
 
