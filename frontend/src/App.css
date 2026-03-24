@@ -3,15 +3,15 @@
    Custom Styles
    ============================================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --reactif-primary: #4f46e5;
-  --reactif-primary-light: #818cf8;
-  --reactif-primary-dark: #3730a3;
-  --reactif-secondary: #06b6d4;
-  --reactif-accent: #c7d2fe;
-  --reactif-bg: #0a1628;
+  --reactif-primary: #1e3a5f;
+  --reactif-primary-light: #4f6df5;
+  --reactif-primary-dark: #152a45;
+  --reactif-secondary: #6c5ce7;
+  --reactif-accent: #4f6df5;
+  --reactif-bg: #1e3a5f;
   --reactif-card: #ffffff;
   --reactif-text: #1f2937;
   --reactif-text-light: #64748b;
@@ -21,22 +21,22 @@
   --reactif-danger: #ef4444;
   --reactif-border: #e5e7eb;
   
-  /* DE'CLIC PRO Theme - Dark Mode */
-  --declic-orange: #F97316;
-  --declic-orange-light: #FB923C;
-  --declic-orange-pale: rgba(249, 115, 22, 0.15);
-  --declic-yellow: #FBBF24;
-  --declic-indigo: #1f2937;
+  /* DE'CLIC PRO Theme - RE'ACTIF PRO aligned */
+  --declic-orange: #4f6df5;
+  --declic-orange-light: #6c5ce7;
+  --declic-orange-pale: rgba(79, 109, 245, 0.15);
+  --declic-yellow: #4f6df5;
+  --declic-indigo: #1e3a5f;
   --declic-gray: #64748b;
-  --declic-green: #22c55e;
+  --declic-green: #10b981;
   
   /* Dark theme colors */
-  --bg-dark: #0a1628;
-  --bg-card: #0f2035;
-  --bg-card-hover: #152a45;
-  --border-dark: rgba(255, 255, 255, 0.1);
+  --bg-dark: #1e3a5f;
+  --bg-card: #152a45;
+  --bg-card-hover: #1a3558;
+  --border-dark: rgba(255, 255, 255, 0.15);
   --text-primary: #ffffff;
-  --text-secondary: #9ca3af;
+  --text-secondary: #94a3b8;
 }
 
 * {
@@ -44,7 +44,7 @@
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   background: var(--bg-dark);
   color: var(--text-primary);
   margin: 0;
@@ -79,10 +79,10 @@ body {
 
 @keyframes glow {
   0%, 100% { 
-    filter: drop-shadow(0 0 2px rgba(249, 115, 22, 0.3));
+    filter: drop-shadow(0 0 2px rgba(79, 109, 245, 0.3));
   }
   50% { 
-    filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.8));
+    filter: drop-shadow(0 0 12px rgba(79, 109, 245, 0.8));
   }
 }
 
@@ -153,7 +153,7 @@ body {
 }
 
 .landing-page.declic-theme::before {
-  background: radial-gradient(circle at 30% 30%, rgba(249, 115, 22, 0.15) 0%, transparent 50%);
+  background: radial-gradient(circle at 30% 30%, rgba(79, 109, 245, 0.15) 0%, transparent 50%);
   content: '';
   position: absolute;
   inset: 0;
@@ -161,7 +161,7 @@ body {
 }
 
 .landing-page.declic-theme::after {
-  background: radial-gradient(circle at 70% 70%, rgba(34, 197, 94, 0.1) 0%, transparent 50%);
+  background: radial-gradient(circle at 70% 70%, rgba(108, 92, 231, 0.1) 0%, transparent 50%);
   content: '';
   position: absolute;
   inset: 0;
@@ -237,7 +237,7 @@ body {
 .declic-title {
   font-size: 3rem;
   font-weight: 900;
-  background: linear-gradient(90deg, #f97316, #fbbf24, #a3e635, #22c55e, #14b8a6);
+  background: linear-gradient(90deg, #4f6df5, #4f6df5, #6c5ce7, #10b981, #14b8a6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -287,7 +287,7 @@ body {
 }
 
 .phase-badge .phase-number {
-  background: linear-gradient(135deg, #f97316 0%, #22c55e 100%);
+  background: linear-gradient(135deg, #4f6df5 0%, #10b981 100%);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 30px;
@@ -410,7 +410,7 @@ body {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #f97316, #22c55e, #3b82f6);
+  background: linear-gradient(90deg, #4f6df5, #10b981, #3b82f6);
 }
 
 .beyond-diploma-header {
@@ -421,7 +421,7 @@ body {
 }
 
 .beyond-diploma-icon {
-  color: #f97316;
+  color: #4f6df5;
   flex-shrink: 0;
 }
 
@@ -430,7 +430,7 @@ body {
   font-weight: 700;
   color: white;
   margin: 0;
-  background: linear-gradient(90deg, #f97316, #fbbf24);
+  background: linear-gradient(90deg, #4f6df5, #4f6df5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -448,12 +448,12 @@ body {
 }
 
 .beyond-diploma-intro strong {
-  color: #f97316;
+  color: #4f6df5;
 }
 
 .beyond-diploma-highlight {
   background: rgba(249, 115, 22, 0.1);
-  border-left: 3px solid #f97316;
+  border-left: 3px solid #4f6df5;
   padding: 1rem 1.25rem;
   border-radius: 0 10px 10px 0;
   margin: 1.25rem 0;
@@ -465,11 +465,11 @@ body {
 }
 
 .beyond-diploma-highlight strong {
-  color: #f97316;
+  color: #4f6df5;
 }
 
 .beyond-diploma-highlight em {
-  color: #22c55e;
+  color: #10b981;
   font-style: normal;
   font-weight: 500;
 }
@@ -481,7 +481,7 @@ body {
 }
 
 .beyond-diploma-description strong {
-  color: #22c55e;
+  color: #10b981;
 }
 
 .beyond-diploma-conclusion {
@@ -531,7 +531,7 @@ body {
 /* Path cards highlight */
 .path-highlight strong,
 .path-highlight .path-highlight-title {
-  color: #f97316;
+  color: #4f6df5;
   display: block;
   margin-bottom: 0.25rem;
   font-size: 1.15rem;
@@ -1470,7 +1470,7 @@ body {
 }
 
 .highlight-word-orange {
-  color: #f97316 !important;
+  color: #4f6df5 !important;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1489,7 +1489,7 @@ body {
 }
 
 .highlight-card-accent .highlight-card-header svg {
-  color: #fbbf24;
+  color: #4f6df5;
 }
 
 .highlight-card-header h5 {
@@ -1539,7 +1539,7 @@ body {
 }
 
 .highlight-card-accent .highlight-list li svg.list-icon-svg {
-  color: #fbbf24;
+  color: #4f6df5;
 }
 
 .highlight-list-check {
@@ -1624,7 +1624,7 @@ body {
 }
 
 .highlight-conclusion svg {
-  color: #fbbf24;
+  color: #4f6df5;
   flex-shrink: 0;
   margin-top: 3px;
 }
@@ -1684,7 +1684,7 @@ body {
 }
 
 .synthesis-header-pro svg {
-  color: #fbbf24;
+  color: #4f6df5;
 }
 
 .synthesis-header-pro h3 {
@@ -1704,7 +1704,7 @@ body {
 }
 
 .synthesis-equation strong {
-  color: #fbbf24;
+  color: #4f6df5;
   font-size: 1.125rem;
 }
 
@@ -1734,7 +1734,7 @@ body {
 }
 
 .pillar-item svg {
-  color: #fbbf24;
+  color: #4f6df5;
 }
 
 @media (max-width: 1024px) {
@@ -2240,7 +2240,7 @@ body {
 }
 
 .soft-skill-badge.important {
-  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  background: linear-gradient(135deg, #f59e0b 0%, #4f6df5 100%);
   color: #1e293b;
 }
 
@@ -2684,7 +2684,7 @@ body {
 .results-header-title {
   font-size: 1.5rem;
   font-weight: 900;
-  background: linear-gradient(90deg, #f97316, #fbbf24, #a3e635, #22c55e);
+  background: linear-gradient(90deg, #4f6df5, #4f6df5, #6c5ce7, #10b981);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -2747,7 +2747,7 @@ body {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #22c55e, #10b981, #059669);
+  background: linear-gradient(90deg, #10b981, #10b981, #059669);
 }
 
 .access-code-header {
@@ -2758,7 +2758,7 @@ body {
 }
 
 .access-code-header svg {
-  color: #22c55e;
+  color: #10b981;
   flex-shrink: 0;
 }
 
@@ -2789,7 +2789,7 @@ body {
   font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
   font-size: 1.75rem;
   font-weight: 700;
-  color: #22c55e;
+  color: #10b981;
   letter-spacing: 0.15em;
   flex-grow: 1;
 }
@@ -2797,13 +2797,13 @@ body {
 .copy-code-btn {
   background: rgba(34, 197, 94, 0.2) !important;
   border-color: rgba(34, 197, 94, 0.5) !important;
-  color: #22c55e !important;
+  color: #10b981 !important;
   transition: all 0.2s ease;
 }
 
 .copy-code-btn:hover {
   background: rgba(34, 197, 94, 0.3) !important;
-  border-color: #22c55e !important;
+  border-color: #10b981 !important;
 }
 
 .copy-code-btn svg {
@@ -2820,7 +2820,7 @@ body {
 }
 
 .access-code-info svg {
-  color: #22c55e;
+  color: #10b981;
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -3046,7 +3046,7 @@ body {
 }
 
 .score-moderate {
-  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  background: linear-gradient(135deg, #f59e0b 0%, #4f6df5 100%);
   color: white;
 }
 
@@ -4132,7 +4132,7 @@ body {
 
 /* Section spécifique - Conation */
 .tripartite-conation .tripartite-header {
-  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  background: linear-gradient(135deg, #dc2626 0%, #4f6df5 100%);
 }
 
 /* Section spécifique - Affection */
@@ -5466,7 +5466,7 @@ body {
 }
 
 .cta-title-highlight {
-  background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+  background: linear-gradient(90deg, #4f6df5 0%, #f59e0b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -5481,7 +5481,7 @@ body {
 }
 
 .cta-description strong {
-  color: #fbbf24;
+  color: #4f6df5;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -5491,7 +5491,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  background: linear-gradient(135deg, #4f6df5 0%, #f59e0b 100%);
   color: #1e1b4b;
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
@@ -5549,7 +5549,7 @@ body {
   font-family: 'Courier New', monospace;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #fbbf24;
+  color: #4f6df5;
   background: rgba(0, 0, 0, 0.3);
   padding: 0.4rem 0.8rem;
   border-radius: 8px;
@@ -5568,7 +5568,7 @@ body {
 }
 
 .cta-icon {
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  background: linear-gradient(135deg, #10b981 0%, #16a34a 100%);
   color: white;
   padding: 1rem;
   border-radius: 50%;
@@ -5589,7 +5589,7 @@ body {
 }
 
 .cta-button {
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  background: linear-gradient(135deg, #10b981 0%, #16a34a 100%);
   color: white;
   font-weight: 600;
   display: flex;
@@ -5833,7 +5833,7 @@ body {
 }
 
 .insight-glow svg {
-  color: #fbbf24;
+  color: #4f6df5;
   filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
 }
 
@@ -6425,7 +6425,7 @@ body {
   margin-top: 2rem;
   background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%);
   border-radius: 20px;
-  border: 2px solid #fbbf24;
+  border: 2px solid #4f6df5;
   box-shadow: 0 8px 32px rgba(251, 191, 36, 0.15);
 }
 
@@ -6443,7 +6443,7 @@ body {
   border-radius: 12px;
   padding: 1rem;
   margin-bottom: 1.5rem;
-  border-left: 4px solid #fbbf24;
+  border-left: 4px solid #4f6df5;
 }
 
 .compass-summary p {
@@ -6550,7 +6550,7 @@ body {
   gap: 0.75rem;
   margin-top: 1.5rem;
   padding: 1rem;
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  background: linear-gradient(135deg, #4f6df5 0%, #f59e0b 100%);
   border-radius: 12px;
 }
 
@@ -7268,7 +7268,7 @@ body {
 .cta-subtitle-institutional {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #fbbf24;
+  color: #4f6df5;
   margin: 0 0 1.25rem 0;
 }
 
@@ -7307,7 +7307,7 @@ body {
   font-family: 'Courier New', monospace;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #fbbf24;
+  color: #4f6df5;
   letter-spacing: 0.05em;
 }
 
@@ -7322,7 +7322,7 @@ body {
 
 /* CTA Button */
 .cta-button-institutional {
-  background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+  background: linear-gradient(135deg, #4f6df5 0%, #6c5ce7 100%);
   color: white;
   font-weight: 600;
   font-size: 1rem;
@@ -7857,7 +7857,7 @@ body {
 }
 
 .compass-profile-section .profile-label {
-  color: #fbbf24;
+  color: #4f6df5;
   font-weight: 600;
   font-size: 1rem;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);

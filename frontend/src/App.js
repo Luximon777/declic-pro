@@ -84,7 +84,7 @@ const DeclicProLogo = ({ size = 120, animated = true }) => (
     <defs>
       {/* Gradient pour le cercle extérieur (orange -> vert) */}
       <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#F97316"/>
+        <stop offset="0%" stopColor="#4f6df5"/>
         <stop offset="50%" stopColor="#84cc16"/>
         <stop offset="100%" stopColor="#22c55e"/>
       </linearGradient>
@@ -132,11 +132,11 @@ const DeclicProLogo = ({ size = 120, animated = true }) => (
     
     {/* Nœuds périphériques colorés */}
     {/* Top - Orange */}
-    <circle cx="60" cy="15" r="7" fill="#F97316"/>
+    <circle cx="60" cy="15" r="7" fill="#4f6df5"/>
     {/* Top-left - Orange */}
-    <circle cx="25" cy="35" r="7" fill="#F97316"/>
+    <circle cx="25" cy="35" r="7" fill="#4f6df5"/>
     {/* Top-right - Orange */}
-    <circle cx="95" cy="35" r="7" fill="#F97316"/>
+    <circle cx="95" cy="35" r="7" fill="#4f6df5"/>
     {/* Bottom-left - Cyan */}
     <circle cx="25" cy="85" r="7" fill="#06b6d4"/>
     {/* Bottom-right - Green */}
@@ -154,11 +154,11 @@ const DeclicProLogo = ({ size = 120, animated = true }) => (
     
     {/* Lignes de connexion colorées */}
     {/* Top orange */}
-    <line x1="60" y1="15" x2="60" y2="38" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="60" y1="15" x2="60" y2="38" stroke="#4f6df5" strokeWidth="2.5" strokeLinecap="round"/>
     {/* Top-left orange */}
-    <line x1="25" y1="35" x2="42" y2="47" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="25" y1="35" x2="42" y2="47" stroke="#4f6df5" strokeWidth="2.5" strokeLinecap="round"/>
     {/* Top-right orange */}
-    <line x1="95" y1="35" x2="78" y2="47" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="95" y1="35" x2="78" y2="47" stroke="#4f6df5" strokeWidth="2.5" strokeLinecap="round"/>
     {/* Bottom-left cyan */}
     <line x1="25" y1="85" x2="42" y2="73" stroke="#06b6d4" strokeWidth="2.5" strokeLinecap="round"/>
     {/* Bottom-right green */}
@@ -248,7 +248,7 @@ const LandingPage = ({ onSelectPath }) => {
             <span className="phase-number">PHASE 1</span>
           </div>
           <p className="phase-description-below-phase">
-            Débutes par un questionnaire <strong style={{color: '#f97316'}}>TOTALEMENT ANONYME</strong> et <strong style={{color: '#f97316'}}>GRATUIT</strong> en moins de 5 mn.
+            Débutes par un questionnaire <strong style={{color: '#4f6df5'}}>TOTALEMENT ANONYME</strong> et <strong style={{color: '#4f6df5'}}>GRATUIT</strong> en moins de 5 mn.
           </p>
         </div>
       </div>
@@ -634,19 +634,19 @@ const DeclicProLogoCompact = ({ size = 40 }) => (
   <div className="declic-logo-compact">
     <svg width={size} height={size} viewBox="0 0 120 120">
       <circle cx="60" cy="60" r="50" fill="none" stroke="#FFE4D6" strokeWidth="2"/>
-      <circle cx="60" cy="60" r="15" fill="#F97316"/>
+      <circle cx="60" cy="60" r="15" fill="#4f6df5"/>
       <g>
-        <path d="M 60 35 L 62 50 L 70 48 L 60 60" fill="#FBBF24" opacity="0.9"/>
-        <path d="M 85 60 L 70 62 L 72 70 L 60 60" fill="#FBBF24" opacity="0.9"/>
-        <path d="M 60 85 L 58 70 L 50 72 L 60 60" fill="#FBBF24" opacity="0.9"/>
-        <path d="M 35 60 L 50 58 L 48 50 L 60 60" fill="#FBBF24" opacity="0.9"/>
+        <path d="M 60 35 L 62 50 L 70 48 L 60 60" fill="#4f6df5" opacity="0.9"/>
+        <path d="M 85 60 L 70 62 L 72 70 L 60 60" fill="#4f6df5" opacity="0.9"/>
+        <path d="M 60 85 L 58 70 L 50 72 L 60 60" fill="#4f6df5" opacity="0.9"/>
+        <path d="M 35 60 L 50 58 L 48 50 L 60 60" fill="#4f6df5" opacity="0.9"/>
       </g>
-      <circle cx="60" cy="20" r="4" fill="#F97316"/>
-      <circle cx="90" cy="40" r="4" fill="#F97316"/>
-      <circle cx="90" cy="80" r="4" fill="#F97316"/>
-      <circle cx="60" cy="100" r="4" fill="#F97316"/>
-      <circle cx="30" cy="80" r="4" fill="#F97316"/>
-      <circle cx="30" cy="40" r="4" fill="#F97316"/>
+      <circle cx="60" cy="20" r="4" fill="#4f6df5"/>
+      <circle cx="90" cy="40" r="4" fill="#4f6df5"/>
+      <circle cx="90" cy="80" r="4" fill="#4f6df5"/>
+      <circle cx="60" cy="100" r="4" fill="#4f6df5"/>
+      <circle cx="30" cy="80" r="4" fill="#4f6df5"/>
+      <circle cx="30" cy="40" r="4" fill="#4f6df5"/>
     </svg>
     <span className="declic-logo-text">DE'<span className="declic-highlight">CLIC</span> <span className="declic-pro">PRO</span></span>
   </div>
@@ -1291,7 +1291,7 @@ const SkillsArcheology = ({ vertus, competences }) => {
       description: 'Forces émotionnelles impliquant l\'exercice de la volonté pour atteindre ses buts',
       icon: Flame,
       color: '#dc2626',
-      gradient: 'linear-gradient(135deg, #dc2626 0%, #f97316 100%)',
+      gradient: 'linear-gradient(135deg, #dc2626 0%, #4f6df5 100%)',
       items: vertus.conation?.slice(0, 6) || ['Détermination', 'Persévérance', 'Volonté', 'Initiative']
     },
     {
@@ -1323,7 +1323,7 @@ const SkillsArcheology = ({ vertus, competences }) => {
       subtitle: 'Seligman & Peterson',
       icon: Award,
       color: '#f59e0b',
-      gradient: 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)',
+      gradient: 'linear-gradient(135deg, #f59e0b 0%, #4f6df5 100%)',
       items: vertus.forces?.slice(0, 5) || []
     },
     {
@@ -2060,7 +2060,7 @@ const RiasecProfile = ({ riasec }) => {
     I: { name: 'Investigateur', color: '#6366f1', icon: '🔬' },
     A: { name: 'Artistique', color: '#ec4899', icon: '🎨' },
     S: { name: 'Social', color: '#10b981', icon: '🤝' },
-    E: { name: 'Entreprenant', color: '#f97316', icon: '📈' },
+    E: { name: 'Entreprenant', color: '#4f6df5', icon: '📈' },
     C: { name: 'Conventionnel', color: '#0ea5e9', icon: '📋' }
   };
 

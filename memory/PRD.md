@@ -1,83 +1,40 @@
-# DE'CLIC PRO & RE'ACTIF PRO - PRD
+# DE'CLIC PRO - PRD
 
-## Projets
-
-### 1. DE'CLIC PRO
+## Projet
 Plateforme d'orientation professionnelle guidant les utilisateurs à travers un questionnaire multi-modèles (MBTI, DISC, Ennéagramme, RIASEC, Archéologie des Compétences) pour déterminer leur profil de personnalité et recommander des métiers compatibles.
 
 **URL**: https://declicpro-eval.preview.emergentagent.com
-
-### 2. RE'ACTIF PRO (NOUVEAU)
-Plateforme d'accompagnement professionnel personnalisé avec 3 espaces :
-- **Mon Espace Pro** : Compte pseudonyme confidentiel (actif)
-- **Entreprise RH** : Espace professionnels RH (à venir)
-- **Partenaires Sociaux** : Consultation et collaboration (à venir)
-
-**URL**: https://declicpro-eval.preview.emergentagent.com/reactif-pro
 
 ---
 
 ## Ce qui a été implémenté
 
+### Février 2026 - Session actuelle (24/02/2026)
+- ✅ **Intégration TABLEAU CK** : Données du fichier TABLEAU CK.ods intégrées dans le moteur de scoring
+  - Nouveau dictionnaire `TABLEAU_CK` avec hiérarchie complète par vertu
+  - `ARCHEOLOGIE_COMPETENCES` enrichi avec compétences sociales, pro transférables, qualités CK
+  - `VERTUS` enrichi avec sous-vertus, valeurs universelles, compétences sociales/pro
+  - `score_archeologie` utilise les compétences sociales et pro transférables CK
+- ✅ **Redesign UI (reactif.pro)** : Nouvelle identité visuelle alignée sur reactif.pro
+  - Palette : bleu marine #1e3a5f (fond), bleu #4f6df5 (accent), #6c5ce7 (secondaire)
+  - Police : Outfit + Plus Jakarta Sans
+  - Remplacement complet des couleurs orange par bleu dans CSS et JSX
 
 ### Décembre 2025 - Session 4 (09/12/2025)
-- ✅ **Bug fix P0** : Scoring des métiers pour profils INFJ/INFP - "Psychologue" passe de #8 à #4
-- ✅ **Ajustement poids WEIGHTS** : MBTI 20% → 35% (facteur clé pour compatibilité métier)
-- ✅ **Tests de régression** : ESTP (Psychologue #48), INTJ (Psychologue #27) - appropriés
-- ✅ **Fichier test** : `/app/backend/tests/test_infj_psychologue.py`
-- ✅ **Validation complète système profilage** : 89/89 tests (100%) - `/app/backend/tests/test_full_profiling_validation.py`
-- ✅ **NOUVEAU: Filtre niveau d'études** :
-  - Question ajoutée après la date de naissance dans le questionnaire
-  - 6 niveaux : Sans diplôme, Bac, Bac+2, Bac+3, Bac+5, Bac+8
-  - Métiers filtrés/priorisés selon le niveau de l'utilisateur
-  - Mapping niveau d'études pour les 54 métiers (`METIER_NIVEAU_ETUDES`)
-- ✅ **Ajout ENTJ aux métiers techniques** : Développeur, Ingénieur, Architecte
+- ✅ Ajustement poids MBTI 20% → 35%
+- ✅ Tests de régression 89/89 (100%)
+- ✅ Filtre niveau d'études (6 niveaux)
+- ✅ ENTJ ajouté aux métiers techniques
 
-### Mars 2026 - Session 3 (08/03/2026)
-- ✅ **Intégration IA Claude Sonnet 4.5** pour génération de fiches métiers
-- ✅ **Cache MongoDB** pour les fiches IA (`ai_job_cache` collection)
-- ✅ **Bug fix** : Fiche métier incorrecte ("aide soignant" au lieu du métier recherché)
-- ✅ **Bug fix** : Vertu par défaut "Sagesse" pour tous les MBTI → Fallback MBTI intelligent
-- ✅ **Amélioration ESCO** : Extraction correcte des descriptions multilingues + vérification pertinence
-- ✅ **Mapping MBTI → Vertu** : ESTP→Courage, INTJ→Sagesse, ENFJ→Humanité, etc.
-
-### Mars 2026 - Session 2 (06/03/2026)
-- ✅ **Tests complets RE'ACTIF PRO** : 11/11 backend, 100% frontend
-- ✅ **Bug fix** : Affichage MBTI dans les résultats corrigé (result.content au lieu de result.result_data)
-- ✅ **Fichier test** : `/app/backend/tests/test_reactif_pro.py`
-
-### Mars 2026 - Session 1
-
-#### RE'ACTIF PRO - Création du projet ✅
-- [x] **Page d'accueil RE'ACTIF PRO** avec 3 cartes d'accès
-- [x] **Système d'authentification pseudonyme** :
-  - Inscription sans identité civile obligatoire
-  - Pseudo + mot de passe obligatoires
-  - Email de récupération facultatif
-  - Code d'accès DE'CLIC PRO facultatif pour récupérer les résultats
-  - Consentements CGU/Confidentialité/Marketing
-- [x] **Backend FastAPI** :
-  - Collection MongoDB `reactif_users`, `reactif_profiles`, `reactif_user_data`, `reactif_audit_logs`
-  - Authentification JWT (tokens 7 jours)
-  - Hash mot de passe SHA-256 + salt
-  - Routes `/api/reactif/auth/register`, `/api/reactif/auth/login`
-  - Routes `/api/reactif/user/profile`, `/api/reactif/user/results`
-  - Export données RGPD `/api/reactif/user/export-data`
-  - Suppression compte `/api/reactif/user/account`
-- [x] **Dashboard utilisateur** avec navigation sidebar
-- [x] **Intégration DE'CLIC PRO** :
-  - Génération code d'accès XXXX-XXXX après test
-  - Endpoint `/api/retrieve-results` pour récupérer résultats
-  - Import automatique des résultats lors de l'inscription RE'ACTIF PRO
-
-#### DE'CLIC PRO - Améliorations ✅
-- [x] **"Soft skills à développer"** affiche une liste spécifique (pas générique)
-- [x] **Croisement Ennéagramme × Questions Vertus** (60% questions + 30% Ennéagramme + 10% CK1)
-- [x] **Scoring filières amélioré** avec mapping RIASEC/Vertus/DISC/Ennéagramme
-- [x] **Filières filtrées** (score >= 65% seulement)
-- [x] **Code d'accès** généré et affiché après le test
-- [x] **Section "Au-delà du diplôme"** sur page d'accueil
-- [x] **Textes mis à jour** ("Avant d'envoyer ton CV", "Découvres tes possibilités", etc.)
+### Mars 2026 - Sessions précédentes
+- ✅ Intégration IA Claude Sonnet 4.5 pour fiches métiers
+- ✅ Cache MongoDB pour fiches IA
+- ✅ Mapping MBTI → Vertu corrigé
+- ✅ Bug fix vertu par défaut
+- ✅ Archéologie des compétences bidirectionnelle
+- ✅ UX/UI Designer reclassifié (Sagesse)
+- ✅ Pénalisation MBTI incompatibles
+- ✅ Score filières basé sur métiers contenus
 
 ---
 
@@ -87,83 +44,63 @@ Plateforme d'accompagnement professionnel personnalisé avec 3 espaces :
 - **Frontend**: React 18 + Tailwind CSS + Shadcn/UI
 - **Backend**: FastAPI (Python)
 - **Base de données**: MongoDB
-- **Authentification**: JWT (RE'ACTIF PRO)
+- **IA**: Claude Sonnet 4.5 via Emergent LLM Key
 
-### Structure des fichiers clés
+### Structure fichiers clés
 ```
 /app/
 ├── backend/
-│   └── server.py           # API DE'CLIC PRO + RE'ACTIF PRO
+│   ├── server.py           # ~7400 lignes - API + logique scoring
+│   ├── esco_api.py
+│   ├── france_travail_api.py
+│   └── tests/
+│       ├── test_full_profiling_validation.py
+│       └── test_infj_psychologue.py
 ├── frontend/src/
-│   ├── App.js              # DE'CLIC PRO (monolithique)
-│   ├── App.css             # Styles DE'CLIC PRO
-│   └── pages/reactif-pro/
-│       ├── ReactifProApp.jsx   # Application RE'ACTIF PRO
-│       └── ReactifPro.css      # Styles RE'ACTIF PRO
+│   ├── App.js              # ~3700 lignes
+│   └── App.css             # ~8000 lignes (redesigné)
+├── tableau_ck.ods          # Données source TABLEAU CK
+├── tableau_ck1.xlsx        # Version enrichie
+└── archeologie_competences.ods
 ```
 
-### Collections MongoDB RE'ACTIF PRO
-- `reactif_users` : Authentification (pseudo, password_hash, email_recovery, consentements)
-- `reactif_profiles` : Profil visible (display_name, visibility_level)
-- `reactif_user_data` : Données métier (résultats DE'CLIC PRO, parcours, etc.)
-- `reactif_audit_logs` : Journal d'audit minimal
-- `test_results` : Résultats DE'CLIC PRO avec code d'accès
+### Collections MongoDB
+- `test_results` : Résultats avec code d'accès
+- `ai_job_cache` : Cache fiches IA
 
 ---
 
 ## Endpoints API
 
-### DE'CLIC PRO
 - `POST /api/job-match` - Matching métiers (retourne access_code)
 - `POST /api/explore` - Exploration filières
-- `POST /api/retrieve-results` - Récupérer résultats via code d'accès
+- `POST /api/retrieve-results` - Récupérer résultats via code
 - `GET /api/questionnaire` - Questions du questionnaire
-
-### RE'ACTIF PRO
-- `POST /api/reactif/auth/register` - Inscription
-- `POST /api/reactif/auth/login` - Connexion
-- `GET /api/reactif/user/profile` - Profil utilisateur
-- `GET /api/reactif/user/results` - Résultats DE'CLIC PRO
-- `POST /api/reactif/user/import-results` - Import via code
-- `GET /api/reactif/user/export-data` - Export RGPD
-- `DELETE /api/reactif/user/account` - Supprimer compte
 
 ---
 
 ## Prochaines tâches (P1)
 
-### RE'ACTIF PRO
-- [ ] Dashboard avec statistiques réelles
-- [ ] Passation questionnaire depuis l'espace pro
-- [ ] Gestion projets professionnels
-- [ ] Plan d'action personnalisé
-- [ ] Espace "Entreprise RH"
-- [ ] Espace "Partenaires Sociaux"
-
-### DE'CLIC PRO
+- [ ] Refactoring backend server.py (>7400 lignes) → modulariser
+- [ ] Refactoring frontend App.js (>3700 lignes) → composants
 - [ ] Export PDF de la carte d'identité Pro
 - [ ] Partage sur réseaux sociaux
-- [ ] Refactoring backend (modularisation)
-- [ ] Refactoring frontend (composants)
 
 ---
 
 ## Backlog (P2)
-- Dashboard administrateur
+
 - API France Travail (bloquée - erreur 403 externe)
+- Dashboard administrateur
 - Notifications email
 - Historique des questionnaires
 - Système de badges/gamification
+- Espace Entreprise RH
+- Espace Partenaires Sociaux
 
 ---
 
 ## Conformité RGPD/AI Act
-
-### RE'ACTIF PRO respecte :
-- ✅ Compte pseudonyme (pas d'identité civile obligatoire)
-- ✅ Email facultatif
-- ✅ Consentements explicites (CGU, Confidentialité, Marketing)
-- ✅ Droit à l'export des données
-- ✅ Droit à la suppression du compte
-- ✅ Données séparées (auth vs métier)
-- ✅ Journal d'audit minimal
+- ✅ Questionnaire anonyme (pas d'identité obligatoire)
+- ✅ Données séparées
+- ✅ Code d'accès pour récupération résultats

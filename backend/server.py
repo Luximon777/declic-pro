@@ -1246,72 +1246,99 @@ QUESTIONNAIRE = [
 VERTUS = {
     "sagesse": {
         "name": "Sagesse et connaissance",
+        "sous_vertus": ["Sagesse", "Connaissance", "Tempérance", "Prudence"],
         "forces": ["Créativité", "Curiosité", "Jugement", "Amour de l'apprentissage", "Perspective"],
         "valeurs_schwartz": ["Autonomie", "Stimulation", "Réalisation de soi"],
-        "qualites_humaines": ["Indépendance", "Créativité", "Curiosité", "Ouverture d'esprit", "Audace", "Liberté de pensée"],
+        "valeurs_universelles": ["Patience", "Ouverture d'esprit", "Indulgence", "Pardon", "Adaptabilité", "Modestie", "Créativité", "Curiosité"],
+        "qualites_humaines": ["Indépendance", "Créativité", "Curiosité", "Ouverture d'esprit", "Audace", "Liberté de pensée",
+                              "Courtoisie", "Gentillesse", "Consultation", "Adaptabilité", "Sincérité", "Sobriété"],
         "competences_oms": ["Pensée critique", "Pensée créative", "Prise de décision"],
+        "competences_sociales": ["Prudent", "Modéré", "Calme", "Docile", "Raisonnable", "Curieux", "Maîtrise de soi"],
+        "competences_pro": ["Diplomate", "Stable", "Prévoyant", "Médiateur", "Gérer son stress"],
         "savoirs_etre": ["Faire preuve de curiosité", "Faire preuve de créativité, d'inventivité", "Prendre des initiatives et être force de proposition"],
-        # Structure tripartite CK1
         "cognition": ["Connaissance", "Ouverture d'esprit", "Curiosité", "Pensée critique", "Lucidité", "Perspicacité"],
         "conation": ["Soif d'apprendre", "Initiative intellectuelle", "Audace créative", "Détermination à comprendre"],
         "affection": ["Partage de connaissances", "Tolérance des idées", "Respect de la diversité", "Humilité intellectuelle"]
     },
     "courage": {
         "name": "Courage",
+        "sous_vertus": ["Courage", "Droiture"],
         "forces": ["Bravoure", "Persévérance", "Honnêteté", "Enthousiasme"],
         "valeurs_schwartz": ["Hédonisme", "Réalisation de soi", "Stimulation"],
-        "qualites_humaines": ["Joie de vivre", "Optimisme", "Gratitude", "Ambition", "Détermination", "Passion"],
+        "valeurs_universelles": ["Sécurité", "Bravoure", "Persévérance", "Authenticité", "Vitalité",
+                                  "Loyauté", "Dignité", "Excellence", "Liberté", "Autonomie", "Discipline"],
+        "qualites_humaines": ["Joie de vivre", "Optimisme", "Gratitude", "Ambition", "Détermination", "Passion",
+                              "Dynamisme", "Fiabilité", "Confiance", "Vigilance", "Endurant", "Volonté"],
         "competences_oms": ["Gestion du stress", "Résilience", "Estime de soi"],
+        "competences_sociales": ["Habileté", "Rigueur", "Persévérant", "Responsabilité", "Intègre"],
+        "competences_pro": ["Consciencieux", "Minutieux", "Spontané", "Assidu", "Engagé", "Entrepreneur",
+                            "Organisé", "Ponctuel", "Déterminé", "Passionné"],
         "savoirs_etre": ["Faire preuve de persévérance", "Gérer son stress", "Faire preuve de réactivité"],
-        # Structure tripartite CK1
         "cognition": ["Lucidité face aux risques", "Évaluation des obstacles", "Conscience de soi", "Discernement"],
         "conation": ["Détermination", "Persévérance", "Bravoure", "Ambition", "Volonté", "Dynamisme"],
         "affection": ["Optimisme", "Joie de vivre", "Enthousiasme communicatif", "Confiance", "Vitalité"]
     },
     "humanite": {
         "name": "Humanité",
+        "sous_vertus": ["Servitude", "Unicité", "Noblesse", "Humanité"],
         "forces": ["Amour", "Gentillesse", "Intelligence sociale"],
         "valeurs_schwartz": ["Bienveillance", "Universalisme", "Affiliation"],
-        "qualites_humaines": ["Empathie", "Gentillesse", "Générosité", "Altruisme", "Compassion", "Écoute", "Solidarité"],
+        "valeurs_universelles": ["Affection", "Gentillesse", "Assertivité", "Humilité",
+                                  "Universalisme", "Unité", "Bonté", "Hospitalité", "Générosité", "Détachement", "Respect"],
+        "qualites_humaines": ["Empathie", "Gentillesse", "Générosité", "Altruisme", "Compassion", "Écoute", "Solidarité",
+                              "Modestie", "Partager", "Amabilité", "Transmettre le savoir", "Fidélité"],
         "competences_oms": ["Communication efficace", "Compétences relationnelles", "Empathie"],
+        "competences_sociales": ["Réservé", "Assertif", "Serviable", "Audacieux", "Intuitif", "Protecteur", "Éloquent", "Patient"],
+        "competences_pro": ["Flexibilité", "Chercheur", "Conseiller", "Concepteur", "Pédagogue", "Perspicace", "Animation"],
         "savoirs_etre": ["Être à l'écoute", "Avoir le sens du service", "Travailler en équipe"],
-        # Structure tripartite CK1
         "cognition": ["Intelligence sociale", "Compréhension d'autrui", "Lecture des émotions", "Psychologie intuitive"],
         "conation": ["Engagement relationnel", "Dévouement", "Volonté d'aider", "Serviabilité", "Hospitalité"],
         "affection": ["Empathie", "Compassion", "Gentillesse", "Bienveillance", "Amour", "Solidarité"]
     },
     "justice": {
         "name": "Justice",
+        "sous_vertus": ["Justice"],
         "forces": ["Travail d'équipe", "Équité", "Leadership"],
         "valeurs_schwartz": ["Égalité", "Responsabilité sociale", "Pouvoir"],
-        "qualites_humaines": ["Justice", "Impartialité", "Équité", "Respect des droits", "Intégrité", "Humilité", "Charisme"],
+        "valeurs_universelles": ["Honnêteté", "Obéissance", "Équité", "Fermeté", "Harmonie"],
+        "qualites_humaines": ["Justice", "Impartialité", "Équité", "Respect des droits", "Intégrité", "Humilité", "Charisme",
+                              "Coopération", "Logique", "Juste"],
         "competences_oms": ["Prise de décision", "Pensée critique", "Compétences relationnelles"],
+        "competences_sociales": ["Lucidité", "Cohérent", "Esprit d'équipe", "Leadership"],
+        "competences_pro": ["Pragmatique", "Méthodique", "Ordonné", "Conciliant", "Travail en équipe"],
         "savoirs_etre": ["Faire preuve de leadership", "Inspirer, donner du sens", "Respecter ses engagements, assumer ses responsabilités"],
-        # Structure tripartite CK1
         "cognition": ["Logique", "Cohérence", "Méthodique", "Pragmatisme", "Objectivité", "Lucidité"],
         "conation": ["Leadership", "Engagement collectif", "Responsabilité", "Fermeté", "Esprit d'équipe"],
         "affection": ["Respect", "Équité", "Harmonie", "Conciliation", "Loyauté", "Intégrité"]
     },
     "temperance": {
         "name": "Tempérance",
+        "sous_vertus": ["Tempérance", "Prudence"],
         "forces": ["Pardon", "Humilité", "Prudence", "Maîtrise de soi"],
         "valeurs_schwartz": ["Conformité", "Sécurité", "Tradition"],
-        "qualites_humaines": ["Respect des règles", "Prudence", "Stabilité", "Patience", "Humilité", "Modération", "Gratitude"],
+        "valeurs_universelles": ["Modestie", "Patience", "Adaptabilité", "Sobriété", "Créativité", "Curiosité"],
+        "qualites_humaines": ["Respect des règles", "Prudence", "Stabilité", "Patience", "Humilité", "Modération", "Gratitude",
+                              "Sincérité", "Sobriété", "Modeste"],
         "competences_oms": ["Gestion des émotions", "Estime de soi", "Résilience"],
+        "competences_sociales": ["Modéré", "Raisonnable", "Curieux", "Maîtrise de soi"],
+        "competences_pro": ["Gérer son stress", "Prévoyant", "Stable"],
         "savoirs_etre": ["Faire preuve de rigueur et de précision", "Organiser son travail selon les priorités et les objectifs"],
-        # Structure tripartite CK1
         "cognition": ["Prévoyance", "Prudence", "Raisonnement", "Calme réflexif", "Sobriété de jugement"],
         "conation": ["Discipline", "Constance", "Patience", "Maîtrise de soi", "Rigueur", "Organisation"],
         "affection": ["Modération", "Pardon", "Gratitude", "Sérénité", "Indulgence", "Stabilité émotionnelle"]
     },
     "transcendance": {
         "name": "Transcendance",
+        "sous_vertus": ["Pureté", "Spiritualité", "Transcendance"],
         "forces": ["Appréciation de la beauté", "Gratitude", "Espoir", "Humour", "Spiritualité"],
         "valeurs_schwartz": ["Universalisme", "Spiritualité", "Bienveillance"],
-        "qualites_humaines": ["Tolérance", "Ouverture d'esprit", "Sagesse", "Gratitude", "Recherche de sens", "Sérénité", "Harmonie"],
+        "valeurs_universelles": ["Fidélité", "Gratitude", "Excellence", "Dévotion", "Bienveillance", "Respect", "Foi", "Beauté"],
+        "qualites_humaines": ["Tolérance", "Ouverture d'esprit", "Sagesse", "Gratitude", "Recherche de sens", "Sérénité", "Harmonie",
+                              "Joyeux", "Hédoniste", "Écouter", "Altruisme", "Compassion", "Politesse"],
         "competences_oms": ["Pensée créative", "Gestion du stress", "Résilience"],
+        "competences_sociales": ["Propreté", "Souriant", "Optimisme", "Sensibilité", "Solidarité", "Force", "Doux", "Humour"],
+        "competences_pro": ["Dévoué", "Sociable", "Souple", "Solidaire", "Délicat", "Bénévole"],
         "savoirs_etre": ["S'adapter aux changements", "Faire preuve d'autonomie"],
-        # Structure tripartite CK1
         "cognition": ["Perspective globale", "Vision holistique", "Contemplation", "Sagesse", "Intuition"],
         "conation": ["Quête de sens", "Espérance", "Dévotion", "Excellence", "Engagement spirituel"],
         "affection": ["Harmonie", "Sérénité", "Gratitude", "Compassion universelle", "Beauté", "Joie profonde"]
@@ -4776,72 +4803,223 @@ MBTI_TO_VERTU_FALLBACK = {
 # ============================================================================
 # Hiérarchie: VERTU (socle) → Forces → Valeurs → Qualités → Compétences → Savoirs-être
 
+# ============================================================================
+# TABLEAU CK - Données enrichies de l'Archéologie des Compétences
+# Source: TABLEAU CK.ods - Hiérarchie complète:
+# Vertu → Sous-vertus → Valeurs Universelles → Qualités Humaines →
+# Compétences Sociales → Compétences Pro Transférables → Métiers
+# ============================================================================
+TABLEAU_CK = {
+    "sagesse": {
+        "sous_vertus": ["Sagesse", "Connaissance", "Tempérance", "Prudence"],
+        "valeurs_universelles": [
+            "Patience", "Ouverture d'esprit", "Indulgence", "Pardon", "Adaptabilité",
+            "Modestie", "Créativité", "Curiosité", "Aimer apprendre"
+        ],
+        "qualites_humaines": [
+            "Courtoisie", "Gentillesse", "Consultation", "Adaptabilité",
+            "Sincérité", "Sobriété", "Modeste", "Pardonner"
+        ],
+        "competences_sociales": [
+            "Prudent", "Modéré", "Calme", "Docile", "Raisonnable", "Curieux", "Maîtrise de soi"
+        ],
+        "competences_pro_transferables": [
+            "Diplomate", "Stable", "Prévoyant", "Médiateur", "Gérer son stress"
+        ],
+        "metiers_associes": ["Psychologue"],
+    },
+    "justice": {
+        "sous_vertus": ["Justice"],
+        "valeurs_universelles": [
+            "Honnêteté", "Obéissance", "Équité", "Fermeté", "Harmonie"
+        ],
+        "qualites_humaines": [
+            "Coopération", "Logique", "Juste", "Pouvoir"
+        ],
+        "competences_sociales": [
+            "Lucidité", "Cohérent", "Esprit d'équipe", "Leadership"
+        ],
+        "competences_pro_transferables": [
+            "Pragmatique", "Méthodique", "Ordonné", "Conciliant", "Travail en équipe"
+        ],
+        "metiers_associes": ["Juriste"],
+    },
+    "courage": {
+        "sous_vertus": ["Courage", "Droiture"],
+        "valeurs_universelles": [
+            "Sécurité", "Bravoure", "Persévérance", "Authenticité", "Vitalité",
+            "Loyauté", "Dignité", "Excellence", "Liberté", "Autonomie", "Discipline"
+        ],
+        "qualites_humaines": [
+            "Dynamisme", "Fiabilité", "Confiance",
+            "Vigilance", "Endurant", "Volonté", "Créatif", "Dextérité"
+        ],
+        "competences_sociales": [
+            "Habileté", "Rigueur", "Persévérant", "Responsabilité", "Intègre"
+        ],
+        "competences_pro_transferables": [
+            "Consciencieux", "Minutieux", "Spontané",
+            "Assidu", "Engagé", "Entrepreneur", "Organisé", "Ponctuel", "Déterminé", "Passionné"
+        ],
+        "metiers_associes": ["Comptable", "Assureur", "Banquier", "Artisan", "Agent immobilier"],
+    },
+    "transcendance": {
+        "sous_vertus": ["Pureté", "Spiritualité", "Transcendance"],
+        "valeurs_universelles": [
+            "Fidélité", "Gratitude", "Excellence", "Dévotion",
+            "Bienveillance", "Respect", "Foi", "Beauté"
+        ],
+        "qualites_humaines": [
+            "Joyeux", "Hédoniste", "Écouter",
+            "Altruisme", "Compassion", "Politesse", "Tolérance", "Amitié", "Rigueur"
+        ],
+        "competences_sociales": [
+            "Propreté", "Souriant", "Optimisme", "Sensibilité",
+            "Solidarité", "Force", "Doux", "Humour"
+        ],
+        "competences_pro_transferables": [
+            "Dévoué", "Sociable", "Souple", "Solidaire", "Délicat", "Bénévole"
+        ],
+        "metiers_associes": [],
+    },
+    "humanite": {
+        "sous_vertus": ["Servitude", "Unicité", "Noblesse", "Humanité"],
+        "valeurs_universelles": [
+            "Affection", "Gentillesse", "Assertivité", "Humilité",
+            "Universalisme", "Unité",
+            "Bonté", "Hospitalité", "Magnanimité", "Générosité", "Détachement", "Respect"
+        ],
+        "qualites_humaines": [
+            "Modestie", "Partager", "Amabilité",
+            "Générosité", "Transmettre le savoir", "Accomplissement", "Enseigner",
+            "Empathie", "Fidélité"
+        ],
+        "competences_sociales": [
+            "Réservé", "Assertif", "Serviable",
+            "Audacieux", "Intuitif",
+            "Protecteur", "Éloquent", "Patient"
+        ],
+        "competences_pro_transferables": [
+            "Flexibilité",
+            "Chercheur", "Conseiller", "Concepteur", "Pédagogue", "Perspicace", "Animation",
+            "Objectivité", "Persévérant"
+        ],
+        "metiers_associes": [],
+    },
+    "temperance": {
+        "sous_vertus": ["Tempérance", "Prudence"],
+        "valeurs_universelles": [
+            "Modestie", "Créativité", "Curiosité", "Patience",
+            "Adaptabilité", "Sobriété"
+        ],
+        "qualites_humaines": [
+            "Sincérité", "Sobriété", "Modeste", "Pardonner"
+        ],
+        "competences_sociales": [
+            "Modéré", "Raisonnable", "Curieux", "Maîtrise de soi"
+        ],
+        "competences_pro_transferables": [
+            "Gérer son stress", "Prévoyant", "Stable"
+        ],
+        "metiers_associes": [],
+    },
+}
+
 ARCHEOLOGIE_COMPETENCES = {
     "sagesse": {
         "forces": ["Créativité", "Curiosité", "Jugement", "Amour de l'apprentissage", "Perspective"],
-        "valeurs_schwartz": ["Autonomie", "Stimulation", "Réalisation de soi"],
-        "qualites": ["Indépendance", "Créativité", "Curiosité", "Ouverture d'esprit", "Audace", "Liberté de pensée"],
+        "valeurs_schwartz": ["Autonomie", "Stimulation", "Réalisation de soi",
+                             "Patience", "Ouverture d'esprit", "Indulgence", "Pardon", "Adaptabilité"],
+        "qualites": ["Indépendance", "Créativité", "Curiosité", "Ouverture d'esprit", "Audace", "Liberté de pensée",
+                     "Courtoisie", "Gentillesse", "Consultation", "Adaptabilité", "Sincérité", "Sobriété"],
         "competences_oms": ["Pensée critique", "Pensée créative", "Prise de décision"],
-        "savoirs_etre_pro": ["Curiosité", "Créativité", "Prise d'initiatives", "Esprit d'analyse"],
-        "filieres_naturelles": ["SIN", "SI"],  # Informatique, Industrielle/Sciences
+        "savoirs_etre_pro": ["Curiosité", "Créativité", "Prise d'initiatives", "Esprit d'analyse",
+                             "Diplomate", "Stable", "Prévoyant", "Médiateur", "Gérer son stress"],
+        "competences_sociales": ["Prudent", "Modéré", "Calme", "Docile", "Raisonnable", "Curieux", "Maîtrise de soi"],
+        "filieres_naturelles": ["SIN", "SI"],
         "mbti_coherents": ["INTJ", "INTP", "ENTJ", "ENTP", "ISTP"],
-        "disc_coherents": ["C", "D"],  # Conformité (analyse) ou Dominance (stratégie)
-        "ennea_coherents": [5, 1, 7],  # Observateur, Perfectionniste, Enthousiaste
+        "disc_coherents": ["C", "D"],
+        "ennea_coherents": [5, 1, 7],
     },
     "courage": {
         "forces": ["Bravoure", "Persévérance", "Honnêteté", "Enthousiasme"],
-        "valeurs_schwartz": ["Hédonisme", "Réalisation de soi", "Stimulation"],
-        "qualites": ["Joie de vivre", "Optimisme", "Gratitude", "Ambition", "Détermination", "Passion"],
+        "valeurs_schwartz": ["Hédonisme", "Réalisation de soi", "Stimulation",
+                             "Sécurité", "Loyauté", "Dignité", "Excellence", "Liberté", "Autonomie", "Discipline"],
+        "qualites": ["Joie de vivre", "Optimisme", "Gratitude", "Ambition", "Détermination", "Passion",
+                     "Dynamisme", "Fiabilité", "Confiance", "Vigilance", "Endurant", "Volonté", "Créatif"],
         "competences_oms": ["Gestion du stress", "Résilience", "Estime de soi"],
-        "savoirs_etre_pro": ["Persévérance", "Gestion du stress", "Réactivité", "Prise de risque"],
-        "filieres_naturelles": ["SBTP", "SCV", "SI"],  # BTP, Commerce, Industrielle
+        "savoirs_etre_pro": ["Persévérance", "Gestion du stress", "Réactivité", "Prise de risque",
+                             "Consciencieux", "Minutieux", "Spontané", "Assidu", "Engagé", "Entrepreneur",
+                             "Organisé", "Ponctuel", "Déterminé", "Passionné"],
+        "competences_sociales": ["Habileté", "Rigueur", "Persévérant", "Responsabilité", "Intègre"],
+        "filieres_naturelles": ["SBTP", "SCV", "SI"],
         "mbti_coherents": ["ESTP", "ISTP", "ESTJ", "ENTJ"],
-        "disc_coherents": ["D", "I"],  # Dominance ou Influence
-        "ennea_coherents": [8, 3, 7],  # Leader, Performeur, Enthousiaste
+        "disc_coherents": ["D", "I"],
+        "ennea_coherents": [8, 3, 7],
     },
     "humanite": {
         "forces": ["Amour", "Gentillesse", "Intelligence sociale"],
-        "valeurs_schwartz": ["Bienveillance", "Universalisme", "Affiliation"],
-        "qualites": ["Empathie", "Gentillesse", "Générosité", "Altruisme", "Compassion", "Écoute", "Solidarité"],
+        "valeurs_schwartz": ["Bienveillance", "Universalisme", "Affiliation",
+                             "Affection", "Gentillesse", "Assertivité", "Humilité",
+                             "Bonté", "Hospitalité", "Générosité", "Détachement", "Respect"],
+        "qualites": ["Empathie", "Gentillesse", "Générosité", "Altruisme", "Compassion", "Écoute", "Solidarité",
+                     "Modestie", "Partager", "Amabilité", "Transmettre le savoir", "Fidélité"],
         "competences_oms": ["Communication efficace", "Compétences relationnelles", "Empathie"],
-        "savoirs_etre_pro": ["Écoute", "Sens du service", "Travail en équipe", "Bienveillance"],
-        "filieres_naturelles": ["SSS", "SC"],  # Santé/Social, Communication/Formation
+        "savoirs_etre_pro": ["Écoute", "Sens du service", "Travail en équipe", "Bienveillance",
+                             "Flexibilité", "Chercheur", "Conseiller", "Concepteur", "Pédagogue",
+                             "Perspicace", "Animation", "Persévérant"],
+        "competences_sociales": ["Réservé", "Assertif", "Serviable", "Audacieux", "Intuitif",
+                                  "Protecteur", "Éloquent", "Patient"],
+        "filieres_naturelles": ["SSS", "SC"],
         "mbti_coherents": ["INFJ", "ENFJ", "ISFJ", "ESFJ", "INFP", "ENFP", "ESFP"],
-        "disc_coherents": ["S", "I"],  # Stabilité ou Influence
-        "ennea_coherents": [2, 9, 6],  # Altruiste, Médiateur, Loyal
+        "disc_coherents": ["S", "I"],
+        "ennea_coherents": [2, 9, 6],
     },
     "justice": {
         "forces": ["Travail d'équipe", "Équité", "Leadership"],
-        "valeurs_schwartz": ["Égalité", "Responsabilité sociale", "Pouvoir"],
-        "qualites": ["Justice", "Impartialité", "Équité", "Intégrité", "Humilité", "Charisme", "Influence"],
+        "valeurs_schwartz": ["Égalité", "Responsabilité sociale", "Pouvoir",
+                             "Honnêteté", "Obéissance", "Équité", "Fermeté", "Harmonie"],
+        "qualites": ["Justice", "Impartialité", "Équité", "Intégrité", "Humilité", "Charisme", "Influence",
+                     "Coopération", "Logique", "Juste"],
         "competences_oms": ["Prise de décision", "Pensée critique", "Compétences relationnelles"],
-        "savoirs_etre_pro": ["Leadership", "Donner du sens", "Respect des engagements", "Responsabilité"],
-        "filieres_naturelles": ["SGAE", "SC"],  # Gestion/Admin, Communication
+        "savoirs_etre_pro": ["Leadership", "Donner du sens", "Respect des engagements", "Responsabilité",
+                             "Pragmatique", "Méthodique", "Ordonné", "Conciliant", "Travail en équipe"],
+        "competences_sociales": ["Lucidité", "Cohérent", "Esprit d'équipe", "Leadership"],
+        "filieres_naturelles": ["SGAE", "SC"],
         "mbti_coherents": ["ENTJ", "ESTJ", "ENFJ", "INTJ"],
-        "disc_coherents": ["D", "C"],  # Dominance ou Conformité
-        "ennea_coherents": [1, 8, 3],  # Perfectionniste, Leader, Performeur
+        "disc_coherents": ["D", "C"],
+        "ennea_coherents": [1, 8, 3],
     },
     "temperance": {
         "forces": ["Pardon", "Humilité", "Prudence", "Maîtrise de soi"],
-        "valeurs_schwartz": ["Conformité", "Sécurité", "Tradition"],
-        "qualites": ["Respect des règles", "Prudence", "Stabilité", "Patience", "Modération", "Gratitude"],
+        "valeurs_schwartz": ["Conformité", "Sécurité", "Tradition",
+                             "Modestie", "Patience", "Adaptabilité", "Sobriété"],
+        "qualites": ["Respect des règles", "Prudence", "Stabilité", "Patience", "Modération", "Gratitude",
+                     "Sincérité", "Sobriété", "Modeste"],
         "competences_oms": ["Gestion des émotions", "Estime de soi", "Résilience"],
-        "savoirs_etre_pro": ["Rigueur", "Précision", "Organisation", "Respect des priorités"],
-        "filieres_naturelles": ["SGAE", "SI"],  # Gestion/Admin, Industrielle
+        "savoirs_etre_pro": ["Rigueur", "Précision", "Organisation", "Respect des priorités",
+                             "Gérer son stress", "Prévoyant", "Stable"],
+        "competences_sociales": ["Modéré", "Raisonnable", "Curieux", "Maîtrise de soi"],
+        "filieres_naturelles": ["SGAE", "SI"],
         "mbti_coherents": ["ISTJ", "ISFJ", "ESTJ", "ESFJ", "INTP"],
-        "disc_coherents": ["S", "C"],  # Stabilité ou Conformité
-        "ennea_coherents": [6, 1, 9],  # Loyal, Perfectionniste, Médiateur
+        "disc_coherents": ["S", "C"],
+        "ennea_coherents": [6, 1, 9],
     },
     "transcendance": {
         "forces": ["Appréciation de la beauté", "Gratitude", "Espoir", "Humour", "Spiritualité"],
-        "valeurs_schwartz": ["Universalisme", "Spiritualité", "Bienveillance"],
-        "qualites": ["Tolérance", "Ouverture d'esprit", "Sagesse", "Recherche de sens", "Sérénité", "Harmonie"],
+        "valeurs_schwartz": ["Universalisme", "Spiritualité", "Bienveillance",
+                             "Fidélité", "Gratitude", "Excellence", "Dévotion", "Respect", "Foi", "Beauté"],
+        "qualites": ["Tolérance", "Ouverture d'esprit", "Sagesse", "Recherche de sens", "Sérénité", "Harmonie",
+                     "Joyeux", "Hédoniste", "Écouter", "Altruisme", "Compassion", "Politesse"],
         "competences_oms": ["Pensée créative", "Gestion du stress", "Résilience"],
-        "savoirs_etre_pro": ["Adaptation aux changements", "Autonomie", "Créativité", "Vision globale"],
-        "filieres_naturelles": ["SC", "SSS", "SIN"],  # Communication, Santé/Social, Informatique (UX/Design)
+        "savoirs_etre_pro": ["Adaptation aux changements", "Autonomie", "Créativité", "Vision globale",
+                             "Dévoué", "Sociable", "Souple", "Solidaire", "Délicat", "Bénévole"],
+        "competences_sociales": ["Propreté", "Souriant", "Optimisme", "Sensibilité",
+                                  "Solidarité", "Force", "Doux", "Humour"],
+        "filieres_naturelles": ["SC", "SSS", "SIN"],
         "mbti_coherents": ["INFP", "ENFP", "ISFP", "INFJ"],
-        "disc_coherents": ["I", "S"],  # Influence ou Stabilité
-        "ennea_coherents": [4, 9, 7],  # Créatif, Médiateur, Enthousiaste
+        "disc_coherents": ["I", "S"],
+        "ennea_coherents": [4, 9, 7],
     },
 }
 
@@ -5005,22 +5183,28 @@ def generate_job_fiche_with_archeology(metier: Dict, profile: Dict = None, vertu
     competences_metier = metier.get("competences_requises", [])
     
     # Construire la chaîne d'archéologie
+    ck_data = TABLEAU_CK.get(metier_vertu, {})
     chaine_archeologie = {
         "niveau_1_vertu": {
             "nom": metier_vertu.capitalize(),
+            "sous_vertus": ck_data.get("sous_vertus", []),
             "description": f"Socle fondamental - {metier_vertu}",
             "forces_caractere": archeologie.get("forces", [])
         },
         "niveau_2_valeurs": {
             "valeurs_schwartz": archeologie.get("valeurs_schwartz", []),
+            "valeurs_universelles": ck_data.get("valeurs_universelles", []),
             "description": "Valeurs qui guident l'action"
         },
         "niveau_3_qualites": {
             "qualites": archeologie.get("qualites", []),
+            "qualites_humaines_ck": ck_data.get("qualites_humaines", []),
             "description": "Qualités personnelles mobilisées"
         },
         "niveau_4_savoirs_etre": {
             "savoirs_etre_pro": archeologie.get("savoirs_etre_pro", []),
+            "competences_sociales": ck_data.get("competences_sociales", []),
+            "competences_pro_transferables": ck_data.get("competences_pro_transferables", []),
             "description": "Comportements professionnels attendus"
         },
         "niveau_5_savoir_faire": {
@@ -6069,6 +6253,14 @@ def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any], vertus_profi
     user_conation = set(c.lower() for c in user_vertu.get("conation", []))
     user_affection = set(a.lower() for a in user_vertu.get("affection", []))
     
+    # ============================================================================
+    # SOURCE 4: TABLEAU CK - Compétences sociales et pro transférables
+    # ============================================================================
+    ck_data = TABLEAU_CK.get(user_vertu_key, {})
+    user_comp_sociales = set(c.lower() for c in ck_data.get("competences_sociales", []))
+    user_comp_pro = set(c.lower() for c in ck_data.get("competences_pro_transferables", []))
+    user_valeurs_univ = set(v.lower() for v in ck_data.get("valeurs_universelles", []))
+    
     # Récupérer les soft skills requis par le métier
     job_soft_skills = job.get("soft_skills_essentiels", [])
     job_skill_names = set()
@@ -6138,6 +6330,37 @@ def score_archeologie(profile: Dict[str, Any], job: Dict[str, Any], vertus_profi
                 ck1_matches += 1
                 break
     score += min(0.1, ck1_matches * 0.02)
+    
+    # 4b. TABLEAU CK: Match compétences sociales avec soft skills (bonus 8%)
+    if user_comp_sociales and job_skill_names:
+        matches = 0
+        for comp in user_comp_sociales:
+            for job_skill in job_skill_names | job_competences:
+                if comp in job_skill or job_skill in comp:
+                    matches += 1
+                    break
+                comp_words = set(w for w in comp.split() if len(w) > 3)
+                skill_words = set(w for w in job_skill.split() if len(w) > 3)
+                if comp_words & skill_words:
+                    matches += 0.5
+                    break
+        score += min(0.08, matches * 0.02)
+    
+    # 4c. TABLEAU CK: Match compétences pro transférables (bonus 7%)
+    if user_comp_pro and (job_skill_names or job_competences):
+        matches = 0
+        all_job = job_skill_names | job_competences
+        for comp in user_comp_pro:
+            for job_item in all_job:
+                if comp in job_item or job_item in comp:
+                    matches += 1
+                    break
+                comp_words = set(w for w in comp.split() if len(w) > 3)
+                job_words = set(w for w in job_item.split() if len(w) > 3)
+                if comp_words & job_words:
+                    matches += 0.5
+                    break
+        score += min(0.07, matches * 0.02)
     
     # 5. COHÉRENCE VERTU-MÉTIER : Le facteur le plus important
     # La vertu de l'utilisateur doit correspondre à la vertu naturelle du métier
