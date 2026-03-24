@@ -7442,7 +7442,7 @@ class AccessCodeRequest(BaseModel):
 @api_router.post("/retrieve-results")
 async def retrieve_test_results(request: AccessCodeRequest):
     """
-    Récupère les résultats d'un test DE'CLIC PRO via le code d'accès.
+    Récupère les résultats d'un test D'CLIC PRO via le code d'accès.
     Utilisé par RE'ACTIF PRO lors de la création de compte.
     """
     access_code = request.access_code.upper().strip()

@@ -223,7 +223,7 @@ const ReactifProLogo = ({ size = 80, animated = false }) => (
 );
 
 // ============================================================================
-// LANDING PAGE - DE'CLIC PRO Design
+// LANDING PAGE - D'CLIC PRO Design
 // ============================================================================
 const LandingPage = ({ onSelectPath }) => {
   return (
@@ -235,7 +235,7 @@ const LandingPage = ({ onSelectPath }) => {
             <DeclicProLogo size={140} animated={true} />
             <div className="declic-brand">
               <h1 className="declic-title">
-                DE'<span className="declic-highlight">CLIC</span> PRO
+                D'<span className="declic-highlight">CLIC</span> PRO
               </h1>
               <p className="declic-tagline">L'APPLY RE'ACTIF PRO</p>
             </div>
@@ -290,7 +290,7 @@ const LandingPage = ({ onSelectPath }) => {
               
               <div className="beyond-diploma-highlight">
                 <p>
-                  <strong>RE'ACTIF PRO</strong> (concepteur Alt&Act) créateur de <strong>DE'CLIC PRO</strong>, défend une approche différente : reconnaître les individus à partir de leurs <em>compétences réelles</em>, de leur <em>potentiel</em> et de leur <em>capacité à contribuer</em>.
+                  <strong>RE'ACTIF PRO</strong> (concepteur Alt&Act) créateur de <strong>D'CLIC PRO</strong>, défend une approche différente : reconnaître les individus à partir de leurs <em>compétences réelles</em>, de leur <em>potentiel</em> et de leur <em>capacité à contribuer</em>.
                 </p>
               </div>
               
@@ -648,7 +648,7 @@ const DeclicProLogoCompact = ({ size = 40 }) => (
       <circle cx="30" cy="80" r="4" fill="#4f6df5"/>
       <circle cx="30" cy="40" r="4" fill="#4f6df5"/>
     </svg>
-    <span className="declic-logo-text">DE'<span className="declic-highlight">CLIC</span> <span className="declic-pro">PRO</span></span>
+    <span className="declic-logo-text">D'<span className="declic-highlight">CLIC</span> <span className="declic-pro">PRO</span></span>
   </div>
 );
 
@@ -3213,7 +3213,7 @@ const JobMatchResult = ({ result, onBack, onNewSearch }) => {
         </Button>
         <div className="results-header-logo">
           <DeclicProLogo size={50} animated={false} />
-          <span className="results-header-title">DE'CLIC PRO</span>
+          <span className="results-header-title">D'CLIC PRO</span>
         </div>
         <div className="header-right-section">
           <Button variant="outline" onClick={onNewSearch} data-testid="new-search-btn" className="declic-button-secondary">
@@ -3434,7 +3434,7 @@ const ExploreResult = ({ result, onBack }) => {
         </Button>
         <div className="results-header-logo">
           <DeclicProLogo size={50} animated={false} />
-          <span className="results-header-title">DE'CLIC PRO</span>
+          <span className="results-header-title">D'CLIC PRO</span>
         </div>
         <div className="header-right-section">
         </div>

@@ -21,7 +21,7 @@
   --reactif-danger: #ef4444;
   --reactif-border: #e5e7eb;
   
-  /* DE'CLIC PRO Theme - RE'ACTIF PRO aligned */
+  /* D'CLIC PRO Theme - RE'ACTIF PRO aligned */
   --declic-orange: #4f6df5;
   --declic-orange-light: #6c5ce7;
   --declic-orange-pale: rgba(79, 109, 245, 0.15);
@@ -65,7 +65,7 @@ body {
    LANDING PAGE - Modern Design
    ============================================================================ */
 
-/* DE'CLIC PRO Animations */
+/* D'CLIC PRO Animations */
 @keyframes spark {
   0%, 100% { 
     opacity: 0.3;
@@ -144,7 +144,7 @@ body {
   transform-origin: center;
 }
 
-/* DE'CLIC Theme Landing - DARK MODE */
+/* D'CLIC Theme Landing - DARK MODE */
 .landing-page.declic-theme {
   background: var(--bg-dark);
   position: relative;
@@ -177,7 +177,7 @@ body {
   --reactif-text-light: #9ca3af;
 }
 
-/* Landing page logos row - DE'CLIC PRO left, RE'ACTIF PRO right */
+/* Landing page logos row - D'CLIC PRO left, RE'ACTIF PRO right */
 .landing-logos-row {
   display: flex;
   justify-content: center;
@@ -191,7 +191,7 @@ body {
   justify-content: center;
 }
 
-/* DE'CLIC Logo Container - keep original styling */
+/* D'CLIC Logo Container - keep original styling */
 .landing-logos-row .declic-logo-container {
   margin-bottom: 0;
 }
@@ -208,7 +208,7 @@ body {
   }
 }
 
-/* DE'CLIC Logo Container */
+/* D'CLIC Logo Container */
 .declic-logo-container {
   display: flex;
   align-items: center;
@@ -645,7 +645,7 @@ body {
   display: none;
 }
 
-/* DE'CLIC Cards - DARK MODE */
+/* D'CLIC Cards - DARK MODE */
 .declic-card {
   border: 1px solid var(--border-dark);
   background: var(--bg-card);
@@ -692,7 +692,7 @@ body {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* DE'CLIC Features */
+/* D'CLIC Features */
 .declic-features .feature {
   border-left-color: var(--declic-orange);
 }
@@ -701,7 +701,7 @@ body {
   color: var(--declic-orange);
 }
 
-/* DE'CLIC Logo Compact */
+/* D'CLIC Logo Compact */
 .declic-logo-compact {
   display: flex;
   align-items: center;
@@ -724,7 +724,7 @@ body {
   opacity: 0.7;
 }
 
-/* DE'CLIC Questionnaire - DARK MODE */
+/* D'CLIC Questionnaire - DARK MODE */
 .declic-questionnaire {
   background: var(--bg-dark);
   min-height: 100vh;
@@ -752,7 +752,7 @@ body {
   background: rgba(79, 109, 245, 0.15);
 }
 
-/* DE'CLIC Results - DARK MODE */
+/* D'CLIC Results - DARK MODE */
 .declic-results {
   background: var(--bg-dark);
   min-height: 100vh;
@@ -794,7 +794,7 @@ body {
   color: var(--declic-indigo);
 }
 
-/* Override primary colors with DE'CLIC orange */
+/* Override primary colors with D'CLIC orange */
 .declic-results .archeology-card,
 .declic-results .radar-card {
   border: 1px solid var(--declic-orange-pale);

@@ -43,7 +43,7 @@ export const HomePage = () => {
       <section className="relative z-10 px-6 pt-20 pb-16 max-w-6xl mx-auto">
         <div className="text-center space-y-8 animate-fade-in-up">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            <span className="gradient-text">DE'CLIC PRO</span>
+            <span className="gradient-text">D'CLIC PRO</span>
             <br />
             <span className="text-white/90 text-3xl md:text-4xl font-medium mt-4 block">
               Découvrez votre potentiel professionnel
@@ -144,7 +144,7 @@ export const HomePage = () => {
 
       {/* Footer */}
       <footer className="relative z-10 px-6 py-8 text-center text-white/40 text-sm">
-        <p>© 2026 DE'CLIC PRO - Intelligence Professionnelle</p>
+        <p>© 2026 D'CLIC PRO - Intelligence Professionnelle</p>
       </footer>
     </div>
   );

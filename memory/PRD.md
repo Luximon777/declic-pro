@@ -1,4 +1,4 @@
-# DE'CLIC PRO - PRD
+# D'CLIC PRO - PRD
 
 ## Projet
 Plateforme d'orientation professionnelle guidant les utilisateurs à travers un questionnaire multi-modèles (MBTI, DISC, Ennéagramme, RIASEC, Archéologie des Compétences) pour déterminer leur profil de personnalité et recommander des métiers compatibles.
